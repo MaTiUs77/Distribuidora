@@ -1,5 +1,5 @@
 @extends('layouts.adminlte')
 
 @section('contenido')
-        Home!!
+        Pagina principal
 @endsection
