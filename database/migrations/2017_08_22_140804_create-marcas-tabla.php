@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlmacenTabla extends Migration
+class CreateMarcasTabla extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAlmacenTabla extends Migration
      */
     public function up()
     {
-        Schema::create('almacen', function (Blueprint $table) {
+        Schema::create('marcas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateAlmacenTabla extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('almacen');
+        Schema::dropIfExists('marcas');
     }
 }
