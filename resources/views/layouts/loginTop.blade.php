@@ -3,7 +3,7 @@
 
     @if(Auth::check())
       <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-      <span class="hidden-xs">Luis Baron</span>
+      <span class="hidden-xs">{{ Auth::user()->name }}</span>
     @else
       <img src="{{ asset('adminlte/dist/img/user.png') }}" class="user-image" alt="User Image">
       <span class="hidden-xs">Iniciar sesion</span>
