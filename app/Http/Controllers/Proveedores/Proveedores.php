@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Proveedores;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class Proveedores extends Controller
 {
@@ -14,7 +15,7 @@ class Proveedores extends Controller
      */
     public function index()
     {
-        dd('Formulario para listar proveedores');
+        return view('proveedores.index');
     }
 
     /**
@@ -35,7 +36,7 @@ class Proveedores extends Controller
      */
     public function store(Request $request)
     {
-        dd('Accion para crear nuevo proveedor');
+        dd('Accion para crear nuevo proveedor',$request);
     }
 
     /**
@@ -46,7 +47,7 @@ class Proveedores extends Controller
      */
     public function show($id)
     {
-        dd('Formulario para ver detalles del proveedor');
+        dd('Formulario para ver detalles del proveedor',$id);
     }
 
     /**
@@ -57,7 +58,7 @@ class Proveedores extends Controller
      */
     public function edit($id)
     {
-        dd('Formulario para ver editar el proveedor');
+        dd('Formulario para ver editar el proveedor',$id);
     }
 
     /**
@@ -69,7 +70,7 @@ class Proveedores extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('Accion para ver actualizar al proveedor');
+        dd('Accion para ver actualizar al proveedor',$id);
     }
 
     /**
@@ -80,6 +81,6 @@ class Proveedores extends Controller
      */
     public function destroy($id)
     {
-        dd('Accion para eliminar al proveedor');
+        dd('Accion para eliminar al proveedor',$id);
     }
 }

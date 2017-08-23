@@ -30,7 +30,7 @@
         <li><a href="#"><i class="fa fa-briefcase"></i> <span>Vendedores</span></a></li>
 
         <li class="header">ADMINISTRACION</li>
-        <li><a href="#"><i class="fa fa-address-book"></i> <span>Distribuidores</span></a></li>
+        <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-address-book"></i> <span>Proveedores</span></a></li>
         <li><a href="#"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Categorias</span></a></li>
 
