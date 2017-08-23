@@ -3,8 +3,8 @@
 @section('contenido')
 
         @include('component.resourceTable',[
-                'recurso' => 'proveedores',
-                'lista' => $proveedores,
+                'recurso' => 'productos',
+                'lista' => $productos,
         ])
 
 @endsection

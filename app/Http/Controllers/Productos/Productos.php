@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Productos;
 
+use App\Http\Controllers\Productos\Model\ProductosModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class Productos extends Controller
      */
     public function index()
     {
-        //
+        $productos = ProductosModel::all();
+        $datos = compact('productos');
+        return view('productos.index',$datos);
     }
 
     /**
