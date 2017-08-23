@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Symfony\Component\Finder\Finder;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -39,7 +40,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->customWebRoutes();
+
     }
 
     /**
@@ -69,5 +71,26 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "custom" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function customWebRoutes()
+    {
+        $files = Finder::create()
+            ->in(app_path('Http\Controllers'))
+            ->name('routes.php');
+
+        foreach($files as $file) {
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group($file->getRealPath());
+        }
+
     }
 }

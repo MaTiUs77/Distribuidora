@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlmacenesTabla extends Migration
+class CreateProveedoresTabla extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateAlmacenesTabla extends Migration
      */
     public function up()
     {
-        Schema::create('almacenes', function (Blueprint $table) {
+        Schema::create('proveedores', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->string('nombre');
+            $table->string('telefono');
+            $table->string('direccion');
+            $table->string('email');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateAlmacenesTabla extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('almacenes');
+        Schema::dropIfExists('proveedores');
     }
 }
