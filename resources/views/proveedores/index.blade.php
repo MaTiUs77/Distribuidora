@@ -2,9 +2,9 @@
 
 @section('contenido')
 
-        @include('component.resourceTable',[
-                'recurso' => 'proveedores',
-                'lista' => $proveedores,
+        @include('component.abm.baseTable',[
+                'resource' => 'proveedores',
+                'items' => $proveedores,
         ])
 
 @endsection

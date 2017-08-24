@@ -13,6 +13,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href={{ asset('adminlte/dist/css/AdminLTE.min.css') }}>
   <link rel="stylesheet" href={{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}>
+  <!-- SweetAlert -->
+  <link rel="stylesheet" href={{ asset('plugins/sweetalert/sweetalert.css') }}>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -250,9 +252,14 @@
 <script src={{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
 <!-- AdminLTE App -->
 <script src={{ asset('adminlte/dist/js/adminlte.min.js') }}></script>
+<!-- SweetAlert -->
+<script src={{ asset('plugins/sweetalert/sweetalert.min.js') }}></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+@yield('footer')
+
 </body>
 </html>

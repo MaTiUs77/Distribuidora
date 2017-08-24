@@ -3,8 +3,8 @@
 @section('contenido')
 
         @include('component.abm.baseTable',[
-                'resource' => 'productos',
-                'items' => $productos,
+                'resource' => 'marcas',
+                'items' => $marcas,
         ])
 
 @endsection

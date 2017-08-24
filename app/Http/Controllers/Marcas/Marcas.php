@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Marcas;
 
+use App\Http\Controllers\Marcas\Model\MarcasModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,11 @@ class Marcas extends Controller
      */
     public function index()
     {
-        //
+        $marcas= MarcasModel::all();
+
+        $datos = compact('marcas');
+        return view('marcas.index',$datos);
+
     }
 
     /**
