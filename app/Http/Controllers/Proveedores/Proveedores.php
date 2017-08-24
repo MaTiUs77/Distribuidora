@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Proveedores;
 use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 
 class Proveedores extends Controller
 {
@@ -28,7 +27,7 @@ class Proveedores extends Controller
      */
     public function create()
     {
-        dd('Formulario para crear nuevo proveedor');
+        return view('proveedores.create');
     }
 
     /**
@@ -39,7 +38,13 @@ class Proveedores extends Controller
      */
     public function store(Request $request)
     {
-        dd('Accion para crear nuevo proveedor',$request);
+        $newItem = new ProveedoresModel();
+        $newItem->nombre = $request->get('name');
+        $newItem->telefono = $request->get('telefono');
+        $newItem->direccion = $request->get('direccion');
+        $newItem->email = $request->get('email');
+        $newItem->save();
+        return redirect()->route('proveedores.index');
     }
 
     /**
@@ -61,7 +66,7 @@ class Proveedores extends Controller
      */
     public function edit($id)
     {
-        dd('Formulario para ver editar el proveedor',$id);
+        return view('proveedores.edit', ['proveedores' => ProveedoresModel::findOrFail($id)]);
     }
 
     /**
@@ -73,7 +78,13 @@ class Proveedores extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('Accion para ver actualizar al proveedor',$id);
+        $proveedores = ProveedoresModel::findOrFail($id);
+        $proveedores->nombre = $request->get('name');
+        $proveedores->telefono = $request->get('telefono');
+        $proveedores->direccion = $request->get('direccion');
+        $proveedores->email = $request->get('email');
+        $proveedores->save();
+        return redirect()->route('proveedores.index');
     }
 
     /**
@@ -84,6 +95,8 @@ class Proveedores extends Controller
      */
     public function destroy($id)
     {
-        dd('Accion para eliminar al proveedor',$id);
+        $proveedores = ProveedoresModel::findOrFail($id);
+        $proveedores->delete();
+        return redirect()->route('proveedores.index')->with('message', 'Proveedor eliminado con exito!');
     }
 }
