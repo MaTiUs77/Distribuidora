@@ -94,6 +94,6 @@ class Categorias extends Controller
     {
         $categoria = CategoriasModel::findOrFail($id);
         $categoria->delete();
-        return redirect()->route('categorias.index');
+        return redirect()->route('categorias.index')->with('message', 'Categoria eliminada con exito!');
     }
 }

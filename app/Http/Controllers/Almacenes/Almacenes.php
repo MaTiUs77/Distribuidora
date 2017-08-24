@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Almacenes;
 
+use App\Http\Controllers\Almacenes\Model\AlmacenesModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,10 @@ class Almacenes extends Controller
      */
     public function index()
     {
-        //
+        $almacenes = AlmacenesModel::all();
+
+        $datos = compact('almacenes');
+        return view('almacenes.index',$datos);
     }
 
     /**
@@ -24,7 +28,7 @@ class Almacenes extends Controller
      */
     public function create()
     {
-        //
+        return view('almacenes.create');
     }
 
     /**
@@ -35,7 +39,10 @@ class Almacenes extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newItem = new AlmacenesModel();
+        $newItem->nombre = $request->get('name');
+        $newItem->save();
+        return redirect()->route('almacenes.index');
     }
 
     /**
@@ -80,6 +87,8 @@ class Almacenes extends Controller
      */
     public function destroy($id)
     {
-        //
+        $almacen = AlmacenesModel::findOrFail($id);
+        $almacen->delete();
+        return redirect()->route('almacenes.index');
     }
 }
