@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Marcas;
 
+use App\Http\Controllers\Marcas\Model\MarcasModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,10 @@ class Marcas extends Controller
      */
     public function index()
     {
-        //
+        $marcas = MarcasModel::all();
+
+        $datos = compact('marcas');
+        return view('marcas.index',$datos);
     }
 
     /**
@@ -24,7 +28,7 @@ class Marcas extends Controller
      */
     public function create()
     {
-        //
+        return view('marcas.create');
     }
 
     /**
@@ -35,7 +39,10 @@ class Marcas extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newItem = new MarcasModel();
+        $newItem->nombre = $request->get('name');
+        $newItem->save();
+        return redirect()->route('marcas.index');
     }
 
     /**
@@ -57,7 +64,7 @@ class Marcas extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('marcas.edit', ['marcas' => MarcasModel::findOrFail($id)]);
     }
 
     /**
@@ -69,7 +76,10 @@ class Marcas extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $marcas = MarcasModel::findOrFail($id);
+        $marcas->nombre = $request->get('name');
+        $marcas->save();
+        return redirect()->route('marcas.index');
     }
 
     /**
@@ -80,6 +90,8 @@ class Marcas extends Controller
      */
     public function destroy($id)
     {
-        //
+        $marcas = MarcasModel::findOrFail($id);
+        $marcas->delete();
+        return redirect()->route('marcas.index')->with('message', 'Marca eliminada con exito!');
     }
 }
