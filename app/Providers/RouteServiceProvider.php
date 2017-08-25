@@ -83,7 +83,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function customWebRoutes()
     {
         $files = Finder::create()
-            ->in(app_path('Http\Controllers'))
+            ->in(app_path('Http/Controllers'))
             ->name('routes.php');
 
         foreach($files as $file) {
