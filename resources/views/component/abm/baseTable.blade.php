@@ -3,7 +3,12 @@
     <h3 class="box-title">Lista de {{ ucfirst($resource) }}</h3>
 
     <a class="btn btn-primary pull-right" href="{{ route($resource.'.create') }}">
-      Agregar {{ ucfirst($resource) }}
+      <i class="fa fa-plus"></i>
+      Agregar
+      <span class="hidden-xs">
+        {{ ucfirst($resource) }}
+      </span>
+
     </a>
 
   </div>
@@ -12,7 +17,7 @@
     <table class="table table-striped">
       <tbody>
       <tr>
-        <th style="width: 150px">Acciones</th>
+        <th style="width: 180px">Acciones</th>
         <th style="width: 10px">Id</th>
         <th>Nombre</th>
       </tr>
