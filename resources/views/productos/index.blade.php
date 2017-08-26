@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-        @include('component.abm.baseTable',[
+        @include('component.abm.baseTableProductos',[
                 'resource' => 'productos',
                 'items' => $productos,
         ])

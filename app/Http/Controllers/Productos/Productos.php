@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Productos;
 
+use App\Http\Controllers\Almacenes\Model\AlmacenesModel;
+use App\Http\Controllers\Categorias\Model\CategoriasModel;
+use App\Http\Controllers\Marcas\Model\MarcasModel;
 use App\Http\Controllers\Productos\Model\ProductosModel;
+use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 
 class Productos extends Controller
 {
@@ -27,7 +33,18 @@ class Productos extends Controller
      */
     public function create()
     {
-        //
+        $almacen = AlmacenesModel::all();
+        $proveedor = ProveedoresModel::all();
+        $marca = MarcasModel::all();
+        $categoria = CategoriasModel::all();
+        $producto = [
+            'almacen' => $almacen,
+            'proveedor' => $proveedor,
+            'marca' => $marca,
+            'categoria' => $categoria
+        ];
+        $datos = compact('producto');
+        return view('productos.create',$datos);
     }
 
     /**
@@ -38,7 +55,20 @@ class Productos extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newItem = new ProductosModel();
+        $newItem->nombre = $request->get('producto');
+        $newItem->barcode = $request->get('barcode');
+        $newItem->precio_proveedor = $request->get('precio_proveedor');
+        $newItem->precio_venta = $request->get('precio_venta');
+        $newItem->aplicar_porcentaje = $request->get('aplicar_porcentaje');
+        $newItem->estado = $request->get('estado');
+        $newItem->stock= $request->get('stock');
+        $newItem->id_almacen = $request->get('almacen');
+        $newItem->id_proveedor = $request->get('proveedor');
+        $newItem->id_marca = $request->get('marca');
+        $newItem->id_categoria = $request->get('categoria');
+        $newItem->save();
+        return redirect()->route('productos.index');
     }
 
     /**
