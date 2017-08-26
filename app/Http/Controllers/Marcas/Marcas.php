@@ -64,7 +64,9 @@ class Marcas extends Controller
      */
     public function edit($id)
     {
-        return view('marcas.edit', ['marcas' => MarcasModel::findOrFail($id)]);
+        $marca = MarcasModel::findOrFail($id);
+        $dato = compact('marca');
+        return view('marcas.edit', $dato);
     }
 
     /**

@@ -12,7 +12,7 @@
     <table class="table table-striped">
       <tbody>
       <tr>
-        <th style="width: 150px">Acciones</th>
+        <th style="width: 180px">Acciones</th>
         <th style="width: 10px">Id</th>
         <th>Nombre</th>
         <th>Telefono</th>

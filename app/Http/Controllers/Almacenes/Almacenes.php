@@ -64,7 +64,10 @@ class Almacenes extends Controller
      */
     public function edit($id)
     {
-        //
+        $almacen = AlmacenesModel::findOrFail($id);
+        $dato = compact('almacen');
+        return view('almacenes.edit', $dato);
+
     }
 
     /**
@@ -76,7 +79,10 @@ class Almacenes extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $almacen = AlmacenesModel::findOrFail($id);
+        $almacen->nombre = $request->get('name');
+        $almacen->save();
+        return redirect()->route('almacenes.index');
     }
 
     /**
