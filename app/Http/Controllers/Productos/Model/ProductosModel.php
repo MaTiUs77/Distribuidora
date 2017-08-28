@@ -7,4 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class ProductosModel extends Model
 {
     protected $table = 'productos';
+
+    public function almacen()
+    {
+        return $this->hasOne('App\Http\Controllers\Almacenes\Model\AlmacenesModel','id','id_almacen');
+    }
+
+    public function proveedor()
+    {
+        return $this->hasOne('App\Http\Controllers\Proveedores\Model\ProveedoresModel','id','id_proveedor');
+    }
+
+    public function marca()
+    {
+        return $this->hasOne('App\Http\Controllers\Marcas\Model\MarcasModel','id','id_marca');
+    }
+
+    public function categoria()
+    {
+        return $this->hasOne('App\Http\Controllers\Categorias\Model\CategoriasModel','id','id_categoria');
+    }
 }

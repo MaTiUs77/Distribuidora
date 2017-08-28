@@ -3,7 +3,11 @@
     <h3 class="box-title">Lista de {{ ucfirst($resource) }}</h3>
 
     <a class="btn btn-primary pull-right" href="{{ route($resource.'.create') }}">
-      Agregar {{ ucfirst($resource) }}
+      <i class="fa fa-plus"></i>
+      Agregar
+      <span class="hidden-xs">
+        {{ ucfirst($resource) }}
+      </span>
     </a>
 
   </div>

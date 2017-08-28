@@ -5,23 +5,24 @@
     <div class="container">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">Crear producto</h3>
+                <h3 class="box-title">Editar producto</h3>
             </div>
             <h4 class="box-body">
-                <form role="form" method="post" action="{{ route('productos.store') }}">
+                <form role="form" method="post" action="{{ route('productos.update',$producto->id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_method" value="PUT" />
 
                     <!-- Basicos -->
                     <div class="col-sm-4">
-                        <input class="form-control input-lg" type="text" name="barcode" required placeholder="Barcode">
+                        <input class="form-control input-lg" type="text" name="barcode" required placeholder="Barcode" value="{{$producto->barcode}}">
                     </div>
 
                     <div class="col-sm-4">
-                        <input class="form-control input-lg" type="text" name="producto" required placeholder="Nombre del producto">
+                        <input class="form-control input-lg" type="text" name="producto" required placeholder="Nombre del producto"  value="{{$producto->nombre}}">
                     </div>
 
                     <div class="col-sm-4">
-                        <input class="form-control input-lg" type="text" name="stock" required placeholder="Stock">
+                        <input class="form-control input-lg" type="text" name="stock" required placeholder="Stock"  value="{{$producto->stock}}">
                     </div>
 
                     <div class="clearfix"></div>
@@ -29,15 +30,15 @@
 
                     <!-- Precios-->
                     <div class="col-sm-4">
-                        <input class="form-control input-lg" type="text" name="precio_proveedor" required placeholder="Precio del proveedor">
+                        <input class="form-control input-lg" type="text" name="precio_proveedor" required placeholder="Precio del proveedor"  value="{{$producto->precio_proveedor}}">
                     </div>
 
                     <div class="col-sm-4">
-                        <input class="form-control input-lg" type="text" name="precio_venta" required placeholder="Precio de venta">
+                        <input class="form-control input-lg" type="text" name="precio_venta" required placeholder="Precio de venta"  value="{{$producto->precio_venta}}">
                     </div>
 
                     <div class="col-sm-4">
-                        <input class="form-control input-lg" type="text" name="aplicar_porcentaje" required placeholder="Porcentaje aplicado">
+                        <input class="form-control input-lg" type="text" name="aplicar_porcentaje" required placeholder="Porcentaje aplicado"  value="{{$producto->aplicar_porcentaje}}">
                     </div>
 
                     <div class="clearfix"></div>
@@ -46,22 +47,19 @@
                     <!-- Selects -->
                     <div class="col-sm-6">
                         <select name="almacen" class="form-control input-lg">
-                            <option value="">- Seleccionar un almacen -</option>
                             @foreach($almacenes as $almacen)
-                                <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                <option value="{{$almacen->id}}" {{ ($almacen->id == $producto->id_almacen) ? 'selected=selected' :'' }}>{{$almacen->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="col-sm-6">
                         <select name="proveedor" class="form-control input-lg">
-                            <option value="">- Seleccionar un proveedor -</option>
                             @foreach($proveedores as $proveedor)
-                                <option value="{{$proveedor->id}}">{{$proveedor->nombre}}</option>
+                                <option value="{{$proveedor->id}}" {{ ($proveedor->id == $producto->id_proveedor) ? 'selected=selected' :'' }}>{{$proveedor->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
-
 
                     <div class="clearfix"></div>
                     <hr>
@@ -70,18 +68,16 @@
 
                     <div class="col-sm-6">
                         <select name="marca" class="form-control input-lg">
-                            <option value="">- Seleccionar una marca -</option>
                             @foreach($marcas as $marca)
-                                <option value="{{$marca->id}}">{{$marca->nombre}}</option>
+                                <option value="{{$marca->id}}" {{ ($marca->id == $producto->id_marca) ? 'selected=selected' :'' }}>{{$marca->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="col-sm-6">
                         <select name="categoria" class="form-control input-lg">
-                            <option value="">- Seleccionar una categoria -</option>
                             @foreach($categorias as $categoria)
-                                <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                <option value="{{$categoria->id}}" {{ ($categoria->id == $producto->id_marca) ? 'selected=selected' :'' }}>{{$categoria->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -94,7 +90,7 @@
 
 
                     <div class="text-center">
-                        <button class="btn btn-success"><i class="fa fa-plus"></i> Crear</button>
+                        <button class="btn btn-success"><i class="fa fa-edit"></i> Actualizar</button>
                     </div>
                 </form>
             </div>

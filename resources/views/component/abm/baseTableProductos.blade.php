@@ -3,7 +3,11 @@
     <h3 class="box-title">Lista de {{ ucfirst($resource) }}</h3>
 
     <a class="btn btn-primary pull-right" href="{{ route($resource.'.create') }}">
-      Agregar {{ ucfirst($resource) }}
+      <i class="fa fa-plus"></i>
+      Agregar
+      <span class="hidden-xs">
+        {{ ucfirst($resource) }}
+      </span>
     </a>
 
   </div>
@@ -12,7 +16,7 @@
     <table class="table table-striped">
       <tbody>
       <tr>
-        <th style="width: 150px">Acciones</th>
+        <th style="width: 180px">Acciones</th>
         <th style="width: 10px">Id</th>
         <th>Nombre</th>
         <th>Barcode</th>
@@ -43,10 +47,10 @@
           <td>{{ $item->aplicar_porcentaje }}</td>
           <td>{{ $item->estado }}</td>
           <td>{{ $item->stock }}</td>
-          <td>{{ $item->id_almacen}}</td>
-          <td>{{ $item->id_proveedor}}</td>
-          <td>{{ $item->id_marca}}</td>
-          <td>{{ $item->id_categoria}}</td>
+          <td>{{ $item->almacen->nombre }}</td>
+          <td>{{ $item->proveedor->nombre }}</td>
+          <td>{{ $item->marca->nombre }}</td>
+          <td>{{ $item->categoria->nombre }}</td>
         </tr>
       @endforeach
 

@@ -33,17 +33,12 @@ class Productos extends Controller
      */
     public function create()
     {
-        $almacen = AlmacenesModel::all();
-        $proveedor = ProveedoresModel::all();
-        $marca = MarcasModel::all();
-        $categoria = CategoriasModel::all();
-        $producto = [
-            'almacen' => $almacen,
-            'proveedor' => $proveedor,
-            'marca' => $marca,
-            'categoria' => $categoria
-        ];
-        $datos = compact('producto');
+        $almacenes = AlmacenesModel::all();
+        $proveedores = ProveedoresModel::all();
+        $marcas = MarcasModel::all();
+        $categorias = CategoriasModel::all();
+
+        $datos = compact('almacenes','proveedores','marcas','categorias');
         return view('productos.create',$datos);
     }
 
@@ -90,7 +85,15 @@ class Productos extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto = ProductosModel::findOrFail($id);
+
+        $almacenes = AlmacenesModel::all();
+        $proveedores = ProveedoresModel::all();
+        $marcas = MarcasModel::all();
+        $categorias = CategoriasModel::all();
+
+        $datos = compact('producto','almacenes','proveedores','marcas','categorias');
+        return view('productos.edit', $datos);
     }
 
     /**
@@ -102,7 +105,20 @@ class Productos extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $producto = ProductosModel::findOrFail($id);
+        $producto ->nombre = $request->get('producto');
+        $producto ->barcode = $request->get('barcode');
+        $producto ->precio_proveedor = $request->get('precio_proveedor');
+        $producto ->precio_venta = $request->get('precio_venta');
+        $producto ->aplicar_porcentaje = $request->get('aplicar_porcentaje');
+        $producto ->estado = $request->get('estado');
+        $producto ->stock= $request->get('stock');
+        $producto ->id_almacen = $request->get('almacen');
+        $producto ->id_proveedor = $request->get('proveedor');
+        $producto ->id_marca = $request->get('marca');
+        $producto ->id_categoria = $request->get('categoria');
+        $producto ->save();
+        return redirect()->route('productos.index');
     }
 
     /**
