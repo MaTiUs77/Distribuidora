@@ -11,7 +11,3 @@ npm-debug.log
 yarn-error.log
 .env
 Esquema_db.mwb.bak
-app/Http/Controllers/Marcas/Marcas.php
-resources/views/categorias/index.blade.php
-app/Http/Controllers/Productos/Productos.php
-resources/views/productos/create.blade.php
