@@ -131,6 +131,8 @@ class Productos extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = ProductosModel::findOrFail($id);
+        $producto->delete();
+        return redirect()->route('productos.index')->with('message', 'Producto eliminado con exito!');
     }
 }

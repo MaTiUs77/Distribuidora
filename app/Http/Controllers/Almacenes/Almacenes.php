@@ -95,6 +95,6 @@ class Almacenes extends Controller
     {
         $almacen = AlmacenesModel::findOrFail($id);
         $almacen->delete();
-        return redirect()->route('almacenes.index');
+        return redirect()->route('almacenes.index')->with('message', 'Almacen eliminado con exito!');
     }
 }
