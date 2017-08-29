@@ -53,6 +53,7 @@ class Productos extends Controller
         $newItem = new ProductosModel();
         $newItem->nombre = $request->get('producto');
         $newItem->barcode = $request->get('barcode');
+        $newItem->descripcion = $request->get('descripcion');
         $newItem->precio_proveedor = $request->get('precio_proveedor');
         $newItem->precio_venta = $request->get('precio_venta');
         $newItem->aplicar_porcentaje = $request->get('aplicar_porcentaje');
@@ -108,6 +109,7 @@ class Productos extends Controller
         $producto = ProductosModel::findOrFail($id);
         $producto ->nombre = $request->get('producto');
         $producto ->barcode = $request->get('barcode');
+        $producto ->descripcion = $request->get('descripcion');
         $producto ->precio_proveedor = $request->get('precio_proveedor');
         $producto ->precio_venta = $request->get('precio_venta');
         $producto ->aplicar_porcentaje = $request->get('aplicar_porcentaje');

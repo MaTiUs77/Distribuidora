@@ -1,14 +1,13 @@
 @extends('layouts.adminlte')
 
 @section('contenido')
-
     <div class="container">
-        <div class="box box-success">
-            <div class="box-header with-border">
-                <h3 class="box-title">Crear producto</h3>
-            </div>
-            <h4 class="box-body">
-                <form role="form" method="post" action="{{ route('productos.store') }}">
+        <form role="form" method="post" action="{{ route('productos.store') }}">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Crear producto</h3>
+                </div>
+                <div class="box-body">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <!-- Basicos -->
@@ -66,7 +65,28 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    <h4>Opcional</h4>
+
+                    <input type="hidden" name="estado" value="inactivo">
+
+                    <div class="clearfix"></div>
+
+                    <div class="text-center">
+                        <button class="btn btn-success">Dar de alta el producto</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Opcional</h3>
+                </div>
+                <div class="box-body">
+                    <div class="col-sm-12">
+                        <textarea class="form-control input-lg" name="descripcion" placeholder="Descripcion del producto"></textarea>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <hr>
 
                     <div class="col-sm-6">
                         <select name="marca" class="form-control input-lg">
@@ -85,20 +105,48 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <input type="hidden" name="estado" value="inactivo">
-
-                    <div class="clearfix"></div>
-                    <br>
-                    <br>
-
-
-                    <div class="text-center">
-                        <button class="btn btn-success"><i class="fa fa-plus"></i> Crear</button>
-                    </div>
-                </form>
+                </div>
             </div>
-            <!-- /.box-body -->
-        </div>
+        </form>
     </div>
+@endsection
+
+@section('footer')
+    <script>
+
+        /*
+            Version BETA
+            Es necesario optimizar en caso de que no se encuentre definitos todos los valores
+        */
+
+        $(function() {
+            var precio_proveedor = $("input[name='precio_proveedor']");
+            var precio_venta = $("input[name='precio_venta']");
+            var precio_aplicado = $("input[name='aplicar_porcentaje']");
+
+            precio_proveedor.keyup(function() {
+                var precio_proveedor_val = Number($( this ).val());
+                var aplicar_porcentaje_val = Number(precio_aplicado.val());
+
+                var calcular_precio_venta =   (precio_proveedor_val  * aplicar_porcentaje_val / 100) + precio_proveedor_val ;
+                precio_venta.val(calcular_precio_venta);
+            });
+
+            precio_venta.keyup(function() {
+                var precio_proveedor_val = Number(precio_proveedor.val());
+                var precio_venta_val = Number($( this ).val());
+
+                var calcular_porcentaje =   ((precio_venta_val - precio_proveedor_val )) / precio_proveedor_val *  100;
+                precio_aplicado.val(calcular_porcentaje);
+            });
+
+            precio_aplicado.keyup(function() {
+                var precio_proveedor_val = Number(precio_proveedor.val());
+                var aplicar_porcentaje_val = Number($( this ).val());
+
+                var calcular_precio_venta =   (precio_proveedor_val  * aplicar_porcentaje_val / 100) + precio_proveedor_val ;
+                precio_venta.val(calcular_precio_venta);
+            });
+        });
+    </script>
 @endsection
