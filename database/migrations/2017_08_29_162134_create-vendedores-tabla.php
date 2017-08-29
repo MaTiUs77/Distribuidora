@@ -23,10 +23,10 @@ class CreateVendedoresTabla extends Migration
             $table->string('direccion');
             $table->string('email')->unique();
             $table->string('cuil_cuit');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            //$table->foreign('user_id')->references('id')->on('users');
 
         });
     }
