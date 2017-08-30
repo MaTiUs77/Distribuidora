@@ -25,8 +25,8 @@
         <li><a href="#"><i class="fa fa-money"></i> <span>Facturacion</span></a></li>
 
         <li class="header">USUARIOS</li>
-        <li><a href="#"><i class="fa fa-address-card"></i> <span>Clientes</span></a></li>
-        <li><a href="#"><i class="fa fa-briefcase"></i> <span>Vendedores</span></a></li>
+        <li><a href="{{route('clientes.index')}}"><i class="fa fa-address-card"></i> <span>Clientes</span></a></li>
+        <li><a href="{{route('vendedores.index')}}"><i class="fa fa-briefcase"></i> <span>Vendedores</span></a></li>
 
         <li class="header">ADMINISTRACION</li>
         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-address-book"></i> <span>Proveedores</span></a></li>

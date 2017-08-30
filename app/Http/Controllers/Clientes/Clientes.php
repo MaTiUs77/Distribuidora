@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Clientes;
 
+use App\Http\Controllers\Clientes\Model\ClientesModel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class Clientes extends Controller
@@ -13,7 +15,9 @@ class Clientes extends Controller
      */
     public function index()
     {
-        //
+        $clientes = ClientesModel::all();
+        $datos = compact('clientes');
+        return view('clientes.index',$datos);
     }
 
     /**
@@ -23,7 +27,7 @@ class Clientes extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.create');
     }
 
     /**
@@ -34,7 +38,14 @@ class Clientes extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newItem = new ClientesModel();
+        $newItem->nombre = $request->get('name');
+        $newItem->telefono = $request->get('telefono');
+        $newItem->direccion = $request->get('direccion');
+        $newItem->email = $request->get('email');
+        $newItem->cuil_cuit = $request->get('cuil_cuit');
+        $newItem->save();
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -56,7 +67,9 @@ class Clientes extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = ClientesModel::findOrFail($id);
+        $dato =  compact('cliente');
+        return view('clientes.edit', $dato);
     }
 
     /**
@@ -68,7 +81,14 @@ class Clientes extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cliente = ClientesModel::findOrFail($id);
+        $cliente->nombre = $request->get('name');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->direccion = $request->get('direccion');
+        $cliente->email = $request->get('email');
+        $cliente->cuil_cuit = $request->get('cuil_cuit');
+        $cliente->save();
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -79,6 +99,8 @@ class Clientes extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cliente = ClientesModel::findOrFail($id);
+        $cliente->delete();
+        return redirect()->route('clientes.index')->with('message', 'Cliente eliminado con exito!');
     }
 }

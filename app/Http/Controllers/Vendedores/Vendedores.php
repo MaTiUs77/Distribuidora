@@ -69,7 +69,9 @@ class Vendedores extends Controller
      */
     public function edit($id)
     {
-        //
+        $vendedor = VendedoresModel::findOrFail($id);
+        $dato =  compact('vendedor');
+        return view('vendedores.edit', $dato);
     }
 
     /**
@@ -81,7 +83,15 @@ class Vendedores extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vendedor = VendedoresModel::findOrFail($id);
+        $vendedor->nombre = $request->get('name');
+        $vendedor->apellido = $request->get('apellido');
+        $vendedor->telefono = $request->get('telefono');
+        $vendedor->direccion = $request->get('direccion');
+        $vendedor->email = $request->get('email');
+        $vendedor->cuil_cuit = $request->get('cuil_cuit');
+        $vendedor->save();
+        return redirect()->route('vendedores.index');
     }
 
     /**
@@ -92,6 +102,8 @@ class Vendedores extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vendedor = VendedoresModel::findOrFail($id);
+        $vendedor->delete();
+        return redirect()->route('vendedores.index')->with('message', 'Vendedor eliminado con exito!');
     }
 }
