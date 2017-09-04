@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Controlador ACL
+        Spatie\Permission\PermissionServiceProvider::class,
+
     ],
 
     /*

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
 {
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -23,6 +26,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $user = Auth::user();
+
+      //  $role = Role::create(['name' => 'vendedor']);
+      // $permission = Permission::create(['name' => 'productos.create']);
+      // $permission = Permission::create(['name' => 'productos.edit']);
+
+//      $role = Role::findByName('vendedor');
+//      $role->givePermissionTo('productos.edit');
+//      $role->givePermissionTo('productos.create');
+
+//      $user->assignRole('vendedor');
+
+        return view('home',compact('user'));
     }
 }

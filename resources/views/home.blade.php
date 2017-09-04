@@ -1,5 +1,23 @@
 @extends('layouts.adminlte')
 
 @section('contenido')
-        Pagina principal
+  Test de permisos de usuarios
+
+  @role('vendedor')
+    <div>Soy un vendedor</div>
+  @else
+    <div>No soy un vendedor</div>
+  @endrole
+
+  @role('admin')
+    <div>Soy admin</div>
+  @else
+    <div>No soy admin</div>
+  @endrole
+
+
+  @can('productos.delete')
+    <div>Puedo eliminar un producto!</div>
+  @endcan
+
 @endsection
