@@ -16,7 +16,7 @@
   @endrole
 
 
-  @can('productos.delete')
+  @can('productos.destroy')
     <div>Puedo eliminar un producto!</div>
   @endcan
 
