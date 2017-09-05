@@ -10,6 +10,11 @@ use Spatie\Permission\Models\Role;
 
 class Usuarios extends Controller
 {
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
+
   public function index()
   {
     $users = User::all();
