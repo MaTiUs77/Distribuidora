@@ -11,7 +11,7 @@
         <form role="form" method="post" action="{{ route('usuarios.store') }}">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-          <input class="form-control input-lg" type="text" name="name" required placeholder="Ingresar nombre">
+          <input class="form-control input-lg" type="text" name="name"  required placeholder="Ingresar nombre">
           <br>
 
           <input class="form-control input-lg" type="email" name="email" required placeholder="Ingresar email">
@@ -35,5 +35,15 @@
       </div>
     </div>
   </div>
+
+  @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
 
 @endsection

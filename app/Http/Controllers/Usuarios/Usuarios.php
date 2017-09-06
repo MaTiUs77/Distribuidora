@@ -10,72 +10,99 @@ use Spatie\Permission\Models\Role;
 
 class Usuarios extends Controller
 {
-  public function __construct()
-  {
-    $this->middleware('auth');
-  }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-  public function index()
-  {
-    $users = User::all();
+    public function index()
+    {
+        $users = User::all();
 
-    $datos = compact('users');
-    return view('usuarios.index',$datos);
-  }
+        $datos = compact('users');
+        return view('usuarios.index', $datos);
+    }
 
-  public function create()
-  {
-    $roles = Role::all();
-    $datos = compact('roles');
-    return view('usuarios.create',$datos);
-  }
+    public function create()
+    {
+        $roles = Role::all();
+        $datos = compact('roles');
+        return view('usuarios.create', $datos);
+    }
 
-  public function store(Request $request)
-  {
-    $user = new User();
-    $user->name = $request->get('name');
-    $user->email = $request->get('email');
-    $user->password = bcrypt($request->get('password'));
-    $user->save();
+    public function store(Request $request)
+    {
+        $message =  [
+          'name.required' => 'El nombre es requerido',
+          'email.required'  => 'El email es requerido',
+          'role_id.required'  => 'El rol es requerido',
+          'email.unique'  => 'El email ya se encuentra registrado',
+        ];
 
-    $rol = Role::find($request->get('role_id'));
-    $user->assignRole($rol);
+        $this->validate($request, [
+          'name' => 'required',
+          'password' => 'required',
+          'email' => 'required|unique:users',
+          'role_id' => 'required'
+        ], $message);
 
-    return redirect()->route('usuarios.index');
-  }
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
 
-  public function show($id)
-  {
-    //
-  }
+        $rol = Role::find($request->get('role_id'));
+        $user->assignRole($rol);
+        return redirect()->route('usuarios.index')->with('message', 'Usuario agregado con exito!');
+    }
 
-  public function edit($id)
-  {
-    $user = User::findOrFail($id);
-    $roles = Role::all();
+    public function show($id)
+    {
+        //
+    }
 
-    $dato = compact('user','roles');
-    return view('usuarios.edit', $dato);
-  }
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        $roles = Role::all();
 
-  public function update(Request $request, $id)
-  {
-    $user = User::findOrFail($id);
-    $user->name = $request->get('name');
-    $user->email = $request->get('email');
-    $user->password = bcrypt($request->get('password'));
-    $user->save();
+        $dato = compact('user', 'roles');
+        return view('usuarios.edit', $dato);
+    }
 
-    $rol = Role::find($request->get('role_id'));
-    $user->syncRoles($rol);
+    public function update(Request $request, $id)
+    {
+        $message =  [
+          'name.required' => 'El nombre es requerido',
+          'email.required'  => 'El email es requerido',
+          'role_id.required'  => 'El rol es requerido',
+          'email.unique'  => 'El email ya se encuentra registrado',
+        ];
 
-    return redirect()->route('usuarios.index');
-  }
+        $this->validate($request, [
+          'name' => 'required',
+          'password' => 'required',
+          'email' => 'required|unique:users,email,'.$id,
+          'role_id' => 'required'
+        ], $message);
 
-  public function destroy($id)
-  {
-    $user = User::findOrFail($id);
-    $user->delete();
-    return redirect()->route('usuarios.index')->with('message', 'Usuario eliminado con exito!');
-  }
+        $user = User::findOrFail($id);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
+
+        $rol = Role::find($request->get('role_id'));
+        $user->syncRoles($rol);
+
+        return redirect()->route('usuarios.index')->with('message', 'Usuario actualizado con exito!');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('usuarios.index')->with('message', 'Usuario eliminado con exito!');
+    }
 }

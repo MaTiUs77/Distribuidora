@@ -5,7 +5,7 @@
   <div class="container">
     <div class="box box-success">
       <div class="box-header with-border">
-        <h3 class="box-title">Editar almacen</h3>
+        <h3 class="box-title">Editar usuario</h3>
       </div>
       <div class="box-body">
         <form class="form-horizontal" role="form" method="post" action="{{ route('usuarios.update',$user->id) }}">
@@ -39,4 +39,13 @@
     </div>
   </div>
 
+  @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
 @endsection
