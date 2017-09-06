@@ -7,17 +7,17 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\User;
 
+
+use App\Http\Controllers\Categorias\Model\CategoriasModel;
+use App\Http\Controllers\Marcas\Model\MarcasModel;
+use App\Http\Controllers\Almacenes\Model\AlmacenesModel;
+use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
+use App\Http\Controllers\Productos\Model\ProductosModel;
+
 class DatabaseSeeder extends Seeder
 {
-  /**
-  * Run the database seeds.
-  *
-  * @return void
-  */
   public function run()
   {
-    // $this->call(UsersTableSeeder::class);
-
     // Reset cached roles and permissions
     app()['cache']->forget('spatie.permission.cache');
 
@@ -46,5 +46,52 @@ class DatabaseSeeder extends Seeder
     $user = User::where('name','Administrador')->first();
 
     $user->assignRole('admin');
+
+    AlmacenesModel::create([
+      'nombre' => 'Default'
+    ]);
+
+    CategoriasModel::create([
+        'nombre' => 'Default'
+    ]);
+
+    MarcasModel::create([
+        'nombre' => 'Default'
+    ]);
+
+    ProveedoresModel::create([
+      'nombre' => 'Proveedor Test',
+      'telefono' => '2901000000',
+      'direccion' => 'Ushuaia',
+      'email' => 'proveedor@test.com',
+    ]);
+
+    ProductosModel::create([
+      'nombre' => 'Leche',
+      'barcode' => '0001',
+      'precio_proveedor' => '100',
+      'precio_venta' => '150',
+      'aplicar_porcentaje' => '50',
+      'stock' => '200',
+      'id_almacen' => 1,
+      'id_proveedor' => 1,
+      'id_marca' => 1,
+      'id_categoria' => 1,
+    ]);
+
+    ProductosModel::create([
+      'nombre' => 'Fideos',
+      'barcode' => '0002',
+      'precio_proveedor' => '10',
+      'precio_venta' => '15',
+      'aplicar_porcentaje' => '50',
+      'stock' => '120',
+      'id_almacen' => 1,
+      'id_proveedor' => 1,
+      'id_marca' => 1,
+      'id_categoria' => 1,
+    ]);
+
+
   }
 }
