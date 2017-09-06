@@ -108,24 +108,28 @@
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">2</span>
+              @if(count(App\Http\Controllers\Carrito\Carrito::lista()))
+                <span class="label label-warning">{{count(App\Http\Controllers\Carrito\Carrito::lista())}}</span>
+              @endif
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Alertas de stock</li>
+              @if(count(App\Http\Controllers\Carrito\Carrito::lista()))
+                <li class="header">Carrito de venta</li>
+              @else
+                <li class="header">Carrito vacio</li>
+              @endif
               <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
-                  <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 2 unidades <b> Fideos Marolio</b>
-                    </a>
-                  </li>
-                  <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 4 unidades <b> Papel Higienico Scott</b>
-                    </a>
-                  </li>
-                  <!-- end notification -->
+                  @if(count(App\Http\Controllers\Carrito\Carrito::lista()))
+                    @foreach(App\Http\Controllers\Carrito\Carrito::lista() as $item)
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> {{ $item->unidades }} unidades <b> {{ $item->nombre }}</b>
+                      </a>
+                    </li>
+                    @endforeach
+                @endif
                 </ul>
               </li>
               <li class="footer"><a href="#">Ver todo el stock</a></li>
@@ -149,10 +153,10 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-   
+
     <!-- Main content -->
-    <section class="content container-fluid">	
-	  @yield('contenido') 	
+    <section class="content container-fluid">
+	  @yield('contenido')
     </section>
     <!-- /.content -->
   </div>
@@ -165,7 +169,7 @@
      Todos los derechos reservados.
     </div>
     <!-- Default to the left -->
-	<strong><a href="#">DevAlliance</a></strong> Copyright &copy; 2017 
+	<strong><a href="#">DevAlliance</a></strong> Copyright &copy; 2017
   </footer>
 
   <!-- Control Sidebar -->

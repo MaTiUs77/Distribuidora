@@ -29,6 +29,7 @@
         <th>Proveedor</th>
         <th>Marca</th>
         <th>Categoria</th>
+        <th></th>
       </tr>
 
       @foreach($items as $item)
@@ -51,6 +52,15 @@
           <td>{{ $item->proveedor->nombre }}</td>
           <td>{{ $item->marca->nombre }}</td>
           <td>{{ $item->categoria->nombre }}</td>
+          <td>
+            <a href="{{ route('carrito.add', [ $item->id, 1 ] ) }}" class="btn btn-success btn-sm" >
+                <i class="fa fa-edit"></i>
+                <span class="hidden-xs">
+                     Al arrito
+                </span>
+            </a>
+
+          </td>
         </tr>
       @endforeach
 

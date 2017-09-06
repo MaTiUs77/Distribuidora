@@ -21,7 +21,22 @@
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
         <li><a href="{{ route('productos.index') }}"><i class="fa fa-shopping-cart"></i> <span>Productos</span></a></li>
-        <li><a href="#"><i class="fa fa-handshake-o"></i> <span>Ventas</span></a></li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-handshake-o"></i>
+            <span>Ventas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-plus"></i> Nueva venta</a></li>
+            <li><a href="#"><i class="fa fa-cart-arrow-down"></i> Ver pendientes</a></li>
+            <li><a href="#"><i class="fa fa-history"></i> Ver historial</a></li>
+          </ul>
+        </li>
+
         <li><a href="#"><i class="fa fa-money"></i> <span>Facturacion</span></a></li>
 
         <li class="header">USUARIOS</li>
@@ -38,7 +53,6 @@
           <li><a href="{{route('categorias.index')}}"><i class="fa fa-book"></i> <span>Categorias</span></a></li>
           <li><a href="{{ route('almacenes.index') }}"><i class="fa fa-cubes"></i> <span>Almacenes</span></a></li>
         @endrole
-
 
         @stack('sidebar_menu')
       </ul>
