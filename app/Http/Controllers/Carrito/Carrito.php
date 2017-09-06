@@ -17,6 +17,7 @@ class Carrito extends Controller
 
     public static function add($id_producto,$unidades)
     {
+      // Fito se la come
       $producto = ProductosModel::find($id_producto);
 
       $producto->unidades = $unidades;
