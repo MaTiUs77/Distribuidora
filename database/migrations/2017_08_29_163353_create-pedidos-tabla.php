@@ -19,13 +19,10 @@ class CreatePedidosTabla extends Migration
             $table->increments('id');
             $table->dateTime('fecha_entrega');
             $table->string('estado');
-            $table->integer('cliente_id')->unsigned();
-            $table->integer('vendedor_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('cliente_id')->references('id')->on('clientes');
-            $table->foreign('vendedor_id')->references('id')->on('vendedores');
-
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

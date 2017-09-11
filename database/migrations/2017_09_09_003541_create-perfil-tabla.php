@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientesTabla extends Migration
+class CreatePerfilTabla extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,20 @@ class CreateClientesTabla extends Migration
      */
     public function up()
     {
-
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('perfil', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->string('nombre');
+            $table->string('apellido');
             $table->string('telefono');
             $table->string('direccion');
             $table->string('email')->unique();
             $table->string('cuil_cuit');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
 
         });
     }
@@ -35,6 +38,6 @@ class CreateClientesTabla extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clientes');
+        Schema::dropIfExists('perfil');
     }
 }
