@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
 
     // create roles and assign existing permissions
     $role = Role::create(['name' => 'vendedor']);
+    $role = Role::create(['name' => 'clientes']);
+
     $role->givePermissionTo('productos.index');
     $role->givePermissionTo('productos.create');
     $role->givePermissionTo('productos.edit');

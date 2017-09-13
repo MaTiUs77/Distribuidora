@@ -40,11 +40,6 @@
         <li><a href="#"><i class="fa fa-money"></i> <span>Facturacion</span></a></li>
 
         <li class="header">USUARIOS</li>
-        <li><a href="{{route('clientes.index')}}"><i class="fa fa-address-card"></i> <span>Clientes</span></a></li>
-
-        @role('admin')
-          <li><a href="{{route('vendedores.index')}}"><i class="fa fa-briefcase"></i> <span>Vendedores</span></a></li>
-        @endrole
 
         @role('admin')
           <li class="header">ADMINISTRACION</li>
