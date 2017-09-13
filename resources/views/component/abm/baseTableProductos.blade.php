@@ -18,6 +18,7 @@
       <tr>
         <th style="width: 180px">Acciones</th>
         <th style="width: 10px">Id</th>
+        <th>Imagen</th>
         <th>Nombre</th>
         <th>Barcode</th>
         <th>Precio Proveedor</th>
@@ -41,6 +42,9 @@
             ])
           </td>
           <td>{{ $item->id }}</td>
+          <td>
+            <img src="{{ asset("upload/".$item->imagen) }}" width="100" style="display: block;">
+          </td>
           <td>{{ $item->nombre }}</td>
           <td>{{ $item->barcode }}</td>
           <td>{{ $item->precio_proveedor }}</td>

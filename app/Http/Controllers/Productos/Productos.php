@@ -10,6 +10,7 @@ use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\In;
 
 class Productos extends Controller
@@ -106,20 +107,34 @@ class Productos extends Controller
      */
     public function update(Request $request, $id)
     {
-        $producto = ProductosModel::findOrFail($id);
-        $producto ->nombre = $request->get('producto');
-        $producto ->barcode = $request->get('barcode');
-        $producto ->descripcion = $request->get('descripcion');
-        $producto ->precio_proveedor = $request->get('precio_proveedor');
-        $producto ->precio_venta = $request->get('precio_venta');
-        $producto ->aplicar_porcentaje = $request->get('aplicar_porcentaje');
-        $producto ->estado = $request->get('estado');
-        $producto ->stock= $request->get('stock');
-        $producto ->id_almacen = $request->get('almacen');
-        $producto ->id_proveedor = $request->get('proveedor');
-        $producto ->id_marca = $request->get('marca');
-        $producto ->id_categoria = $request->get('categoria');
-        $producto ->save();
+         $producto = ProductosModel::findOrFail($id);
+         $producto ->nombre = $request->get('producto');
+         $producto ->barcode = $request->get('barcode');
+         $producto ->descripcion = $request->get('descripcion');
+         $producto ->precio_proveedor = $request->get('precio_proveedor');
+         $producto ->precio_venta = $request->get('precio_venta');
+         $producto ->aplicar_porcentaje = $request->get('aplicar_porcentaje');
+         $producto ->estado = $request->get('estado');
+         $producto ->stock= $request->get('stock');
+         $producto ->id_almacen = $request->get('almacen');
+         $producto ->id_proveedor = $request->get('proveedor');
+         $producto ->id_marca = $request->get('marca');
+         $producto ->id_categoria = $request->get('categoria');
+
+         if ($request->hasFile('imagen')) {
+             $image = $request->file('imagen');
+             $imagenName = time().'.'.$image->guessClientExtension();
+             $destinationPath = public_path('upload');
+             $image->move($destinationPath, $imagenName);
+
+//            $image->store('productos');
+
+              $producto->imagen  = $imagenName;
+
+         }
+
+         $producto ->save();
+
         return redirect()->route('productos.index');
     }
 

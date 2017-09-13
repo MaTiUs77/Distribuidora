@@ -29,6 +29,7 @@ class CreateProductosTabla extends Migration
             $table->integer('id_proveedor')->unsigned();
             $table->integer('id_marca')->unsigned();
             $table->integer('id_categoria')->unsigned();
+            $table->string('imagen')->nullable();
             $table->timestamps();
 
             $table->foreign('id_almacen')->references('id')->on('almacenes')
