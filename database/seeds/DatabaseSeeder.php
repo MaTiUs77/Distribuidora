@@ -16,6 +16,39 @@ class DatabaseSeeder extends Seeder
 {
   public function run()
   {
+    // Reset cached roles and permissions
+    app()['cache']->forget('spatie.permission.cache');
+
+    // create permissions
+    Permission::create(['name' => 'productos.index']);
+    Permission::create(['name' => 'productos.create']);
+    Permission::create(['name' => 'productos.edit']);
+    Permission::create(['name' => 'productos.destroy']);
+
+    // create roles and assign existing permissions
+    $role = Role::create(['name' => 'vendedor']);
+    $role = Role::create(['name' => 'clientes']);
+
+    $role->givePermissionTo('productos.index');
+    $role->givePermissionTo('productos.create');
+    $role->givePermissionTo('productos.edit');
+    $role->givePermissionTo('productos.destroy');
+
+    $role = Role::create(['name' => 'admin']);
+
+    // Alta de usuario admin
+    DB::table('users')->insert([
+      'name' => 'Administrador',
+      'email' => 'admin@admin',
+      'password' => bcrypt('admin'),
+    ]);
+
+    $user = User::where('name','Administrador')->first();
+
+    $user->assignRole('admin');
+
+
+
     AlmacenesModel::create([
       'nombre' => 'Default'
     ]);

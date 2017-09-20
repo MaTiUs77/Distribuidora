@@ -16,7 +16,7 @@ class Perfil extends Controller
      */
     public function index()
     {
-        $perfil = PerfilModel::find(Auth::id());
+        $perfil = PerfilModel::where('user_id',Auth::id())->first();
         if($perfil == null){
             return view('perfil.create');
         }else{
@@ -109,7 +109,6 @@ class Perfil extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $perfil = PerfilModel::findOrFail($id);
         $$perfil->delete();
         return redirect()->route('perfil.index')->with('message', 'Perfil eliminado con exito!');

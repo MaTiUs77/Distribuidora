@@ -15,6 +15,8 @@
   <link rel="stylesheet" href={{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}>
   <!-- SweetAlert -->
   <link rel="stylesheet" href={{ asset('plugins/sweetalert/sweetalert.css') }}>
+  <!-- SweetAlert -->
+  <link rel="stylesheet" href='https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css'>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -262,6 +264,11 @@
 <!-- SweetAlert -->
 <script src={{ asset('plugins/sweetalert/sweetalert.min.js') }}></script>
 
+<!-- jQuery 3 -->
+<script
+        src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"
+        integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
+        crossorigin="anonymous"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
