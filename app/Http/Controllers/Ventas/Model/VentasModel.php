@@ -13,16 +13,6 @@ class VentasModel extends Model
         return $this->hasOne('App\User','id', 'user_id');
     }
 
-    public function vendedorPerfil()
-    {
-        return $this->hasOne('App\Http\Controllers\Perfil\Model\PerfilModel','id', 'user_id');
-    }
-
-    public function clientePerfil()
-    {
-        return $this->hasOne('App\Http\Controllers\Perfil\Model\PerfilModel','id', 'cliente_id');
-    }
-
     public function cliente()
     {
         return $this->hasOne('App\User','id', 'cliente_id');
@@ -30,6 +20,7 @@ class VentasModel extends Model
 
     public function detalle()
     {
-        return $this->hasMany('App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel', 'venta_id','id');
+        return $this->hasMany('App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel','venta_id', 'id');
     }
+
 }

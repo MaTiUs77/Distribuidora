@@ -22,7 +22,7 @@ class ListaClientes extends Controller
 
         $results = array();
 
-        $clientes = User::role('clientes')
+        $clientes = User::role('cliente')
             ->where('name', 'LIKE', '%' . $term . '%')
 //            ->orWhere('apellid', 'LIKE', '%'.$term.'%')
             ->take(5)->get();

@@ -20,8 +20,9 @@ class Ventas_DetallesModel extends Model
     {
         return $this->hasOne('App\Http\Controllers\Ventas\Model\VentasModel','id', 'venta_id');
     }
+
     public function productos()
     {
-        return $this->hasOne('App\Http\Controllers\Productos\Model\ProductosModel','id', 'producto_id');
+        return $this->hasMany('App\Http\Controllers\Productos\Model\ProductosModel','id', 'producto_id');
     }
 }

@@ -75,12 +75,15 @@ class Venta_Detalle extends Controller
         $venta = VentasModel::findOrFail($id);
         $venta_detalle = Ventas_DetallesModel::where('venta_id',$id)->get();
 
-        foreach ($venta_detalle as $item) {
-            $item->precioTotal = $item->cantidad * $item->productos->precio_venta;
+        foreach ($venta_detalle as $detalle) {
+            if(isset($detalle->productos))
+            {
+//                $detalle->precioTotal = $detalle->cantidad * $detalle->productos->precio_venta;
+            }
         }
 
-        $venta->productosTotal = $venta_detalle->sum('cantidad');
-        $venta->precioTotal = $venta_detalle->sum('precioTotal');
+        $venta->productosTotal = 0;
+        $venta->precioTotal = 0;
 
         $datos = compact('venta','venta_detalle');
         return view('venta_detalle.show',$datos);

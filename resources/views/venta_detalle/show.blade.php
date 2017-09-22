@@ -17,22 +17,38 @@
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                 Vendedor
-                <address>
-                    <strong>{{$venta->vendedor->perfil->nombre}}</strong><br>
-                    {{$venta->vendedor->perfil->direccion}}<br>
-                    Tel: {{$venta->vendedor->perfil->telefono}}<br>
-                    Email: {{$venta->vendedor->perfil->email}}
-                </address>
+                @if(isset($venta->vendedor->perfil))
+                    <address>
+                        <strong>{{$venta->vendedor->perfil->nombre}}</strong><br>
+                        {{$venta->vendedor->perfil->direccion}}<br>
+                        Tel: {{$venta->vendedor->perfil->telefono}}<br>
+                        Email: {{$venta->vendedor->perfil->email}}
+                    </address>
+                @else
+                    <label class="label label-danger">sin perfil</label>
+                    <address>
+                        <strong>{{$venta->vendedor->name}}</strong><br>
+                        Email: {{$venta->vendedor->email}}
+                    </address>
+                @endif
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 Cliente
-                <address>
-                    <strong>{{$venta->cliente->perfil->nombre}}</strong><br>
-                    {{$venta->cliente->perfil->direccion}}<br>
-                    Tel: {{$venta->cliente->perfil->telefono}}<br>
-                    Email: {{$venta->cliente->perfil->email}}
-                </address>
+                <label class="label label-danger">sin perfil</label>
+                @if(isset($venta->vendedor->perfil))
+                    <address>
+                        <strong>{{$venta->cliente->perfil->nombre}}</strong><br>
+                        {{$venta->cliente->perfil->direccion}}<br>
+                        Tel: {{$venta->cliente->perfil->telefono}}<br>
+                        Email: {{$venta->cliente->perfil->email}}
+                    </address>
+                @else
+                    <address>
+                        <strong>{{$venta->cliente->name}}</strong><br>
+                        Email: {{$venta->cliente->email}}
+                    </address>
+                @endif
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
@@ -63,12 +79,12 @@
                     <tbody>
                     @foreach($venta_detalle as $item)
                         <tr>
-                            <td>{{ $item->productos->nombre }}</td>
-                            <td>{{ $item->productos->barcode}}</td>
-                            <td>$ {{ $item->productos->precio_venta}}</td>
+                            <td>{{ $item->producto->nombre }}</td>
+                            <td>{{ $item->producto->barcode}}</td>
+                            <td>$ {{ $item->producto->precio_venta}}</td>
                             <td>{{ $item->cantidad }}</td>
                             <td id="total">$ {{ $item->precioTotal }}</td>
-                            <td>{{ $item->productos->marca->nombre }}</td>
+                            <td>{{ $item->producto->marca->nombre }}</td>
                             <td style="width: 100px;">
                                 <form method="POST" class="form" action="{{ route('venta_detalle.destroy',$item->id) }}">
                                     {{ csrf_field() }}
@@ -184,7 +200,7 @@
 
         $(function() {
             $("#producto").autocomplete({
-                source: "http://distribuidora.com/ventas/search/autocomplete/producto",
+                source: "{{ url('ventas/search/autocomplete/producto') }}",
                 minLength: 2,
                 select: function (event, ui) {
                     $('#producto').val(ui.item.name);

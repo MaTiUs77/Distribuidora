@@ -21,7 +21,7 @@ class Ventas extends Controller
      */
     public function index()
     {
-        $clientes = User::role('clientes')->get();
+        $clientes = User::role('cliente')->get();
         $datos = compact('clientes');
         return view('ventas.index',$datos);
     }
