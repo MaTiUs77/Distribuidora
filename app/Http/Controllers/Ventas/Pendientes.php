@@ -11,15 +11,9 @@ class Pendientes extends Controller
     {
         $ventasPendientes = VentasModel::where('estado','Pendiente de entrega')->get();
 
-        $pendientes = array();
-        foreach ($ventasPendientes as $venta )
-        {
-            $resumen = new ResumenDeVenta($venta);
+        $resumen = new ResumenDeVenta($ventasPendientes );
 
-            $pendientes[] = $resumen;
-        }
-
-        $datos = compact('pendientes');
+        $datos = compact('resumen');
         return view('ventas.pendientes',$datos);
     }
 }
