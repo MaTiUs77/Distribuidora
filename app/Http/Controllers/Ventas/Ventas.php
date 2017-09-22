@@ -100,6 +100,6 @@ class Ventas extends Controller
         $vet = Ventas_DetallesModel::where('venta_id',$id)->delete();
         $ventas = VentasModel::findOrFail($id);
         $ventas->delete();
-        return redirect()->route('ventas.pendientes')->with('message', 'venta eliminada con exito!');
+        return redirect()->route('pendientes.index')->with('message', 'venta eliminada con exito!');
     }
 }

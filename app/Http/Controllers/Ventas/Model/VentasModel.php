@@ -27,4 +27,9 @@ class VentasModel extends Model
     {
         return $this->hasOne('App\User','id', 'cliente_id');
     }
+
+    public function detalle()
+    {
+        return $this->hasMany('App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel', 'venta_id','id');
+    }
 }

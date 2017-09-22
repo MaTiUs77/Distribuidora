@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Venta_Detalle;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Productos\Inventario;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\In;
 
 class Venta_Detalle extends Controller
 {
@@ -29,17 +31,37 @@ class Venta_Detalle extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(),Ventas_DetallesModel::rules());
         if ($validator->fails()) {
             return redirect(route('venta_detalle.show',$request->get('venta_id')))->withErrors($validator);
         }
-        $newventa = new Ventas_DetallesModel();
-        $newventa->venta_id = $request->get('venta_id');
-        $newventa->producto_id = $request->get('producto_id');
-        $newventa->cantidad = $request->get('cantidad');
-        $newventa->save();
+
+        $newventa = Ventas_DetallesModel::where('producto_id', $request->get('producto_id'))
+            ->where('venta_id', $request->get('venta_id'))
+            ->first();
+        if($newventa != null)
+        {
+            $newventa->cantidad += $request->get('cantidad');
+            $newventa->save();
+        }
+        else
+        {
+            $newventa = new Ventas_DetallesModel();
+            $newventa->venta_id = $request->get('venta_id');
+            $newventa->producto_id = $request->get('producto_id');
+            $newventa->cantidad = $request->get('cantidad');
+            $newventa->save();
+        }
 
         return redirect(route('venta_detalle.show',$newventa->venta_id));
+
+
+//        SE LLAMA A INVENTARIO PARA CONSULTAR STOCK DE PRODUCTO
+//        $inventario = new Inventario();
+//        $inv = $inventario->descontarProducto($request->get('producto_id'),$request->get('cantidad'));
+
+
     }
 
     /**
@@ -87,10 +109,12 @@ class Venta_Detalle extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $venta = VentasModel::findOrFail($id);
         $venta_d = Ventas_DetallesModel::findOrFail($request->get('venta_detalle_id'));
         $venta_d->cantidad = $request->get('cantidad');
         $venta_d->save();
+
 
         //$venta_detalle = Ventas_DetallesModel::where('venta_id',$id)->get();
 

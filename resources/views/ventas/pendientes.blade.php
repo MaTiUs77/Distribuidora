@@ -8,46 +8,68 @@
                 <h3 class="box-title">Ventas Pendientes</h3>
             </div>
             <div class="box-body">
-                <table class="table table-striped">
+                <table class="table table-bordered table-striped">
                     <tbody>
                     <tr>
-                        <th style="width: 10px">Id</th>
                         <th>Fecha Creado</th>
-                        <th>Fecha Entrega</th>
-                        <th>Estado</th>
                         <th>Cliente</th>
                         <th>Vendedor</th>
+                        <th>Productos</th>
+                        <th>Total</th>
                         <th>Acciones</th>
                     </tr>
 
-                    @foreach($pendientes as $item)
+                    @foreach($pendientes as $venta)
                     <tr>
 
-                    <td>{{ $item->id }}</td>
-                    <td>{{ $item->created_at }}</td>
-                    <td>{{ $item->fecha_entrega }}</td>
-                    <td>{{ $item->estado }}</td>
-                    <td>{{ $item->cliente->name }}</td>
-                    <td>{{ $item->vendedor->name }}</td>
-                        <td><a class="btn btn-success" href="{{route('ventas.edit',$item->id)}}">
-                                <i class="fa fa-bars fa-lg"></i> Modificar Cliente</a>
-                            <a class="btn btn-success" href="{{route('venta_detalle.show',$item->id)}}">
-                                <i class="fa fa-bars fa-lg"></i> Modificar Productos</a>
+                        <td>{{ $venta->created_at }}</td>
+                        <td>{{ $venta->cliente->name }}</td>
+                        <td>{{ $venta->vendedor->name }}</td>
+                        <td>{{ $venta->detalle->sum('cantidad') }}</td>
+                        <td>
+                    
+                        </td>
+                        <td>
+                            <form method="POST" action="{{ route('ventas.destroy',$venta->id) }}">
+                                <a class="btn btn-default btn-sm" href="{{route('ventas.edit',$venta->id)}}">
+                                    <i class="fa fa-edit fa-lg"></i>  </a>
 
-                            <form method="POST" action="{{ route('ventas.destroy',$item->id) }}">
+                                <a class="btn btn-default btn-sm" href="{{route('venta_detalle.show',$venta->id)}}">
+                                    <i class="fa fa-cart-plus fa-lg"></i>  </a>
+
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" value="delete" />
-                                <button class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i>Cancelar</button>
+                                <button class="btn btn-default btn-sm"><i class="fa fa-trash-o fa-lg"></i></button>
                             </form>
-                    </td>
+                        </td>
 
                     </tr>
                     @endforeach
-                    <tr>
-                        <th>Total</th>
-                        <th>$</th>
-                    </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <b>Total</b> de Productos retenidos
+                            </td>
+                            <td>
+                                {{
+                                    $pendientes->sum(function ($pendiente) {
+                                        return $pendiente->detalle->sum('cantidad');
+                                    })
+                                }}
+                            </td>
+                            <td>
+                                {{
+                                    $pendientes->sum(function ($pendiente) {
+                                        return $pendiente->detalle->sum(function ($detalle) {
+                                            return $detalle->productos->precio_venta;
+                                        });
+                                    })
+                                }}
+                            </td>
+                            <td>$</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <!-- /.box-body -->
