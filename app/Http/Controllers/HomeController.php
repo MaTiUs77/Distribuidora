@@ -29,11 +29,14 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $ventas = VentasModel::where('estado','Pendiente de entrega')->get();
 
-        $resumen  = new ResumenDeVenta($ventas);
+        $ventasPendientes = VentasModel::where('estado','Pendiente de entrega')->get();
+        $ventasFinalizadas = VentasModel::where('estado','Finalizado')->get();
 
-        $datos = compact('user','resumen') ;
+        $resumenPendiente  = new ResumenDeVenta($ventasPendientes);
+        $resumenFinalizada  = new ResumenDeVenta($ventasFinalizadas);
+
+        $datos = compact('user','resumenPendiente','resumenFinalizada') ;
 
         return view('home',$datos);
     }
