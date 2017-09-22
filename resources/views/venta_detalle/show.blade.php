@@ -77,22 +77,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($venta_detalle as $item)
+                    @foreach($resumen->detalles as $detalle)
                         <tr>
-                            <td>{{ $item->producto->nombre }}</td>
-                            <td>{{ $item->producto->barcode}}</td>
-                            <td>$ {{ $item->producto->precio_venta}}</td>
-                            <td>{{ $item->cantidad }}</td>
-                            <td id="total">$ {{ $item->precioTotal }}</td>
-                            <td>{{ $item->producto->marca->nombre }}</td>
+                            <td>{{ $detalle->producto->nombre }}</td>
+                            <td>{{ $detalle->producto->barcode}}</td>
+                            <td>$ {{ $detalle->producto->precio_venta}}</td>
+                            <td>{{ $detalle->cantidad }}</td>
+                            <td id="total">$ {{ $detalle->costoTotal }}</td>
+                            <td>{{ $detalle->producto->marca->nombre }}</td>
                             <td style="width: 100px;">
-                                <form method="POST" class="form" action="{{ route('venta_detalle.destroy',$item->id) }}">
+                                <form method="POST" class="form" action="{{ route('venta_detalle.destroy',$detalle->id) }}">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="delete" />
                                     <button class="btn btn-default btn-sm" title="Eliminar Producto">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </button>
-                                    <a class="btn btn-default btn-sm" id="qty" data-slider-value="{{$item->id}}" title="Modificar Cantidad" data-toggle="modal" data-target=".bd-example-modal-sm">
+                                    <a class="btn btn-default btn-sm" id="qty" data-slider-value="{{$detalle->id}}" title="Modificar Cantidad" data-toggle="modal" data-target=".bd-example-modal-sm">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </form>
@@ -147,11 +147,11 @@
                     <table class="table">
                         <tr>
                             <th>Productos:</th>
-                            <td>{{ $venta->productosTotal }}</td>
+                            <td>{{ $resumen->cantidadProductos }}</td>
                         </tr>
                         <tr>
                             <th>Total:</th>
-                            <td>${{ $venta->precioTotal }}</td>
+                            <td>${{ $resumen->costoTotal }}</td>
                         </tr>
                     </table>
                 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Productos\Inventario;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
+use App\Http\Controllers\Ventas\ResumenDeVenta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -54,6 +55,7 @@ class Venta_Detalle extends Controller
             $newventa->save();
         }
 
+
         return redirect(route('venta_detalle.show',$newventa->venta_id));
 
 
@@ -73,19 +75,11 @@ class Venta_Detalle extends Controller
     public function show($id)
     {
         $venta = VentasModel::findOrFail($id);
-        $venta_detalle = Ventas_DetallesModel::where('venta_id',$id)->get();
+        $detalles = Ventas_DetallesModel::where('venta_id',$id)->get();
 
-        foreach ($venta_detalle as $detalle) {
-            if(isset($detalle->productos))
-            {
-//                $detalle->precioTotal = $detalle->cantidad * $detalle->productos->precio_venta;
-            }
-        }
+        $resumen = new ResumenDetalle($venta, $detalles);
 
-        $venta->productosTotal = 0;
-        $venta->precioTotal = 0;
-
-        $datos = compact('venta','venta_detalle');
+        $datos = compact('venta','resumen');
         return view('venta_detalle.show',$datos);
     }
 
@@ -117,7 +111,6 @@ class Venta_Detalle extends Controller
         $venta_d = Ventas_DetallesModel::findOrFail($request->get('venta_detalle_id'));
         $venta_d->cantidad = $request->get('cantidad');
         $venta_d->save();
-
 
         //$venta_detalle = Ventas_DetallesModel::where('venta_id',$id)->get();
 

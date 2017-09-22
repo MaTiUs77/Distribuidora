@@ -19,22 +19,20 @@
                         <th>Acciones</th>
                     </tr>
 
-                    @foreach($pendientes as $venta)
+                    @foreach($pendientes as $resumen)
                     <tr>
 
-                        <td>{{ $venta->created_at }}</td>
-                        <td>{{ $venta->cliente->name }}</td>
-                        <td>{{ $venta->vendedor->name }}</td>
-                        <td>{{ $venta->detalle->sum('cantidad') }}</td>
+                        <td>{{ $resumen->venta->created_at }}</td>
+                        <td>{{ $resumen->venta->cliente->name }}</td>
+                        <td>{{ $resumen->venta->vendedor->name }}</td>
+                        <td>{{ $resumen->venta->cantidad }}</td>
+                        <td>{{ $resumen->venta->total }}</td>
                         <td>
-                    
-                        </td>
-                        <td>
-                            <form method="POST" action="{{ route('ventas.destroy',$venta->id) }}">
-                                <a class="btn btn-default btn-sm" href="{{route('ventas.edit',$venta->id)}}">
+                            <form method="POST" action="{{ route('ventas.destroy',$resumen->venta->id) }}">
+                                <a class="btn btn-default btn-sm" href="{{route('ventas.edit',$resumen->venta->id)}}">
                                     <i class="fa fa-edit fa-lg"></i>  </a>
 
-                                <a class="btn btn-default btn-sm" href="{{route('venta_detalle.show',$venta->id)}}">
+                                <a class="btn btn-default btn-sm" href="{{route('venta_detalle.show',$resumen->venta->id)}}">
                                     <i class="fa fa-cart-plus fa-lg"></i>  </a>
 
                                 {{ csrf_field() }}
@@ -52,22 +50,10 @@
                                 <b>Total</b> de Productos retenidos
                             </td>
                             <td>
-                                {{
-                                    $pendientes->sum(function ($pendiente) {
-                                        return $pendiente->detalle->sum('cantidad');
-                                    })
-                                }}
+
                             </td>
                             <td>
-                                {{
-                                    $pendientes->sum(function ($pendiente) {
-                                        return $pendiente->detalle->sum(function ($detalle) {
-                                            return $detalle->productos->precio_venta;
-                                        });
-                                    })
-                                }}
                             </td>
-                            <td>$</td>
                         </tr>
                     </tfoot>
                 </table>

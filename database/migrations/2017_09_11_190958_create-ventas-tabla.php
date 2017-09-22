@@ -21,6 +21,10 @@ class CreateVentasTabla extends Migration
             $table->string('estado');
             $table->integer('user_id')->unsigned();
             $table->integer('cliente_id')->unsigned();
+
+            $table->integer('cantidad')->nullable();
+            $table->integer('total')->nullable();
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

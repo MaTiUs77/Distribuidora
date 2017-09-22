@@ -3,28 +3,36 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
-use Illuminate\Http\Request;
 
 class ResumenDeVenta extends Controller
 {
-    public $estado;
-    public $costoTotal = 0;
-    public $productosTotal = 0;
     public $venta;
 
-    public function _construct(VentasModel $venta)
-    {
-        $this->venta = VentasModel::find($venta->id)->first();
+    public $cantidadProductos = 0;
+    public $costoTotal = 0;
 
-        dd($this->venta);
+    public function __construct(VentasModel $venta) {
+        $this->venta = $venta;
 
+        $this->calcularCantidadProductos();
         $this->calcularCostoTotal();
+    }
+
+    public function calcularCantidadProductos()
+    {
+        $this->cantidadProductos = $this->venta->cantidad;
     }
 
     private function calcularCostoTotal()
     {
-        $this->costoTotal = $this->venta->detalle->sum('cantidad');
+ //       $costoTotal = 0;
+
+   //     foreach ($this->venta->detalles as $detalle)
+     //   {
+       //     $costoTotal += $detalle->producto->precio_venta * $detalle->cantidad;
+        //}
+
+//        $this->costoTotal = $costoTotal;
     }
 }

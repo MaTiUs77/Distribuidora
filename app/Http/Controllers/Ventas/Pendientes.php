@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
-use Illuminate\Http\Request;
 
 class Pendientes extends Controller
 {
     public function index()
     {
-        $pendientes = VentasModel::where('estado','Pendiente de entrega')->get();
+        $ventasPendientes = VentasModel::where('estado','Pendiente de entrega')->get();
 
-        $resumen = array();
-        foreach ($pendientes as $pendiente )
+        $pendientes = array();
+        foreach ($ventasPendientes as $venta )
         {
-            $resumen[] = new ResumenDeVenta($pendiente);
+            $resumen = new ResumenDeVenta($venta);
+
+            $pendientes[] = $resumen;
         }
 
-        $datos = compact('resumen');
+        $datos = compact('pendientes');
         return view('ventas.pendientes',$datos);
     }
 }
