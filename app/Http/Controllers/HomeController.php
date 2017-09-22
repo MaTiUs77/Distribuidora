@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Ventas\Model\VentasModel;
+use App\Http\Controllers\Ventas\ResumenDeVenta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -26,18 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $user = Auth::user();
+        $user = Auth::user();
+        $ventas = VentasModel::where('estado','Pendiente de entrega')->get();
 
-      //  $role = Role::create(['name' => 'vendedor']);
-      // $permission = Permission::create(['name' => 'productos.create']);
-      // $permission = Permission::create(['name' => 'productos.edit']);
+        $resumen  = new ResumenDeVenta($ventas);
 
-//      $role = Role::findByName('vendedor');
-//      $role->givePermissionTo('productos.edit');
-//      $role->givePermissionTo('productos.create');
+        $datos = compact('user','resumen') ;
 
-//      $user->assignRole('vendedor');
-
-        return view('home',compact('user'));
+        return view('home',$datos);
     }
 }

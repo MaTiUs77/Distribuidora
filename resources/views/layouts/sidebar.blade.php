@@ -32,7 +32,15 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route('ventas.index')}}"><i class="fa fa-plus"></i> Nueva venta</a></li>
-            <li><a href="{{route('pendientes.index')}}"><i class="fa fa-cart-arrow-down"></i> Ver pendientes</a></li>
+            <li>
+              <a href="{{route('pendientes.index')}}"><i class="fa fa-cart-arrow-down"></i> Ver pendientes
+
+                <span class="label label-primary pull-right">
+                {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','Pendiente de entrega')->count() }}
+                </span>
+
+              </a>
+            </li>
             <li><a href="#"><i class="fa fa-history"></i> Ver historial</a></li>
           </ul>
         </li>

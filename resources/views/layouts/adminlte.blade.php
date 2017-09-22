@@ -46,7 +46,7 @@
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -73,11 +73,16 @@
           <li class="dropdown messages-menu">
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">
+                  {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','Pendiente de entrega')->count() }}
+              </span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Tiene 4 mensajes</li>
+              <li class="header">
+                Tiene {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','Pendiente de entrega')->count() }}
+                ventas pendientes
+              </li>
               <li>
                 <!-- inner menu: contains the messages -->
                 <ul class="menu">
@@ -109,7 +114,7 @@
           <li class="dropdown notifications-menu">
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
+              <i class="fa fa-envelope-o"></i>
               @if(count(App\Http\Controllers\Carrito\Carrito::lista()))
                 <span class="label label-warning">{{count(App\Http\Controllers\Carrito\Carrito::lista())}}</span>
               @endif
