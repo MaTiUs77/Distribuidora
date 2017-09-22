@@ -159,6 +159,15 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+        <div class="row">
+            <div class="col-xs-6 fa-pull-right">
+                <form role="form" enctype="multipart/form-data" method="post" action="{{ route('pendientes.update',$venta->id) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_method" value="PUT" />
+                    <button class="btn btn-default btn-lg">Finalizar Venta</button>
+                </form>
+            </div>
+        </div>
     </section>
 
 
