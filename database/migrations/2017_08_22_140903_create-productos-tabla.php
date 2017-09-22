@@ -25,6 +25,7 @@ class CreateProductosTabla extends Migration
             $table->float('aplicar_porcentaje');
             $table->enum('estado',['activo','inactivo']);
             $table->smallInteger('stock');
+            $table->smallInteger('stock_minimo')->nullable();
             $table->integer('id_almacen')->unsigned();
             $table->integer('id_proveedor')->unsigned();
             $table->integer('id_marca')->unsigned();

@@ -30,21 +30,42 @@
     <!-- /.info-box -->
   </div>
 
+  <div class="col-md-4">
+    <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Alertas de stock</h3>
 
-  <div class="col-md-12">
-  Test de permisos de usuarios
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <ul class="products-list product-list-in-box">
 
-  @role('vendedor')
-    <div>Soy un vendedor</div>
-  @else
-    <div>No soy un vendedor</div>
-  @endrole
+        @foreach($alertaStock as $producto)
 
-  @role('admin')
-    <div>Soy admin</div>
-  @else
-    <div>No soy admin</div>
-  @endrole
+        <li class="item">
+          <div class="product-info">
+            <a href="javascript:void(0)" class="product-title">{{ $producto->nombre }}
+              <span class="product-description">
+                  {{ $producto->stock }} de {{ $producto->stock_minimo }}
+              </span>
+          </div>
+        </li>
+
+          @endforeach
+
+      </ul>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer text-center">
+      <a href="javascript:void(0)" class="uppercase">Ver todas las alertas</a>
+    </div>
+    <!-- /.box-footer -->
+  </div>
   </div>
 
 

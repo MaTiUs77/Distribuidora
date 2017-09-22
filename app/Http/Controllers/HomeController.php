@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Productos\Inventario;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 use App\Http\Controllers\Ventas\ResumenDeVenta;
 use Illuminate\Http\Request;
@@ -36,7 +37,10 @@ class HomeController extends Controller
         $resumenPendiente  = new ResumenDeVenta($ventasPendientes);
         $resumenFinalizada  = new ResumenDeVenta($ventasFinalizadas);
 
-        $datos = compact('user','resumenPendiente','resumenFinalizada') ;
+        $inventario = new Inventario();
+        $alertaStock = $inventario->alertaStock();
+
+        $datos = compact('user','resumenPendiente','resumenFinalizada','alertaStock') ;
 
         return view('home',$datos);
     }
