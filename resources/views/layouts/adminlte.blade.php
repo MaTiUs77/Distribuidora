@@ -9,12 +9,12 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href={{ asset('adminlte/bower_components/Ionicons/css/ionicons.min.css') }}>
+  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/Ionicons/css/ionicons.min.css') }}">
   <!-- Theme style -->
-  <link rel="stylesheet" href={{ asset('adminlte/dist/css/AdminLTE.min.css') }}>
-  <link rel="stylesheet" href={{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}>
+  <link rel="stylesheet" href="{{ asset('adminlte/dist/css/AdminLTE.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}">
   <!-- SweetAlert -->
-  <link rel="stylesheet" href={{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}>
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -257,20 +257,24 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src={{ asset('adminlte/bower_components/jquery/dist/jquery.min.js') }}></script>
+<script src="{{ asset('adminlte/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- jQuery UI -->
-<script src={{ asset('adminlte/bower_components/jquery-ui/jquery-ui.min.js') }}></script>
+<script src="{{ asset('adminlte/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src={{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
+<script src="{{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
-<script src={{ asset('adminlte/dist/js/adminlte.min.js') }}></script>
+<script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- SweetAlert -->
-<script src={{ asset('plugins/sweetalert/sweetalert.min.js') }}></script>
+<script src="{{ asset('adminlte/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <!-- AngularJS -->
-<script src={{ asset('adminlte/bower_components/angular/angular.min.js') }}></script>
+<script src="{{ asset('adminlte/bower_components/angular/angular.min.js') }}"></script>
+
+<!-- Socket.io-->
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 
 <!-- Terminal -->
-<script src={{ asset('js/terminal.js') }}></script>
+<script src="{{ asset('js/terminal.js') }}"></script>
+
 
 @yield('footer')
 

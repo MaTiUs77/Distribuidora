@@ -55,8 +55,17 @@ class Venta_Detalle extends Controller
             $newventa->save();
         }
 
+        // Generar nuevos datos de la factuacion
+        $api  = new ApiVentaDetalle();
+        $response = $api->resumen($newventa->venta_id);
 
-        return redirect(route('venta_detalle.show',$newventa->venta_id));
+        // Publica en redis
+        // Redis::put('venta_1',$response);
+
+        return "OK";
+
+
+        //return redirect(route('venta_detalle.show',$newventa->venta_id));
 
 
 //        SE LLAMA A INVENTARIO PARA CONSULTAR STOCK DE PRODUCTO

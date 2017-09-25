@@ -115,7 +115,7 @@
                             <tr>
                                 <th colspan="8">
                                     <form class="form-inline" role="form" method="post" action="{{ route('venta_detalle.store') }}">
-                                    <input class="form-control" type="text" required placeholder="Codigo Angular" ng-model="codigoProducto" my-enter="findByCodigo(codigoProducto)" >
+                                    <input class="form-control" type="text" placeholder="Codigo Angular" ng-model="codigoProducto" my-enter="findByCodigo(codigoProducto)" >
 
 
                                     <input type= "hidden" name="_token" value="{{ csrf_token() }}">

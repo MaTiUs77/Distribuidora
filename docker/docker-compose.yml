@@ -12,6 +12,7 @@ services:
     depends_on:
        - php
        - mysqldb
+       - redis
   php:
     build:
        context: "./"
@@ -44,3 +45,14 @@ services:
        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
+  redis:
+    image: redis:latest
+    ports:
+       - "6309"
+  node:
+    build:
+       context: "./node"
+       dockerfile: "Dockerfile"
+    ports:
+       - "8080:8080"
+

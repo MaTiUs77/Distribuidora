@@ -3,19 +3,25 @@ var app = angular.module('SytemApp', []);
 app.controller('Terminal', function($scope) {
     $scope.productos = [];
 
-    console.log('Terminal controller iniciado');
+    console.log('Terminal con SocketIo');
+
+    var socket = io.connect('http://localhost:8080', { 'forceNew': true });
+
+    socket.on('messages', function(data) {
+        console.log("Incoming",data);
+    });
 
     $scope.findByCodigo = function(codigoProducto)
     {
         if(codigoProducto!=undefined)
         {
             console.log(codigoProducto);
+            socket.emit('new-message', codigoProducto);
+
             $scope.productos.push('que onda');
         }
     }
 });
-
-
 
 app.directive('myEnter', function () {
     return function (scope, element, attrs) {
