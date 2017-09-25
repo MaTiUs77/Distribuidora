@@ -9,6 +9,7 @@ use App\Http\Controllers\Ventas\Model\VentasModel;
 use App\Http\Controllers\Ventas\ResumenDeVenta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\In;
 
@@ -60,7 +61,7 @@ class Venta_Detalle extends Controller
         $response = $api->resumen($newventa->venta_id);
 
         // Publica en redis
-        // Redis::put('venta_1',$response);
+        Redis::set('name', json_encode($response));
 
         return "OK";
 

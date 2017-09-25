@@ -7,8 +7,8 @@ app.controller('Terminal', function($scope) {
 
     var socket = io.connect('http://localhost:8080', { 'forceNew': true });
 
-    socket.on('messages', function(data) {
-        console.log("Incoming",data);
+    socket.on('redis', function(data) {
+        console.log("Redis",data);
     });
 
     $scope.findByCodigo = function(codigoProducto)

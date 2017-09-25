@@ -10,7 +10,7 @@
   "dependencies": {
     "express": "^4.13.3",
     "body-parser": "^1.15.2",
-    "redis": "^2.6.3",
+    "redis": "",
     "socket.io": "^1.7.1"
   }
 }
