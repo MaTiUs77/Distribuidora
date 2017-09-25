@@ -5,8 +5,9 @@
 * docker & docker-compose
 
 ## Ejecutar 
-
-*docker-compose up -d --build
+```
+docker-compose up -d --build
+```
 
 ## Ingresar al contendor php
 
