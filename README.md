@@ -1,18 +1,11 @@
-# Instalacion
-
-## Instalar 
+## Requisitos
 
 * docker & docker-compose
 
 ## Ejecutar 
 ```
+cd docker/
 docker-compose up -d --build
+docker exec -it docker_php_1 bash
+php artisan migrate --seed
 ```
-
-## Ingresar al contendor php
-
-* docker exec -it docker_php_1 bash
-
-## Una vez dentro ejecutar artisan
-
-* php artisan migrate --seed
