@@ -3,20 +3,31 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Buscar...">
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+
+        <li class="bg-green">
+          <a href="{{ url('terminal') }}" style="background-color: rgb(0, 166, 90);">
+            <i class="fa fa-gear" style="color: rgb(255, 255, 255);"></i><span style="color: rgb(255, 255, 255);">Iniciar terminal de venta</span>
+          </a>
+        </li>
+
+        <li>
+          <!-- search form (Optional) -->
+          <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Buscar...">
           <span class="input-group-btn">
               <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
               </button>
             </span>
-        </div>
-      </form>
-      <!-- /.search form -->
+            </div>
+          </form>
+          <!-- /.search form -->
 
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu" data-widget="tree">
+        </li>
+
+
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home"></i> <span>Inicio</span></a></li>

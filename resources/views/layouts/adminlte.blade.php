@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="SytemApp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +14,7 @@
   <link rel="stylesheet" href={{ asset('adminlte/dist/css/AdminLTE.min.css') }}>
   <link rel="stylesheet" href={{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}>
   <!-- SweetAlert -->
-  <link rel="stylesheet" href={{ asset('plugins/sweetalert/sweetalert.css') }}>
-  <!-- SweetAlert -->
-  <link rel="stylesheet" href='https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css'>
+  <link rel="stylesheet" href={{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,8 +22,6 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   @yield('head')
 
@@ -46,18 +42,18 @@
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-cloak>
 <div class="wrapper">
 
   <!-- Main Header -->
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{ route('home') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg">LTE</span>
     </a>
 
     <!-- Header Navbar -->
@@ -262,21 +258,19 @@
 
 <!-- jQuery 3 -->
 <script src={{ asset('adminlte/bower_components/jquery/dist/jquery.min.js') }}></script>
+<!-- jQuery UI -->
+<script src={{ asset('adminlte/bower_components/jquery-ui/jquery-ui.min.js') }}></script>
 <!-- Bootstrap 3.3.7 -->
 <script src={{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}></script>
 <!-- AdminLTE App -->
 <script src={{ asset('adminlte/dist/js/adminlte.min.js') }}></script>
 <!-- SweetAlert -->
 <script src={{ asset('plugins/sweetalert/sweetalert.min.js') }}></script>
+<!-- AngularJS -->
+<script src={{ asset('adminlte/bower_components/angular/angular.min.js') }}></script>
 
-<!-- jQuery 3 -->
-<script
-        src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"
-        integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
-        crossorigin="anonymous"></script>
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
+<!-- Terminal -->
+<script src={{ asset('js/terminal.js') }}></script>
 
 @yield('footer')
 
