@@ -38,22 +38,32 @@ class Venta_Detalle extends Controller
         if ($validator->fails()) {
             return redirect(route('venta_detalle.show',$request->get('venta_id')))->withErrors($validator);
         }
-
+        $inventario = new Inventario();
         $newventa = Ventas_DetallesModel::where('producto_id', $request->get('producto_id'))
             ->where('venta_id', $request->get('venta_id'))
             ->first();
-        if($newventa != null)
+
+        $controlStock = $inventario->descontarProducto($request->producto_id,$request->cantidad);
+        if($controlStock != true)
         {
-            $newventa->cantidad += $request->get('cantidad');
-            $newventa->save();
+            if($newventa != null)
+            {
+                $newventa->cantidad += $request->get('cantidad');
+                $newventa->save();
+            }
+            else
+            {
+                $newventa = new Ventas_DetallesModel();
+                $newventa->venta_id = $request->get('venta_id');
+                $newventa->producto_id = $request->get('producto_id');
+                $newventa->cantidad = $request->get('cantidad');
+                $newventa->save();
+            }
+            return redirect(route('venta_detalle.show',$newventa->venta_id));
         }
         else
         {
-            $newventa = new Ventas_DetallesModel();
-            $newventa->venta_id = $request->get('venta_id');
-            $newventa->producto_id = $request->get('producto_id');
-            $newventa->cantidad = $request->get('cantidad');
-            $newventa->save();
+            return redirect(route('venta_detalle.show',$request->venta_id))->withErrors('Solo dispones de '.$controlStock->producto->stock.' unidades' );
         }
 
         // Generar nuevos datos de la factuacion
@@ -117,8 +127,15 @@ class Venta_Detalle extends Controller
     public function update(Request $request, $id)
     {
 
+        $inventario = new Inventario();
         $venta = VentasModel::findOrFail($id);
         $venta_d = Ventas_DetallesModel::findOrFail($request->get('venta_detalle_id'));
+        $producto = $inventario->actualizarCantidadProducto($venta_d,$request->get('cantidad'));
+        if($producto == true)
+        {
+            return redirect(route('venta_detalle.show',$id))->withErrors('Solo dispones de '.$producto->stock);
+        }
+
         $venta_d->cantidad = $request->get('cantidad');
         $venta_d->save();
 
@@ -138,17 +155,11 @@ class Venta_Detalle extends Controller
      */
     public function destroy($id)
     {
+        $devolverProducto = new Inventario();
         $venta_detalle = Ventas_DetallesModel::findOrFail($id);
+        $producto = $devolverProducto->devolverProducto($venta_detalle);
         $venta_detalle->delete();
-        /**
-         * ACA HAY UNA MARIMOÑA PARA REVISAR, EL PROBLEMA ES QUE AL INTENTAR HACER return back()->withInput(); NO TE REDIRECCIONA
-         * A LA PAGINA ANTERIOR, REVISAR SI LA RUTA ESTA CONTENIDA DENTRO DEL MIDDLEWARE WEB.
-         *
-         */
-        //$venta = VentasModel::findOrFail($venta_detalle->venta_id);
-        //$venta_detalle = Ventas_DetallesModel::where('venta_id',$venta->id)->get();
 
-        //$datos = compact('venta','venta_detalle');
         return redirect(route('venta_detalle.show',$venta_detalle->venta_id));
     }
 }

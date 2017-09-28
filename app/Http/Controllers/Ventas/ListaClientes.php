@@ -21,7 +21,6 @@ class ListaClientes extends Controller
         $term = Input::get('term');
 
         $results = array();
-
         $clientes = User::role('cliente')
             ->where('name', 'LIKE', '%' . $term . '%')
 //            ->orWhere('apellid', 'LIKE', '%'.$term.'%')
