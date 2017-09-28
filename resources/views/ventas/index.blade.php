@@ -29,7 +29,8 @@
 
     $(function() {
         $("#cliente").autocomplete({
-            source: "ventas/search/autocomplete",
+
+            source: "{{ url('ventas/search/autocomplete') }}",
             minLength: 2,
             select: function (event, ui) {
                 console.log(ui.item.id);
