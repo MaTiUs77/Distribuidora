@@ -26,12 +26,16 @@ io.on('connection', function(socket) {
 
   socket.emit('redis', "Hola desde SocketIO");
 
-/*  socket.on('new-message', function(data) {
-    io.sockets.emit('messages', messages);
-  });*/
+  socket.on('buscarProducto', function(data) {
+    var args2 = ["movie", "[The", '(The\xff', 'LIMIT', "0", "2"];
+    client.zrangebylex(args2, function(err, response) {
+      if (err) throw err;
+      console.log(response);
+      socket.emit('buscarProductoResponse', response);
+    });
+  });
 });
 
 server.listen(8080, function() {
   console.log("Servidor corriendo en http://localhost:8080");
 });
-

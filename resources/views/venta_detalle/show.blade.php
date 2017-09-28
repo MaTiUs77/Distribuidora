@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-    <div ng-controller="Terminal">
+    <div ng-controller="Terminal" ng-cloak>
         <section class="invoice">
             <!-- title row -->
             <div class="row">

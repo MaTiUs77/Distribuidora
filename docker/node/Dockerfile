@@ -1,9 +1,12 @@
 FROM    node:latest
 
-RUN mkdir -p /home
+#RUN mkdir -p /home
 WORKDIR /home
-COPY . /home
+#COPY . /home
+
+# use nodemon for development
+RUN npm install --global nodemon
 
 RUN npm install
 
-CMD ["npm", "start"]
+CMD ["nodemon"]
