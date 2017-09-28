@@ -1,24 +1,32 @@
 var app = angular.module('SytemApp', []);
 
 app.controller('Terminal', function($scope) {
-    $scope.productos = [];
+    $scope.nodeHost = 'localhost:8080';
+    $scope.facturacion = {};
 
-    console.log('Terminal con SocketIo');
+    console.log('Terminal con Socket.io');
 
-    var socket = io.connect('http://localhost:8080', { 'forceNew': true });
+    var socket = io.connect('http://'+$scope.nodeHost, { 'forceNew': true });
 
     socket.on('redis', function(data) {
         console.log("Redis",data);
+    });
+
+    socket.on('ventaUpdated', function(data) {
+        $scope.facturacion = JSON.parse(data);
+        console.log("Venta updated",$scope.facturacion);
+        $scope.$digest();
+    });
+
+    socket.on('buscarProductoResponse', function(data) {
+        console.log("buscarProductoResponse",data);
     });
 
     $scope.findByCodigo = function(codigoProducto)
     {
         if(codigoProducto!=undefined)
         {
-            console.log(codigoProducto);
-            socket.emit('new-message', codigoProducto);
-
-            $scope.productos.push('que onda');
+            socket.emit('buscarProducto', codigoProducto);
         }
     }
 });

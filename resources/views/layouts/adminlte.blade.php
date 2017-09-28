@@ -12,9 +12,12 @@
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/Ionicons/css/ionicons.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/AdminLTE.min.css') }}">
+  <!-- AdminLTE Skins-->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}">
   <!-- SweetAlert -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/select2/dist/css/select2.min.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -268,10 +271,10 @@
 <script src="{{ asset('adminlte/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <!-- AngularJS -->
 <script src="{{ asset('adminlte/bower_components/angular/angular.min.js') }}"></script>
-
+<!-- Select2 -->
+<script src="{{ asset('adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
 <!-- Socket.io-->
 <script src="http://localhost:8080/socket.io/socket.io.js"></script>
-
 <!-- Terminal -->
 <script src="{{ asset('js/terminal.js') }}"></script>
 

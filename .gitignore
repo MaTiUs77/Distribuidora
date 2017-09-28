@@ -13,3 +13,9 @@ yarn-error.log
 .env
 Esquema_db.mwb.bak
 docker/\.\.env\.swp
+
+docker/node/home/node_modules/
+
+docker/node/home/\.Dockerfile\.swp
+
+docker/node/home/package-lock\.json

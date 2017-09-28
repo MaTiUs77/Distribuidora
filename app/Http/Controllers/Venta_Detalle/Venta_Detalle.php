@@ -60,8 +60,9 @@ class Venta_Detalle extends Controller
         $api  = new ApiVentaDetalle();
         $response = $api->resumen($newventa->venta_id);
 
-        // Publica en redis
-        Redis::set('name', json_encode($response));
+        // Publica en el canal de venta redis
+        Redis::set('venta', json_encode($response));
+        Redis::publish('venta', json_encode($response));
 
         return "OK";
 

@@ -78,6 +78,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <tr ng-repeat="detalle in facturacion.resumen.detalles">
+                            <td>@{{ detalle.producto.nombre }}</td>
+                            <td>@{{ detalle.producto.barcode}}</td>
+                            <td>$ @{{ detalle.producto.precio_venta}}</td>
+                            <td>@{{ detalle.cantidad }}</td>
+                            <td id="total">$ @{{ detalle.costoTotal }}</td>
+                            <td>@{{ detalle.producto.marca.nombre }}</td>
+                        </tr>
+                        {{--
                         @foreach($resumen->detalles as $detalle)
                             <tr>
                                 <td>{{ $detalle->producto->nombre }}</td>
@@ -101,15 +110,7 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
-                        <tr ng-repeat="producto in productos">
-                            <td colspan="3">
-                                @{{  producto }}
-                            </td>
-                        </tr>
-
-
+                        --}}
                         </tbody>
                         <tfoot>
                             <tr>
@@ -158,11 +159,17 @@
                         <table class="table">
                             <tr>
                                 <th>Productos:</th>
-                                <td>{{ $resumen->cantidadProductos }}</td>
+                                <td>
+                                    @{{ facturacion.resumen.cantidadProductos }}
+                                    {{-- $resumen->cantidadProductos --}}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td>${{ $resumen->costoTotal }}</td>
+                                <td>
+                                    {{-- $resumen->costoTotal --}}
+                                    $ @{{ facturacion.resumen.costoTotal }}
+                                </td>
                             </tr>
                         </table>
                     </div>
