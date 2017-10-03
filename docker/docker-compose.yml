@@ -34,15 +34,15 @@ services:
        - mysqldb
   mysqldb:
     image: mysql
-    container_name: ${MYSQL_HOST}
+    container_name: mysql
     restart: always
     env_file:
        - ".env"
     environment:
-       - MYSQL_DATABASE=${MYSQL_DATABASE}
-       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-       - MYSQL_USER=${MYSQL_USER}
-       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+       - MYSQL_DATABASE=distribuidora
+       - MYSQL_ROOT_PASSWORD=root
+       - MYSQL_USER=dev
+       - MYSQL_PASSWORD=dev
     ports:
       - "3306:3306"
   redis:
