@@ -8,9 +8,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.13.3",
     "body-parser": "^1.15.2",
-    "redis": "",
+    "express": "^4.13.3",
+    "redis": "^2.8.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
     "socket.io": "^1.7.1"
   }
 }
