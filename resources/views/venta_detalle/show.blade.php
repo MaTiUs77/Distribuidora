@@ -1,8 +1,7 @@
 @extends('layouts.adminlte')
 
 @section('contenido')
-
-    <div ng-controller="Terminal" ng-cloak>
+    <div ng-controller="Terminal" ng-init="init({{ $venta->id }})" ng-cloak>
         <section class="invoice">
             <!-- title row -->
             <div class="row">
@@ -78,7 +77,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="detalle in facturacion.resumen.detalles">
+                        <tr ng-repeat="detalle in facturacion.detalles">
                             <td>@{{ detalle.producto.nombre }}</td>
                             <td>@{{ detalle.producto.barcode}}</td>
                             <td>$ @{{ detalle.producto.precio_venta}}</td>
@@ -112,38 +111,6 @@
                         @endforeach
                         --}}
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th colspan="8">
-                                    <form class="form-inline" role="form" method="post" action="{{ route('venta_detalle.store') }}">
-                                    <input class="form-control" type="text" placeholder="Codigo Angular" ng-model="codigoProducto" my-enter="findByCodigo(codigoProducto)" >
-
-
-                                    <input type= "hidden" name="_token" value="{{ csrf_token() }}">
-
-                                    <input class="form-control" type="hidden" name="venta_id" id="venta_id" value="{{$venta->id}}">
-                                    <input class="form-control" type="hidden" name="producto_id" id="producto_id">
-
-                                    <input class="form-control" type="text" name="producto" id="producto"  required placeholder="Ingrese producto o codigo">
-                                    <input class="form-control" type="number" name="cantidad" id="cantidad"  required placeholder="Cantidad">
-
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> Agregar</button>
-                                    </form>
-
-
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-
-                                </th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
                 <!-- /.col -->
@@ -160,7 +127,7 @@
                             <tr>
                                 <th>Productos:</th>
                                 <td>
-                                    @{{ facturacion.resumen.cantidadProductos }}
+                                    @{{ facturacion.cantidadProductos }}
                                     {{-- $resumen->cantidadProductos --}}
                                 </td>
                             </tr>
@@ -168,7 +135,7 @@
                                 <th>Total:</th>
                                 <td>
                                     {{-- $resumen->costoTotal --}}
-                                    $ @{{ facturacion.resumen.costoTotal }}
+                                    $ @{{ facturacion.costoTotal }}
                                 </td>
                             </tr>
                         </table>
@@ -214,9 +181,48 @@
                 </div>
             </div>
         </div>
+
+
+    <!-- Main Footer -->
+    <footer class="main-footer navbar-fixed-bottom">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Todos los derechos reservados.
+        </div>
+        <!-- Default to the left -->
+
+
+        <table>
+            <tr>
+                <th colspan="8">
+                    <form class="form-inline" role="form" method="post" action="{{ route('venta_detalle.store') }}">
+                        <input class="form-control" type="text" placeholder="Codigo Angular" id="addByCodigoInput" ng-model="codigoProducto" my-enter="addByCodigo(codigoProducto)" >
+
+
+                        <input type= "hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <input class="form-control" type="hidden" name="producto_id" id="producto_id">
+
+                        <button class="btn btn-success"><i class="fa fa-plus"></i> Agregar</button>
+                    </form>
+
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                </th>
+            </tr>
+        </table>
+    </footer>
+
     </div>
-
-
 
 @endsection
 
@@ -253,5 +259,4 @@
 
         });
     </script>
-
 @endsection

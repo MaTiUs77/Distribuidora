@@ -12,23 +12,25 @@ class Inventario extends Controller
 {
     public function descontarProducto($producto_id,$cantidad)
     {
-        $producto = ProductosModel::findOrFail($producto_id);
+        $producto = ProductosModel::find($producto_id);
+
         $cantidad_actual = $producto->stock;
         $resta = $cantidad_actual - $cantidad;
 
+        $retorno = new \stdClass();
+        $retorno->descuentoRealizado = false;
+
         if($resta >= 0)
         {
+            // Ok, el stock es acorde a la cantidad solicitada, se realiza el descuento de inventario
             $producto->stock = $resta;
             $producto->save();
 
+            $retorno->descuentoRealizado = true;
         }
-        else
-        {
-            $retorno = new \stdClass();
-            $retorno->done = true;
-            $retorno->producto = $producto;
-            return $retorno;
-        }
+
+        $retorno->producto = $producto;
+        return $retorno;
     }
 
     public function devolverUnProducto($venta_detalle)

@@ -26,7 +26,6 @@ io.on('connection', function(socket) {
     });
   });
  */
-
 });
 
 server.listen(8080, function() {

@@ -168,16 +168,6 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-     Todos los derechos reservados.
-    </div>
-    <!-- Default to the left -->
-	<strong><a href="#">DevAlliance</a></strong> Copyright &copy; 2017
-  </footer>
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->

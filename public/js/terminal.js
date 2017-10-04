@@ -1,7 +1,19 @@
 var app = angular.module('SytemApp', []);
 
-app.controller('Terminal', function($scope) {
+app.controller('Terminal', function($scope)
+{
+    var addByCodigoInput = $('#addByCodigoInput');
+
+    addByCodigoInput.submit(function (evt) {
+        evt.preventDefault();
+    });
+
+    addByCodigoInput.focus();
+
+    $scope.venta_id;
+
     $scope.nodeHost = 'localhost:8080';
+
     $scope.facturacion = {};
 
     console.log('Terminal con Socket.io');
@@ -12,27 +24,36 @@ app.controller('Terminal', function($scope) {
         console.log("Client on nodeserver",data);
     });
 
-    socket.on('ventaUpdated', function(data) {
-        console.log("Client on ventaUpdated",data);
-
-        $scope.facturacion = JSON.parse(data);
-        console.log("Venta updated",$scope.facturacion);
-        $scope.$digest();
-    });
-
-    socket.on('buscarProductoResponse', function(data) {
-        console.log("Client on buscarProductoResponse",data);
-    });
-
-    $scope.findByCodigo = function(codigoProducto)
+    // Inicializo la terminal con la ID de venta
+    $scope.init = function(venta_id)
     {
-        console.log("Client findByCodigo",codigoProducto);
+        $scope.venta_id = venta_id;
+    };
+
+    socket.on('addByCodigoResponse', function(data) {
+        console.log("Client on addByCodigoResponse",data);
+
+        console.log(data);
+
+        if(data.error!=undefined)
+        {
+            swal(data.error, "", "error");
+        } else {
+            $scope.facturacion = data.resumen;
+            $scope.$digest();
+        }
+    });
+
+    // Agrega productos a la venta_id segun el barcode solicitado
+    $scope.addByCodigo= function(codigoProducto)
+    {
+        console.log("Client addByCodigo",codigoProducto,$scope.venta_id);
 
         if(codigoProducto!=undefined)
         {
-            socket.emit('buscarProducto', codigoProducto);
+            socket.emit('addByCodigo', codigoProducto, $scope.venta_id);
         }
-    }
+    };
 });
 
 app.directive('myEnter', function () {

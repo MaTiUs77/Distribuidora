@@ -1,14 +1,21 @@
 var redis = require('redis');
 
-var client = redis.createClient(6379,"redis");
+var client;
+var redisub;
+
 var rp = require('request-promise');
 
 var app,socket;
+
 
 function init(_app,_socket)
 {
   socket = _socket;
   app = _app;
+
+  client = redis.createClient(6379,"redis");
+  redisub = redis.createClient(6379,"redis");
+  redisub.subscribe("venta");
 
   client.on('error', function(err){
     console.log('Algo salio mal con Redis', err)
@@ -17,30 +24,71 @@ function init(_app,_socket)
   console.log('Terminal iniciada con Socket.io');
   socket.emit('nodeserver', "Terminal iniciada con Socket.io");
 
+  setRedisActions();
+
   socketActions();
-//  setRoutes();
+}
+
+function setRedisActions()
+{
+  redisub.on("error", function(){
+    console.log("Error al subscribir");
+  });
+
+  // Permite escuchar el canal de comunicacion de Redis
+  redisub.on('message', function(channel,data){
+    console.log('redisMessage',channel, data);
+    socket.emit('addByCodigoResponse', JSON.parse(data));
+  });
+
+  // Al ingresar obtiene de redis la ultima imagen de la factura
+  client.get('venta', function(error, data) {
+    if (error) throw error;
+    var data = JSON.parse(data);
+
+    var response = {};
+    response.resumen = data;
+
+    socket.emit('addByCodigoResponse', response);
+  });
 }
 
 function socketActions()
 {
-  socket.on('buscarProducto', function(termino)
+  socket.on('disconnect', function () {
+    console.log('Socket desconectado');
+
+    redisub.quit();
+    redisub.unsubscribe();
+    client.quit();
+  });
+
+
+  socket.on('addByCodigo', function(codigoProducto,venta_id)
   {
-    buscarProducto().then(function (result) {
-        console.log("buscarProductoResponse",result);
-        socket.emit('buscarProductoResponse', result);
+    console.log("Action addByAcodigo",codigoProducto,venta_id);
+
+    addByCodigo(codigoProducto,venta_id).then(function (result) {
+        // En este punto, el api de laravel ya se comunico con redis y lo actualizo,
+        // no es necesario hacer nada, ya que node esta escuchando el canal de redis y actualizo el front
+        // Logueo solo para ver el retorno del api en laravel
+        console.log("addByCodigoResponse",result);
+
+        // Puedo emitir una respuesta de node, para que el front haga otra cosa
+        socket.emit('addByCodigoResponse', result);
       })
       .catch(function (err) {
-        console.log("No se pudo buscar el producto",err.message);
+        console.log("No se pudo acceder al API");
       });
   });
 }
 
-function buscarProducto(termino) {
+function addByCodigo(codigoProducto,venta_id) {
+
+  console.log("Localizando url");
+
   var options = {
-    uri: 'http://localhost/api/terminal/add',
-    qs: {
-      termino: termino
-    },
+    uri: 'http://web/api/terminal/add/'+venta_id+'/1/'+codigoProducto,
     headers: {
       'User-Agent': 'Request-Promise'
     },

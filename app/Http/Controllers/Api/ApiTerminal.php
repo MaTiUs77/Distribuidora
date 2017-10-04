@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Productos\Inventario;
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Venta_Detalle\ResumenDetalle;
@@ -15,12 +16,46 @@ class ApiTerminal extends Api
      *
      * @param $codigo
      */
-    public function addCodigo($codigo)
+    public function addCodigo($venta_id,$cantidad,$codigo)
     {
-        $producto = ProductosModel::where('barcode',$codigo)->first();
-        
-        
+        $venta = VentasModel::find($venta_id);
 
-        return compact('producto');
+        if(isset($venta))
+        {
+            // La venta existe, busco si existe el producto..
+            $producto = ProductosModel::where('barcode',$codigo)->first();
+
+            if(isset($producto))
+            {
+                $inv = new Inventario();
+                $inventario = $inv->descontarProducto($producto->id,$cantidad);
+
+                if($inventario->descuentoRealizado)
+                {
+                    $newventa = new Ventas_DetallesModel();
+                    $newventa->venta_id = $venta->id;
+                    $newventa->producto_id = $producto->id;
+                    $newventa->cantidad = $cantidad;
+                    $newventa->save();
+
+                    // Al llamar al api venta se realiza un nuevo resumen de la venta, y se propaga por redis
+                    
+                    $response = $this->venta($venta_id);
+                    return $response;
+                } else {
+                    $error = 'El producto no tiene stock';
+                    return compact('error','inventario');
+                }
+            } else
+            {
+                $error = 'El codigo no existe';
+                return compact('error');
+            }
+
+        } else
+        {
+            $error = 'La venta no existe';
+            return compact('error');
+        }
     }
 }
