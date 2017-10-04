@@ -21,6 +21,11 @@ services:
        - "9000"
     volumes:
        - "../:/var/www/html"
+  composer:
+    image: "composer"
+    volumes:
+       - "../:/var/www/html"
+    command: install
   myadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -36,8 +41,6 @@ services:
     image: mysql
     container_name: mysql
     restart: always
-    env_file:
-       - ".env"
     environment:
        - MYSQL_DATABASE=distribuidora
        - MYSQL_ROOT_PASSWORD=root
