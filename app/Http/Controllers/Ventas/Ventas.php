@@ -97,7 +97,11 @@ class Ventas extends Controller
      */
     public function destroy($id)
     {
+        $inventario = new Inventario();
+        $vet = Ventas_DetallesModel::where('venta_id',$id)->get();
+        $devolverProducto = $inventario->devolverProducto($vet);
         $vet = Ventas_DetallesModel::where('venta_id',$id)->delete();
+
         $ventas = VentasModel::findOrFail($id);
         $ventas->delete();
         return redirect()->route('pendientes.index')->with('message', 'venta eliminada con exito!');

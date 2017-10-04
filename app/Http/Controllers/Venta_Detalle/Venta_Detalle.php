@@ -156,11 +156,11 @@ class Venta_Detalle extends Controller
      */
     public function destroy($id)
     {
-        $devolverProducto = new Inventario();
+         $devolverProducto = new Inventario();
         $venta_detalle = Ventas_DetallesModel::findOrFail($id);
-        $producto = $devolverProducto->devolverProducto($venta_detalle);
-        $venta_detalle->delete();
+        $producto = $devolverProducto->devolverUnProducto($venta_detalle);
 
+        $venta_detalle->delete();
         return redirect(route('venta_detalle.show',$venta_detalle->venta_id));
     }
 }

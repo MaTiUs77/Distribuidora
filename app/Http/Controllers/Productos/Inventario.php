@@ -31,16 +31,35 @@ class Inventario extends Controller
         }
     }
 
-    public function devolverProducto($venta_detalle)
+    public function devolverUnProducto($venta_detalle)
     {
-        $producto = ProductosModel::findOrFail($venta_detalle->producto_id);
-        $cantidad_actual = $producto->stock;
-        $suma = $cantidad_actual + $venta_detalle->cantidad;
+            $p = ProductosModel::findOrFail($venta_detalle->producto_id);
+        
+            $cantidad_actual = $p->stock;
 
-        $producto->stock = $suma;
-        $producto->save();
+            $suma = $cantidad_actual + $venta_detalle->cantidad;
 
-        return $producto;
+            $p->stock = $suma;
+            $p->save();
+
+
+    }
+    public function devolverProducto(Collection $venta_detalle)
+    {
+
+        foreach ($venta_detalle as $producto)
+        {
+
+            $p = ProductosModel::findOrFail($producto->producto_id);
+            $cantidad_actual = $p->stock;
+
+            $suma = $cantidad_actual + $producto->cantidad;
+
+            $p->stock = $suma;
+            $p->save();
+
+        }
+
     }
 
     public function actualizarCantidadProducto($venta_detalle, $cantidad_nueva)
