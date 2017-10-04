@@ -5,7 +5,8 @@ var rp = require('request-promise');
 
 var app,socket;
 
-function init(_app,_socket) {
+function init(_app,_socket)
+{
   socket = _socket;
   app = _app;
 
@@ -14,15 +15,14 @@ function init(_app,_socket) {
   });
 
   console.log('Terminal iniciada con Socket.io');
-  socket.emit('redis', "Terminal iniciada con Socket.io");
+  socket.emit('nodeserver', "Terminal iniciada con Socket.io");
 
   socketActions();
-  setRoutes();
+//  setRoutes();
 }
 
-
-function socketActions(){
-
+function socketActions()
+{
   socket.on('buscarProducto', function(termino)
   {
     buscarProducto().then(function (result) {
@@ -30,7 +30,7 @@ function socketActions(){
         socket.emit('buscarProductoResponse', result);
       })
       .catch(function (err) {
-        console.log("Error",err);
+        console.log("No se pudo buscar el producto",err.message);
       });
   });
 }
@@ -50,8 +50,9 @@ function buscarProducto(termino) {
   return rp(options);
 }
 
-function setRoutes() {
-
+/*
+function setRoutes()
+{
   app.get('/buscar/producto', function(req, res) {
     var termino = req.query.term;
     var args2 = ["movies", "["+termino, '('+termino+'\xff', 'LIMIT', "0", "2"];
@@ -62,6 +63,7 @@ function setRoutes() {
     });
   });
 }
+*/
 
 module.exports = {
   init : init

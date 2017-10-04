@@ -8,22 +8,26 @@ app.controller('Terminal', function($scope) {
 
     var socket = io.connect('http://'+$scope.nodeHost, { 'forceNew': true });
 
-    socket.on('redis', function(data) {
-        console.log("Redis",data);
+    socket.on('nodeserver', function(data) {
+        console.log("Client on nodeserver",data);
     });
 
     socket.on('ventaUpdated', function(data) {
+        console.log("Client on ventaUpdated",data);
+
         $scope.facturacion = JSON.parse(data);
         console.log("Venta updated",$scope.facturacion);
         $scope.$digest();
     });
 
     socket.on('buscarProductoResponse', function(data) {
-        console.log("buscarProductoResponse",data);
+        console.log("Client on buscarProductoResponse",data);
     });
 
     $scope.findByCodigo = function(codigoProducto)
     {
+        console.log("Client findByCodigo",codigoProducto);
+
         if(codigoProducto!=undefined)
         {
             socket.emit('buscarProducto', codigoProducto);
