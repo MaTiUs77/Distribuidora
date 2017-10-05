@@ -38,7 +38,7 @@ function setRedisActions()
   // Permite escuchar el canal de comunicacion de Redis
   redisub.on('message', function(channel,data){
     console.log('redisMessage',channel, data);
-    socket.emit('addByCodigoResponse', JSON.parse(data));
+    socket.emit('redisMessageChannel', JSON.parse(data));
   });
 
   // Al ingresar obtiene de redis la ultima imagen de la factura
@@ -49,7 +49,7 @@ function setRedisActions()
     var response = {};
     response.resumen = data;
 
-    socket.emit('addByCodigoResponse', response);
+    socket.emit('updateFacturacion', response);
   });
 }
 
@@ -75,7 +75,21 @@ function socketActions()
         console.log("addByCodigoResponse",result);
 
         // Puedo emitir una respuesta de node, para que el front haga otra cosa
-        socket.emit('addByCodigoResponse', result);
+        socket.emit('updateFacturacion', result);
+      })
+      .catch(function (err) {
+        console.log("No se pudo acceder al API");
+      });
+  });
+
+  socket.on('removeDetalleId', function(detalle_id,venta_id)
+  {
+    console.log("Action removeDetalleId",detalle_id,venta_id);
+    removeDetalleId(detalle_id,venta_id).then(function (result) {
+        console.log("removeDetalleIdResponse",result);
+
+        // Puedo emitir una respuesta de node, para que el front haga otra cosa
+        socket.emit('updateFacturacion', result);
       })
       .catch(function (err) {
         console.log("No se pudo acceder al API");
@@ -89,6 +103,19 @@ function addByCodigo(codigoProducto,venta_id) {
 
   var options = {
     uri: 'http://web/api/terminal/add/'+venta_id+'/1/'+codigoProducto,
+    headers: {
+      'User-Agent': 'Request-Promise'
+    },
+    json: true // Automatically parses the JSON string in the response
+  };
+
+  return rp(options);
+}
+
+function removeDetalleId(detalle_id,venta_id)
+{
+  var options = {
+    uri: 'http://web/api/terminal/remove/'+detalle_id,
     headers: {
       'User-Agent': 'Request-Promise'
     },

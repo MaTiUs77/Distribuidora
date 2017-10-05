@@ -39,11 +39,11 @@ class ApiTerminal extends Api
                     $newventa->save();
 
                     // Al llamar al api venta se realiza un nuevo resumen de la venta, y se propaga por redis
-                    
+
                     $response = $this->venta($venta_id);
                     return $response;
                 } else {
-                    $error = 'El producto no tiene stock';
+                    $error = 'El producto "'.$producto->nombre.'" no tiene stock';
                     return compact('error','inventario');
                 }
             } else
@@ -51,6 +51,27 @@ class ApiTerminal extends Api
                 $error = 'El codigo no existe';
                 return compact('error');
             }
+
+        } else
+        {
+            $error = 'La venta no existe';
+            return compact('error');
+        }
+    }
+
+    public function removeDetalle(Ventas_DetallesModel $detalle_id)
+    {
+        $detalle = $detalle_id;
+
+        if(isset($detalle))
+        {
+            $inv = new Inventario();
+            $inventario = $inv->devolverProducto($detalle);
+
+            $detalle->delete();
+
+            $response = $this->venta($detalle->venta_id);
+            return $response;
 
         } else
         {

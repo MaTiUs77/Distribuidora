@@ -1,4 +1,5 @@
 @extends('layouts.adminlte')
+@section('sidebar','sidebar-mini sidebar-collapse')
 
 @section('contenido')
     <div ng-controller="Terminal" ng-init="init({{ $venta->id }})" ng-cloak>
@@ -60,8 +61,8 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-            {{--FORMULARIO PARA AGREGAR PRODUCTOS--}}
 
+            <!-- Tabla de datos completada por Redis -->
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <table class="table table-striped">
@@ -84,76 +85,20 @@
                             <td>@{{ detalle.cantidad }}</td>
                             <td id="total">$ @{{ detalle.costoTotal }}</td>
                             <td>@{{ detalle.producto.marca.nombre }}</td>
+                            <td>
+                                <button ng-click="removeDetalleId(detalle.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            </td>
                         </tr>
-                        {{--
-                        @foreach($resumen->detalles as $detalle)
-                            <tr>
-                                <td>{{ $detalle->producto->nombre }}</td>
-                                <td>{{ $detalle->producto->barcode}}</td>
-                                <td>$ {{ $detalle->producto->precio_venta}}</td>
-                                <td>{{ $detalle->cantidad }}</td>
-                                <td id="total">$ {{ $detalle->costoTotal }}</td>
-                                <td>{{ $detalle->producto->marca->nombre }}</td>
-                                <td style="width: 100px;">
-                                    <form method="POST" class="form" action="{{ route('venta_detalle.destroy',$detalle->id) }}">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="_method" value="delete" />
-                                        <button class="btn btn-default btn-sm" title="Eliminar Producto">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                        <a class="btn btn-default btn-sm" id="qty" data-slider-value="{{$detalle->id}}" title="Modificar Cantidad" data-toggle="modal" data-target=".bd-example-modal-sm">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                    </form>
-
-                                </td>
-                            </tr>
-                        @endforeach
-                        --}}
                         </tbody>
                     </table>
                 </div>
-                <!-- /.col -->
-            </div>
-
-
-            <div class="row">
-
-                <div class="col-xs-6 pull-right" >
-                    <p class="lead">Presupuesto</p>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr>
-                                <th>Productos:</th>
-                                <td>
-                                    @{{ facturacion.cantidadProductos }}
-                                    {{-- $resumen->cantidadProductos --}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Total:</th>
-                                <td>
-                                    {{-- $resumen->costoTotal --}}
-                                    $ @{{ facturacion.costoTotal }}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-xs-6 fa-pull-right">
-                    <form role="form" enctype="multipart/form-data" method="post" action="{{ route('pendientes.update',$venta->id) }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="_method" value="PUT" />
-                        <button class="btn btn-default btn-lg">Finalizar Venta</button>
-                    </form>
-                </div>
             </div>
         </section>
+
+        <!-- Tabla de datos completada por Redis -->
+        <br>
+        <br>
+        <br>
 
         <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
@@ -183,29 +128,21 @@
         </div>
 
 
-    <!-- Main Footer -->
-    <footer class="main-footer navbar-fixed-bottom">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Todos los derechos reservados.
-        </div>
-        <!-- Default to the left -->
+        <!-- Main Footer -->
+        <footer class="main-footer navbar-fixed-bottom">
+            <!-- To the right -->
+            <div class="pull-right">
+                <form role="form" enctype="multipart/form-data" method="post" action="{{ route('pendientes.update',$venta->id) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_method" value="PUT" />
+                    <button class="btn btn-success">F6 - Finalizar Venta</button>
+                </form>
+            </div>
+            <!-- Default to the left -->
 
-
-        <table>
-            <tr>
-                <th colspan="8">
-                    <form class="form-inline" role="form" method="post" action="{{ route('venta_detalle.store') }}">
-                        <input class="form-control" type="text" placeholder="Codigo Angular" id="addByCodigoInput" ng-model="codigoProducto" my-enter="addByCodigo(codigoProducto)" >
-
-
-                        <input type= "hidden" name="_token" value="{{ csrf_token() }}">
-
-                        <input class="form-control" type="hidden" name="producto_id" id="producto_id">
-
-                        <button class="btn btn-success"><i class="fa fa-plus"></i> Agregar</button>
-                    </form>
-
+            <div class="row">
+                <div class="col-md-3">
+                    <input class="form-control" type="text" placeholder="Nombre o codigo de producto" id="addByCodigoInput" ng-model="codigoProducto" my-enter="addByCodigo(codigoProducto)" >
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -217,10 +154,14 @@
                         </div>
                     @endif
 
-                </th>
-            </tr>
-        </table>
-    </footer>
+                </div>
+                <div class="col-md-6">
+                    Productos: @{{ facturacion.cantidadProductos }}
+                    Presupuesto: $ @{{ facturacion.costoTotal }}
+                </div>
+
+            </div>
+        </footer>
 
     </div>
 

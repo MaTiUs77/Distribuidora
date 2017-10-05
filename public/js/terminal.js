@@ -30,10 +30,22 @@ app.controller('Terminal', function($scope)
         $scope.venta_id = venta_id;
     };
 
-    socket.on('addByCodigoResponse', function(data) {
-        console.log("Client on addByCodigoResponse",data);
+    socket.on('redisMessageChannel', function(data) {
+        console.log("Client on redisMessageChannel",data);
 
         console.log(data);
+
+        if(data.error!=undefined)
+        {
+            swal(data.error, "", "error");
+        } else {
+            $scope.facturacion = data.resumen;
+            $scope.$digest();
+        }
+    });
+
+    socket.on('updateFacturacion', function(data) {
+        console.log("Client on updateFacturacion",data);
 
         if(data.error!=undefined)
         {
@@ -54,6 +66,14 @@ app.controller('Terminal', function($scope)
             socket.emit('addByCodigo', codigoProducto, $scope.venta_id);
         }
     };
+
+    // Agrega productos a la venta_id segun el barcode solicitado
+    $scope.removeDetalleId= function(detalle_id)
+    {
+        console.log("Client removeDetalleId",detalle_id,$scope.venta_id);
+        socket.emit('removeDetalleId', detalle_id, $scope.venta_id);
+    };
+
 });
 
 app.directive('myEnter', function () {
