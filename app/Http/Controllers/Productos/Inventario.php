@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Productos;
 
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -34,20 +35,6 @@ class Inventario extends Controller
         return $retorno;
     }
 
-    public function devolverUnProducto($venta_detalle)
-    {
-            $p = ProductosModel::findOrFail($venta_detalle->producto_id);
-        
-            $cantidad_actual = $p->stock;
-
-            $suma = $cantidad_actual + $venta_detalle->cantidad;
-
-            $p->stock = $suma;
-            $p->save();
-
-
-    }
-
     public function devolverProducto(Ventas_DetallesModel $detalle)
     {
         $producto = ProductosModel::findOrFail($detalle->producto_id);
@@ -59,6 +46,16 @@ class Inventario extends Controller
         $producto->save();
 
         return $producto;
+    }
+
+    public function devolverProductosMultiples(Collection $detalleCollection)
+    {
+        foreach ($detalleCollection as $detalle)
+        {
+            $this->devolverProducto($detalle);
+        }
+
+        return true;
     }
 
     public function actualizarCantidadProducto($venta_detalle, $cantidad_nueva)

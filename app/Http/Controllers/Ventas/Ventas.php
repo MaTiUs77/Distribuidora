@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Perfil\Model\PerfilModel;
+use App\Http\Controllers\Productos\Inventario;
 use App\Http\Controllers\Usuarios\Usuarios;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Venta_Detalle\Venta_Detalle;
@@ -97,13 +98,23 @@ class Ventas extends Controller
      */
     public function destroy($id)
     {
-        $inventario = new Inventario();
-        $vet = Ventas_DetallesModel::where('venta_id',$id)->get();
-        $devolverProducto = $inventario->devolverProducto($vet);
-        $vet = Ventas_DetallesModel::where('venta_id',$id)->delete();
+        // Se obtiene todo el detalle de la facturacion
+        $detalle = Ventas_DetallesModel::where('venta_id',$id)->get();
 
+        if(count($detalle))
+        {
+            // Se devuelven todos los productos
+            $inventario = new Inventario();
+            $inventario->devolverProductosMultiples($detalle);
+        }
+
+        // Una vez devuelto el stock se eliminan los detalles
+        Ventas_DetallesModel::where('venta_id',$id)->delete();
+
+        // Se elimina la factura (que no fue finalizada)
         $ventas = VentasModel::findOrFail($id);
         $ventas->delete();
+
         return redirect()->route('pendientes.index')->with('message', 'venta eliminada con exito!');
     }
 }
