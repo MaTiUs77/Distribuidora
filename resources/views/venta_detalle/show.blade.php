@@ -186,12 +186,11 @@
 
                         <br>
 
-                        <form role="form" enctype="multipart/form-data" method="post" action="{{ route('pendientes.update',$venta->id) }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="_method" value="PUT" />
-                            <button class="btn btn-success btn-block">F6 - Finalizar Venta</button>
-                        </form>
-
+                        @if($venta->origen =='TERMINAL')
+                            <a href="{{ route('pendientes.finish',[$venta->id,'TERMINAL']) }}" class="btn btn-success btn-block">F6 - Finalizar Venta</a>
+                        @else
+                            <a href="{{ route('pendientes.finish',$venta->id) }}" class="btn btn-success btn-block">F6 - Finalizar Venta</a>
+                        @endif
                     </div>
                     <!-- /.box-body -->
                 </div>

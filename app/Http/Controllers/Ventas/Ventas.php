@@ -10,6 +10,7 @@ use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Venta_Detalle\Venta_Detalle;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,8 +53,9 @@ class Ventas extends Controller
         else
             {
                 $nuevaVenta = new VentasModel();
-                $nuevaVenta->fecha_entrega = '2017/09/18';
-                $nuevaVenta->estado = 'Pendiente de entrega';
+                $nuevaVenta->origen = 'FACTURACION';
+                $nuevaVenta->fecha_entrega = Carbon::now();
+                $nuevaVenta->estado = 'PENDIENTE';
                 $nuevaVenta->user_id = Auth::id();
                 $nuevaVenta->cliente_id = $request->get('cliente_id');
                 $nuevaVenta->save();

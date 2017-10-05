@@ -24,6 +24,7 @@ class CreateVentasTabla extends Migration
 
             $table->integer('cantidad')->nullable();
             $table->integer('total')->nullable();
+            $table->string('origen');
 
             $table->timestamps();
 

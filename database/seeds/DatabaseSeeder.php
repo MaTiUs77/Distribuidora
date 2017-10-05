@@ -18,11 +18,20 @@ class DatabaseSeeder extends Seeder
         'nombre' => 'Default'
     ]);
 
+    CategoriasModel::create(['nombre' => 'BEBIDAS']);
+    CategoriasModel::create(['nombre' => 'LACTEOS']);
+    CategoriasModel::create(['nombre' => 'CARNES']);
+    CategoriasModel::create(['nombre' => 'PESCADOS']);
+    CategoriasModel::create(['nombre' => 'FRUTAS']);
+    CategoriasModel::create(['nombre' => 'LEGUMBRES']);
+    CategoriasModel::create(['nombre' => 'PAN']);
+    CategoriasModel::create(['nombre' => 'PERFUMERIA']);
+    CategoriasModel::create(['nombre' => 'LIMPIEZA']);
+    CategoriasModel::create(['nombre' => 'HIGIENE']);
+//    $this->call(CategoriasSeeder::class);
+
     $this->call(UsersSeeder::class);
-
     $this->call(ProveedoresSeeder::class);
-    $this->call(CategoriasSeeder::class);
-
     $this->call(ProductosSeeder::class);
   }
 }

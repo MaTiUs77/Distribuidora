@@ -7,7 +7,7 @@
       <ul class="sidebar-menu" data-widget="tree">
 
         <li class="bg-green">
-          <a href="{{ url('terminal') }}" style="background-color: rgb(0, 166, 90);">
+          <a href="{{ url('ventas/terminal') }}" style="background-color: rgb(0, 166, 90);">
             <i class="fa fa-gear" style="color: rgb(255, 255, 255);"></i><span style="color: rgb(255, 255, 255);">Iniciar terminal de venta</span>
           </a>
         </li>
@@ -47,7 +47,7 @@
               <a href="{{route('pendientes.index')}}"><i class="fa fa-cart-arrow-down"></i> Ver pendientes
 
                 <span class="label label-primary pull-right">
-                {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','Pendiente de entrega')->count() }}
+                {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','PENDIENTE')->count() }}
                 </span>
 
               </a>

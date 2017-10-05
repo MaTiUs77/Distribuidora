@@ -10,7 +10,7 @@ class Pendientes extends Controller
 {
     public function index()
     {
-        $ventasPendientes = VentasModel::where('estado','Pendiente de entrega')->get();
+        $ventasPendientes = VentasModel::where('estado','PENDIENTE')->get();
 
         $resumen = new ResumenDeVenta($ventasPendientes );
 
@@ -18,11 +18,24 @@ class Pendientes extends Controller
         return view('ventas.pendientes',$datos);
     }
 
-    public function update(Request $request,$id)
+    public function finish($venta_id,$toTerminal=null)
     {
-       $finalizarVenta = VentasModel::findOrFail($id);
-       $finalizarVenta->estado = "Finalizado";
-       $finalizarVenta->save();
-        return redirect(route('pendientes.index'));
+        $finalizarVenta = VentasModel::findOrFail($venta_id);
+
+        if($finalizarVenta->detalles->count() == 0)
+        {
+            $finalizarVenta->delete();
+        } else {
+            $finalizarVenta->estado = "FINALIZADO";
+            $finalizarVenta->save();
+        }
+
+        if($toTerminal)
+        {
+            return redirect(route('terminal'));
+        } else
+        {
+            return redirect(route('pendientes.index'));
+        }
     }
 }

@@ -18,11 +18,19 @@ class UsersSeeder extends Seeder
 
       // Alta de usuario admin
       $admin = User::create([
-        'name' => 'Administrador',
-        'email' => 'admin@admin',
-        'password' => bcrypt('admin'),
+          'name' => 'Administrador',
+          'email' => 'admin@admin',
+          'password' => bcrypt('admin'),
       ]);
       $admin->assignRole('admin');
+
+      // Alta de usuario admin
+      $clienteFinal = User::create([
+          'name' => 'Cliente Final',
+          'email' => 'cfinal@cfinal',
+          'password' => bcrypt('cfinal'),
+      ]);
+      $clienteFinal ->assignRole('cliente');
 
       factory(App\User::class, 3)->create(['password' => bcrypt('test')])->each(function($usuario) {
         $usuario->assignRole('cliente');

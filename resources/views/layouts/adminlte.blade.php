@@ -74,12 +74,12 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">
-                  {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','Pendiente de entrega')->count() }}
+                  {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','PENDIENTE')->count() }}
               </span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">
-                Tiene {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','Pendiente de entrega')->count() }}
+                Tiene {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','PENDIENTE')->count() }}
                 ventas pendientes
               </li>
               <li>
