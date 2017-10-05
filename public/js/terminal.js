@@ -28,6 +28,8 @@ app.controller('Terminal', function($scope)
     $scope.init = function(venta_id)
     {
         $scope.venta_id = venta_id;
+
+        socket.emit('setVentaId', $scope.venta_id);
     };
 
     socket.on('redisMessageChannel', function(data) {
@@ -37,10 +39,17 @@ app.controller('Terminal', function($scope)
     });
 
     socket.on('updateFacturacion', function(data) {
+        console.log("Client on updateFacturacion",data);
+
+
         if(data.error!=undefined)
         {
             console.log("Client on updateFacturacion error",data);
             swal(data.error, "", "error");
+        } else
+        {
+            $scope.facturacion = data.resumen;
+            $scope.$digest();
         }
     });
 

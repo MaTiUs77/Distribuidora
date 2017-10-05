@@ -25,7 +25,6 @@ function init(_app,_socket)
   socket.emit('nodeserver', "Terminal iniciada con Socket.io");
 
   setRedisActions();
-
   socketActions();
 }
 
@@ -40,12 +39,19 @@ function setRedisActions()
     console.log('redisMessage',channel, data);
     socket.emit('redisMessageChannel', JSON.parse(data));
   });
+}
 
-  // Al ingresar obtiene de redis la ultima imagen de la factura
-  client.get('venta', function(error, data) {
+// Obtiene de redis la ultima imagen de la factura
+function getRedisResume(venta_id)
+{
+  var channel = 'venta_'+venta_id;
+  console.log("getRedisResume form ",channel);
+
+  client.get(channel, function(error, data) {
     if (error) throw error;
     socket.emit('redisMessageChannel', JSON.parse(data));
   });
+
 }
 
 function socketActions()
@@ -58,6 +64,13 @@ function socketActions()
     client.quit();
   });
 
+  socket.on('setVentaId', function(_venta_id)
+  {
+    venta_id = _venta_id;
+    console.log("Action setVentaId",venta_id);
+
+    getRedisResume(venta_id);
+  });
 
   socket.on('addByCodigo', function(codigoProducto,venta_id)
   {
