@@ -19,6 +19,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 #RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit \
 #    && chmod +x /usr/local/bin/phpunit
 
-#RUN cd /var/www/html && \
-#    composer install --no-interaction && \
-#    composer update
+WORKDIR /var/www/html
+
+#RUN composer install --no-interaction
+#RUN composer update

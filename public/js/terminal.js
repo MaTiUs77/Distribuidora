@@ -15,6 +15,7 @@ app.controller('Terminal', function($scope)
     $scope.nodeHost = 'localhost:8080';
 
     $scope.facturacion = {};
+    $scope.cambioCalculado = 0;
 
     console.log('Terminal con Socket.io');
 
@@ -40,7 +41,6 @@ app.controller('Terminal', function($scope)
 
     socket.on('updateFacturacion', function(data) {
         console.log("Client on updateFacturacion",data);
-
 
         if(data.error!=undefined)
         {
@@ -71,17 +71,43 @@ app.controller('Terminal', function($scope)
         socket.emit('removeDetalleId', detalle_id, $scope.venta_id);
     };
 
+    // Calcula el cambio segun el monto recibido
+    $scope.calcularCambio= function()
+    {
+        console.log("Calculando cambio",$scope.montoRecibido);
+        var calculo = $scope.montoRecibido - $scope.facturacion.costoTotal;
+        $scope.cambioCalculado = calculo;
+    };
+
+    $scope.cambioInsuficiente= function()
+    {
+        if($scope.cambioCalculado < 0)
+        {
+            console.log('Insuficiente');
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+
 });
 
 app.directive('myEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
             if(event.which === 13) {
+                console.log(element,event);
+
                 scope.$apply(function (){
                     scope.$eval(attrs.myEnter);
-                });
 
-                element.val('');
+                    var blank = scope.$eval(attrs.myEnterBlank);
+                    if(blank)
+                    {
+                        element.val('');
+                    }
+                });
 
                 event.preventDefault();
             }

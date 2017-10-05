@@ -14,16 +14,15 @@ class DatabaseSeeder extends Seeder
       'nombre' => 'Default'
     ]);
 
-    CategoriasModel::create([
-        'nombre' => 'Default'
-    ]);
-
     MarcasModel::create([
         'nombre' => 'Default'
     ]);
 
     $this->call(UsersSeeder::class);
-    $this->call(ProductosSeeder::class);
+
     $this->call(ProveedoresSeeder::class);
+    $this->call(CategoriasSeeder::class);
+
+    $this->call(ProductosSeeder::class);
   }
 }
