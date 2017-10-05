@@ -32,27 +32,15 @@ app.controller('Terminal', function($scope)
 
     socket.on('redisMessageChannel', function(data) {
         console.log("Client on redisMessageChannel",data);
-
-        console.log(data);
-
-        if(data.error!=undefined)
-        {
-            swal(data.error, "", "error");
-        } else {
-            $scope.facturacion = data.resumen;
-            $scope.$digest();
-        }
+        $scope.facturacion = data;
+        $scope.$digest();
     });
 
     socket.on('updateFacturacion', function(data) {
-        console.log("Client on updateFacturacion",data);
-
         if(data.error!=undefined)
         {
+            console.log("Client on updateFacturacion error",data);
             swal(data.error, "", "error");
-        } else {
-            $scope.facturacion = data.resumen;
-            $scope.$digest();
         }
     });
 

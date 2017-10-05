@@ -44,12 +44,7 @@ function setRedisActions()
   // Al ingresar obtiene de redis la ultima imagen de la factura
   client.get('venta', function(error, data) {
     if (error) throw error;
-    var data = JSON.parse(data);
-
-    var response = {};
-    response.resumen = data;
-
-    socket.emit('updateFacturacion', response);
+    socket.emit('redisMessageChannel', JSON.parse(data));
   });
 }
 
@@ -97,16 +92,16 @@ function socketActions()
   });
 }
 
-function addByCodigo(codigoProducto,venta_id) {
-
-  console.log("Localizando url");
+function addByCodigo(codigoProducto,venta_id)
+{
+  var cantidad = 1;
 
   var options = {
-    uri: 'http://web/api/terminal/add/'+venta_id+'/1/'+codigoProducto,
+    uri: 'http://web/api/terminal/add/'+venta_id+'/'+cantidad+'/'+codigoProducto,
     headers: {
       'User-Agent': 'Request-Promise'
     },
-    json: true // Automatically parses the JSON string in the response
+    json: true
   };
 
   return rp(options);
@@ -119,7 +114,7 @@ function removeDetalleId(detalle_id,venta_id)
     headers: {
       'User-Agent': 'Request-Promise'
     },
-    json: true // Automatically parses the JSON string in the response
+    json: true
   };
 
   return rp(options);
