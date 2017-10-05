@@ -21,11 +21,6 @@ services:
        - "9000"
     volumes:
        - "../:/var/www/html"
-  composer:
-    image: "composer"
-    volumes:
-       - "../:/var/www/html"
-    command: install
   myadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
