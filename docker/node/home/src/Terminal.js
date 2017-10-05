@@ -15,7 +15,6 @@ function init(_app,_socket)
 
   client = redis.createClient(6379,"redis");
   redisub = redis.createClient(6379,"redis");
-  redisub.subscribe("venta");
 
   client.on('error', function(err){
     console.log('Algo salio mal con Redis', err)
@@ -45,6 +44,9 @@ function setRedisActions()
 function getRedisResume(venta_id)
 {
   var channel = 'venta_'+venta_id;
+
+  redisub.subscribe(channel);
+
   console.log("getRedisResume form ",channel);
 
   client.get(channel, function(error, data) {
