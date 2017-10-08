@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function perfil()
     {
-        return $this->hasOne('App\Http\Controllers\Perfil\Model\PerfilModel','id', 'id');
+        return $this->hasOne('App\Http\Controllers\Perfil\Model\PerfilModel','user_id', 'id');
     }
 }

@@ -40,8 +40,8 @@
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
                             Cliente
-                            <label class="label label-danger">sin perfil</label>
-                            @if(isset($venta->vendedor->perfil))
+
+                            @if(isset($venta->cliente->perfil))
                                 <address>
                                     <strong>{{$venta->cliente->perfil->nombre}}</strong><br>
                                     {{$venta->cliente->perfil->direccion}}<br>
@@ -49,6 +49,7 @@
                                     Email: {{$venta->cliente->perfil->email}}
                                 </address>
                             @else
+                                <label class="label label-danger">sin perfil</label>
                                 <address>
                                     <strong>{{$venta->cliente->name}}</strong><br>
                                     Email: {{$venta->cliente->email}}

@@ -61,6 +61,7 @@
         @role('admin')
           <li class="header">ADMINISTRACION</li>
           <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+          <li><a href="{{ route('clientes.index') }}"><i class="fa fa-user"></i> <span>Clientes</span></a></li>
           <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-address-book"></i> <span>Proveedores</span></a></li>
           <li><a href="{{ route('marcas.index') }}"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>
           <li><a href="{{ route('categorias.index') }}"><i class="fa fa-book"></i> <span>Categorias</span></a></li>
