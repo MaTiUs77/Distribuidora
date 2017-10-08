@@ -18,11 +18,15 @@ class CreatePerfilTabla extends Migration
 
             $table->increments('id');
             $table->string('nombre');
-            $table->string('apellido');
+            $table->string('codigo');
             $table->string('telefono');
             $table->string('direccion');
+            $table->string('tipo_identificacion');
+            $table->string('numero_identificacion');
             $table->string('email')->unique();
-            $table->string('cuil_cuit');
+            $table->string('pais');
+            $table->string('provincia');
+            $table->string('localidad')->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

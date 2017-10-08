@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Perfil;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Perfil\Model\PerfilModel;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,12 +47,16 @@ class Perfil extends Controller
     public function store(Request $request)
     {
         $nuevoPerfil = new PerfilModel();
-        $nuevoPerfil->nombre = $request->get('name');
-        $nuevoPerfil->apellido = $request->get('apellido');
+        $nuevoPerfil->nombre = $request->get('nombre');
+        $nuevoPerfil->codigo = $request->get('codigo');
         $nuevoPerfil->telefono = $request->get('telefono');
         $nuevoPerfil->direccion = $request->get('direccion');
+        $nuevoPerfil->tipo_identificacion = $request->get('tipo_identificacion');
+        $nuevoPerfil->numero_identificacion = $request->get('numero_identificacion');
         $nuevoPerfil->email = $request->get('email');
-        $nuevoPerfil->cuil_cuit = $request->get('cuit_cuil');
+        $nuevoPerfil->pais = $request->get('pais');
+        $nuevoPerfil->provincia = $request->get('provincia');
+        $nuevoPerfil->localidad = $request->get('localidad');
         $nuevoPerfil->user_id= Auth::id();
         $nuevoPerfil->save();
         return redirect()->route('perfil.index');
@@ -91,12 +96,16 @@ class Perfil extends Controller
     public function update(Request $request, $id)
     {
         $perfil = PerfilModel::findOrFail($id);
-        $perfil->nombre = $request->get('name');
-        $perfil->apellido = $request->get('apellido');
+        $perfil->nombre = $request->get('nombre');
+        $perfil->codigo = $request->get('codigo');
         $perfil->telefono = $request->get('telefono');
         $perfil->direccion = $request->get('direccion');
+        $perfil->tipo_identificacion = $request->get('tipo_identificacion');
+        $perfil->numero_identificacion = $request->get('numero_identificacion');
         $perfil->email = $request->get('email');
-        $perfil->cuil_cuit = $request->get('cuil_cuit');
+        $perfil->pais = $request->get('pais');
+        $perfil->provincia = $request->get('provincia');
+        $perfil->localidad = $request->get('localidad');
         $perfil->save();
         return redirect()->route('perfil.index');
     }
