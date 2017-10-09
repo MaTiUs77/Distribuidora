@@ -52,7 +52,7 @@
 
               </a>
             </li>
-            <li><a href="#"><i class="fa fa-history"></i> Ver historial</a></li>
+            <li><a href="{{ route('historial.index') }}"><i class="fa fa-history"></i> Ver historial</a></li>
           </ul>
         </li>
 
