@@ -54,13 +54,17 @@ app.controller('Terminal', function($scope)
     });
 
     // Agrega productos a la venta_id segun el barcode solicitado
-    $scope.addByCodigo= function(codigoProducto)
+    $scope.addProducto= function()
     {
-        console.log("Client addByCodigo",codigoProducto,$scope.venta_id);
+        console.log("Client addProducto",$scope.venta_id, $scope.codigoProducto, $scope.cantidadProducto);
 
-        if(codigoProducto!=undefined)
+        if($scope.codigoProducto!=undefined && $scope.cantidadProducto > 0)
         {
-            socket.emit('addByCodigo', codigoProducto, $scope.venta_id);
+            socket.emit('addProducto',$scope.venta_id, $scope.codigoProducto, $scope.cantidadProducto);
+
+            $scope.codigoProducto = '';
+            $scope.cantidadProducto = 1;
+            $('#codigoProducto').focus();
         }
     };
 
@@ -101,6 +105,8 @@ app.directive('myEnter', function () {
 
                 scope.$apply(function (){
                     scope.$eval(attrs.myEnter);
+
+                    console.log('OK EVAL MyEnter');
 
                     var blank = scope.$eval(attrs.myEnterBlank);
                     if(blank)

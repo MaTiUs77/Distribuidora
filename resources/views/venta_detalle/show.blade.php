@@ -105,7 +105,16 @@
                 <div class="box box-solid">
                     <div class="box-body">
 
-                        <input class="form-control input-lg" type="text" placeholder="Ingrese el Nombre o Codigo del Producto" id="addByCodigoInput" ng-model="codigoProducto" my-enter-blank="true" my-enter="addByCodigo(codigoProducto)" >
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <label for="codigoProducto">Producto:</label>
+                                <input class="form-control input-lg" type="text" placeholder="Nombre o Codigo del Producto" id="codigoProducto" ng-model="codigoProducto" my-enter="addProducto()" >
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="cantidadProducto">Cantidad:</label>
+                                <input class="form-control input-lg" type="text" placeholder="Cantidad" ng-model="cantidadProducto" ng-init="cantidadProducto = 1" my-enter="addProducto()" >
+                            </div>
+                        </div>
 
                         <br>
 

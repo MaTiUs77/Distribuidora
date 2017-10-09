@@ -74,11 +74,11 @@ function socketActions()
     getRedisResume(venta_id);
   });
 
-  socket.on('addByCodigo', function(codigoProducto,venta_id)
+  socket.on('addProducto', function(venta_id, productoCodigo, productoCantidad)
   {
-    console.log("Action addByAcodigo",codigoProducto,venta_id);
+    console.log("Action addProducto",venta_id, productoCodigo, productoCantidad);
 
-    addByCodigo(codigoProducto,venta_id).then(function (result) {
+    addProducto(venta_id, productoCodigo, productoCantidad).then(function (result) {
         // En este punto, el api de laravel ya se comunico con redis y lo actualizo,
         // no es necesario hacer nada, ya que node esta escuchando el canal de redis y actualizo el front
         // Logueo solo para ver el retorno del api en laravel
@@ -107,17 +107,19 @@ function socketActions()
   });
 }
 
-function addByCodigo(codigoProducto,venta_id)
+function addProducto(venta_id, productoCodigo, productoCantidad)
 {
-  var cantidad = 1;
-
   var options = {
-    uri: 'http://web/api/terminal/add/'+venta_id+'/'+cantidad+'/'+codigoProducto,
+    uri: 'http://web/api/terminal/add/'+venta_id+'/'+productoCantidad+'/'+productoCodigo,
     headers: {
       'User-Agent': 'Request-Promise'
     },
     json: true
   };
+
+
+  console.log("Servide addProducto",options);
+
 
   return rp(options);
 }
