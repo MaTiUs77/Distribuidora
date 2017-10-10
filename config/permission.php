@@ -31,19 +31,12 @@ return [
     'table_names' => [
 
         /*
-         * The table that your application uses for users. This table's model will
-         * be using the "HasRoles" and "HasPermissions" traits.
-         */
-
-        'users' => 'users',
-
-        /*
          * When using the "HasRoles" trait from this package, we need to know which
          * table should be used to retrieve your roles. We have chosen a basic
          * default value but you may easily change it to any table you like.
          */
 
-        'roles' => 'roles',
+        'roles' => 'spa_roles',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -51,23 +44,23 @@ return [
          * default value but you may easily change it to any table you like.
          */
 
-        'permissions' => 'permissions',
+        'permissions' => 'spa_permissions',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
-         * table should be used to retrieve your users permissions. We have chosen a
+         * table should be used to retrieve your models permissions. We have chosen a
          * basic default value but you may easily change it to any table you like.
          */
 
-        'user_has_permissions' => 'user_has_permissions',
+        'model_has_permissions' => 'spa_model_permissions',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
-         * table should be used to retrieve your users roles. We have chosen a
+         * table should be used to retrieve your models roles. We have chosen a
          * basic default value but you may easily change it to any table you like.
          */
 
-        'user_has_roles' => 'user_has_roles',
+        'model_has_roles' => 'spa_model_roles',
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -75,19 +68,17 @@ return [
          * basic default value but you may easily change it to any table you like.
          */
 
-        'role_has_permissions' => 'role_has_permissions',
-    ],
-
-    'foreign_keys' => [
-
-        /*
-         * The name of the foreign key to the users table.
-         */
-        'users' => 'user_id',
+        'role_has_permissions' => 'spa_role_permissions',
     ],
 
     /*
-     *
+     * By default all permissions will be cached for 24 hours unless a permission or
+     * role is updated. Then the cache will be flushed immediately.
+     */
+
+    'cache_expiration_time' => 60 * 24,
+
+    /*
      * By default we'll make an entry in the application log when the permissions
      * could not be loaded. Normally this only occurs while installing the packages.
      *

@@ -88,7 +88,7 @@ function socketActions()
         socket.emit('updateFacturacion', result);
       })
       .catch(function (err) {
-        console.log("No se pudo acceder al API");
+        console.log("No se pudo acceder al API v3",err );
       });
   });
 

@@ -41,7 +41,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         $this->customWebRoutes();
-
     }
 
     /**
@@ -91,6 +90,5 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group($file->getRealPath());
         }
-
     }
 }

@@ -58,7 +58,8 @@
 
         <li><a href="#"><i class="fa fa-money"></i> <span>Facturacion</span></a></li>
 
-        @role('admin')
+
+        @hasanyrole('vendedor|admin')
           <li class="header">ADMINISTRACION</li>
           <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
           <li><a href="{{ route('clientes.index') }}"><i class="fa fa-user"></i> <span>Clientes</span></a></li>
@@ -66,7 +67,7 @@
           <li><a href="{{ route('marcas.index') }}"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>
           <li><a href="{{ route('categorias.index') }}"><i class="fa fa-book"></i> <span>Categorias</span></a></li>
           <li><a href="{{ route('almacenes.index') }}"><i class="fa fa-cubes"></i> <span>Almacenes</span></a></li>
-        @endrole
+        @endhasanyrole
 
         @stack('sidebar_menu')
       </ul>

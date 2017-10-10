@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
 /public/storage
-/public/upload
 /storage/*.key
 /vendor
 /.idea
@@ -10,11 +9,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-Esquema_db.mwb.bak
-docker/\.\.env\.swp
-
-docker/node/home/node_modules/
-
-docker/node/home/\.Dockerfile\.swp
-
-docker/node/home/package-lock\.json
+.env
+docker/node/home/node_modules
