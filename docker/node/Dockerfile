@@ -1,6 +1,5 @@
-FROM    node:latest
+FROM    node:alpine
 
-#RUN mkdir -p /home
 WORKDIR /home
 #COPY . /home
 
