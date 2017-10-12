@@ -6,7 +6,7 @@ services:
 
     myadmin:
       image: phpmyadmin/phpmyadmin
-      container_name: dev-pma
+      container_name: phpmyadmin
       ports:
           - "81:80"
       environment:

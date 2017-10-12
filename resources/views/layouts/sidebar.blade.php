@@ -6,11 +6,14 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
 
+        @hasanyrole('vendedor|admin')
         <li class="bg-green">
           <a href="{{ url('ventas/terminal') }}" style="background-color: rgb(0, 166, 90);">
             <i class="fa fa-gear" style="color: rgb(255, 255, 255);"></i><span style="color: rgb(255, 255, 255);">Iniciar terminal de venta</span>
           </a>
         </li>
+        @endhasanyrole
+
 
         <li>
           <!-- search form (Optional) -->
@@ -42,7 +45,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
+
+            @hasanyrole('vendedor|admin')
             <li><a href="{{route('ventas.index')}}"><i class="fa fa-plus"></i> Nueva venta</a></li>
+            @endhasanyrole
+
             <li>
               <a href="{{route('pendientes.index')}}"><i class="fa fa-cart-arrow-down"></i> Ver pendientes
 
@@ -55,9 +62,6 @@
             <li><a href="{{ route('historial.index') }}"><i class="fa fa-history"></i> Ver historial</a></li>
           </ul>
         </li>
-
-        <li><a href="#"><i class="fa fa-money"></i> <span>Facturacion</span></a></li>
-
 
         @hasanyrole('vendedor|admin')
           <li class="header">ADMINISTRACION</li>

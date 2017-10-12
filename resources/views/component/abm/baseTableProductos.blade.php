@@ -2,6 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Lista de {{ ucfirst($resource) }}</h3>
 
+    @hasanyrole('vendedor|admin')
     <a class="btn btn-primary pull-right" href="{{ route($resource.'.create') }}">
       <i class="fa fa-plus"></i>
       Agregar
@@ -9,6 +10,8 @@
         {{ ucfirst($resource) }}
       </span>
     </a>
+    @endhasanyrole
+
 
   </div>
   <!-- /.box-header -->
@@ -16,7 +19,9 @@
     <table class="table table-striped">
       <tbody>
       <tr>
+        @hasanyrole('vendedor|admin')
         <th style="width: 180px">Acciones</th>
+        @endhasanyrole
         <th style="width: 10px">Id</th>
         <th>Imagen</th>
         <th>Nombre</th>
@@ -30,17 +35,18 @@
         <th>Proveedor</th>
         <th>Marca</th>
         <th>Categoria</th>
-        <th></th>
       </tr>
 
       @foreach($items as $item)
         <tr>
+          @hasanyrole('vendedor|admin')
           <td>
-            @include('component.abm.btn',[
-                'resource' => $resource,
-                'item' => $item,
-            ])
+              @include('component.abm.btn',[
+                  'resource' => $resource,
+                  'item' => $item,
+              ])
           </td>
+          @endhasanyrole
           <td>{{ $item->id }}</td>
           <td>
             <img src="{{ asset("upload/".$item->imagen) }}" width="100" style="display: block;">
@@ -56,6 +62,8 @@
           <td>{{ $item->proveedor->nombre }}</td>
           <td>{{ $item->marca->nombre }}</td>
           <td>{{ $item->categoria->nombre }}</td>
+
+          <!-- DESABILITAMSO AL CARRITO
           <td>
             <a href="{{ route('carrito.add', [ $item->id, 1 ] ) }}" class="btn btn-success btn-sm" >
                 <i class="fa fa-edit"></i>
@@ -63,8 +71,8 @@
                      Al arrito
                 </span>
             </a>
-
           </td>
+          -->
         </tr>
       @endforeach
 

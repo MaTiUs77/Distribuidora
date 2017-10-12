@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Productos\Inventario;
+use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 use App\Http\Controllers\Ventas\ResumenDeVenta;
 use Illuminate\Http\Request;
@@ -31,14 +32,13 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        $ventasPendientes = VentasModel::where('estado','Pendiente de entrega')->get();
-        $ventasFinalizadas = VentasModel::where('estado','Finalizado')->get();
+        $ventasPendientes = VentasModel::pendientes()->get();
+        $ventasFinalizadas = VentasModel::finalizadas()->get();
 
         $resumenPendiente  = new ResumenDeVenta($ventasPendientes);
         $resumenFinalizada  = new ResumenDeVenta($ventasFinalizadas);
 
-        $inventario = new Inventario();
-        $alertaStock = $inventario->alertaStock();
+        $alertaStock = ProductosModel::conAlertaStock()->get();
 
         $datos = compact('user','resumenPendiente','resumenFinalizada','alertaStock') ;
 

@@ -1,3 +1,5 @@
+@inject('ventasModel', '\App\Http\Controllers\Ventas\Model\VentasModel')
+
 <!DOCTYPE html>
 <html ng-app="SytemApp">
 <head>
@@ -18,6 +20,8 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/select2/dist/css/select2.min.css') }}">
+  <!-- JqueryUI-->
+  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,12 +78,12 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">
-                  {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','PENDIENTE')->count() }}
+                  {{  $ventasModel::pendientes()->count() }}
               </span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">
-                Tiene {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','PENDIENTE')->count() }}
+                Tiene {{  $ventasModel::pendientes()->count() }}
                 ventas pendientes
               </li>
               <li>

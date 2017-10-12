@@ -91,11 +91,4 @@ class Inventario extends Controller
 
         }
     }
-
-    public function alertaStock()
-    {
-        $productosConAlerta = ProductosModel::where('stock','<',DB::raw("`stock_minimo`"))->get();
-
-        return $productosConAlerta;
-    }
 }

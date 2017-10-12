@@ -18,7 +18,7 @@ class Ventas_DetallesModel extends Model
 
     public function ventas()
     {
-        return $this->hasOne('App\Http\Controllers\Ventas\Model\VentasModel','id', 'venta_id');
+        return $this->belongsTo('App\Http\Controllers\Ventas\Model\VentasModel','venta_id', 'id');
     }
 
     public function producto()

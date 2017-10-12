@@ -23,4 +23,24 @@ class VentasModel extends Model
         return $this->hasMany('App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel','venta_id', 'id');
     }
 
+    /**
+     * Se llama de esta manera
+     *
+     * $pendientes = VentasModel::pendientes()->get();
+     */
+    public function scopePendientes($query)
+    {
+        return $query->where('estado','Pendiente de entrega');
+    }
+
+    /**
+     * Se llama de esta manera
+     *
+     * $finalizadas = VentasModel::finalizadas()->get();
+     */
+    public function scopeFinalizadas($query)
+    {
+        return $query->where('estado','Finalizado');
+    }
+
 }

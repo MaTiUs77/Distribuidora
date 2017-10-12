@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Ventas\Model\VentasModel;
+use Illuminate\Database\Eloquent\Collection;
 
 class ResumenDeVenta extends Controller
 {
@@ -13,7 +15,6 @@ class ResumenDeVenta extends Controller
 
     public function __construct($ventas) {
         $this->ventas = $ventas;
-
 
         $this->calcularCantidadProductos();
         $this->calcularCostoTotal();

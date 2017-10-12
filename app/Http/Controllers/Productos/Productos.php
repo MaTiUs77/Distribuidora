@@ -9,12 +9,19 @@ use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\In;
 
 class Productos extends Controller
 {
+    /**
+     * Si no se encuentra autenticado solamente ve el index!
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['role:admin|vendedor'])->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
