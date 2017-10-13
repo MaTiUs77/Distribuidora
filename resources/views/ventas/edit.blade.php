@@ -44,7 +44,7 @@
 
         $(function() {
             $("#cliente").autocomplete({
-                source: "http://distribuidora.com/ventas/search/autocomplete",
+                source: "{{ url("api/autocomplete/clientes") }}",
                 minLength: 2,
                 select: function (event, ui) {
                     console.log(ui.item.id);

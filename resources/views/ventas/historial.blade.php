@@ -62,4 +62,10 @@
         </div>
     </div>
 
+    @if($resumen->ventas instanceof  \Illuminate\Pagination\LengthAwarePaginator)
+        <div class="text-center">
+            {{ $resumen->ventas->links() }}
+        </div>
+    @endif
+
 @endsection

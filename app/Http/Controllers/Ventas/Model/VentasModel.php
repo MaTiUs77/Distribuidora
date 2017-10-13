@@ -30,7 +30,7 @@ class VentasModel extends Model
      */
     public function scopePendientes($query)
     {
-        return $query->where('estado','Pendiente de entrega');
+        return $query->where('estado','PENDIENTE');
     }
 
     /**
@@ -40,7 +40,7 @@ class VentasModel extends Model
      */
     public function scopeFinalizadas($query)
     {
-        return $query->where('estado','Finalizado');
+        return $query->where('estado','FINALIZADO');
     }
 
 }

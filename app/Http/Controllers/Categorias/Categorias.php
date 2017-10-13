@@ -16,7 +16,7 @@ class Categorias extends Controller
      */
     public function index()
     {
-        $categorias = CategoriasModel::all();
+        $categorias = CategoriasModel::paginate(10);
 
         $datos = compact('categorias');
         return view('categorias.index',$datos);

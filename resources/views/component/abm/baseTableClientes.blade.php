@@ -49,6 +49,13 @@
 </div>
 
 
+@if($items instanceof  \Illuminate\Pagination\LengthAwarePaginator)
+  <div class="text-center">
+    {{ $items->links() }}
+  </div>
+@endif
+
+
 @if(session()->has('message'))
   <script>
 

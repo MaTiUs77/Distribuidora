@@ -259,12 +259,11 @@
     <script >
 
         $(function() {
-            $("#producto").autocomplete({
-                source: "{{ url('ventas/search/autocomplete/producto') }}",
+            $("#codigoProducto").autocomplete({
+                source: "{{ url('api/autocomplete/productos') }}",
                 minLength: 2,
                 select: function (event, ui) {
-                    $('#producto').val(ui.item.name);
-                    $('#producto_id').val(ui.item.id);
+                    $('#codigoProducto').val(ui.item.name);
                 }
             });
         });

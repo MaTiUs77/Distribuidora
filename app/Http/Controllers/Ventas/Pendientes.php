@@ -10,7 +10,7 @@ class Pendientes extends Controller
 {
     public function index()
     {
-        $ventasPendientes = VentasModel::where('estado','PENDIENTE')->get();
+        $ventasPendientes = VentasModel::pendientes()->paginate(10);
 
         $resumen = new ResumenDeVenta($ventasPendientes );
 

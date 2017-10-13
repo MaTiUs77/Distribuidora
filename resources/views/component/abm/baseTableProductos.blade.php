@@ -12,7 +12,6 @@
     </a>
     @endhasanyrole
 
-
   </div>
   <!-- /.box-header -->
   <div class="box-body no-padding">
@@ -81,6 +80,12 @@
   </div>
   <!-- /.box-body -->
 </div>
+
+@if($items instanceof  \Illuminate\Pagination\LengthAwarePaginator)
+  <div class="text-center">
+    {{ $items->links() }}
+  </div>
+@endif
 
 
 @if(session()->has('message'))

@@ -15,7 +15,7 @@ class Almacenes extends Controller
      */
     public function index()
     {
-        $almacenes = AlmacenesModel::all();
+        $almacenes = AlmacenesModel::paginate(10);
 
         $datos = compact('almacenes');
         return view('almacenes.index',$datos);

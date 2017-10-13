@@ -13,7 +13,7 @@ class Clientes extends Controller
 
     public function index()
     {
-        $clientes = User::role('cliente')->get();
+        $clientes = User::role('cliente')->paginate(10);
 
         $datos = compact('clientes');
         return view('clientes.index', $datos);

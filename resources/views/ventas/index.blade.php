@@ -29,8 +29,7 @@
 
     $(function() {
         $("#cliente").autocomplete({
-
-            source: "{{ url('ventas/search/autocomplete') }}",
+            source: "{{ url("api/autocomplete/clientes") }}",
             minLength: 2,
             select: function (event, ui) {
                 console.log(ui.item.id);
@@ -41,6 +40,4 @@
         });
 
 </script>
-
-
 @endsection

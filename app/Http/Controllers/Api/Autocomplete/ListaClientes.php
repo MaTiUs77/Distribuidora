@@ -1,21 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Ventas;
+namespace App\Http\Controllers\Api\Autocomplete;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Usuarios\Usuarios;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 
 class ListaClientes extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function autocomplete()
     {
         $term = Input::get('term');

@@ -29,7 +29,10 @@ class Productos extends Controller
      */
     public function index()
     {
-        $productos = ProductosModel::all();
+        $productos = ProductosModel::with([
+            'almacen','proveedor','marca','categoria'
+        ])->paginate(10);
+
         $datos = compact('productos');
         return view('productos.index',$datos);
     }

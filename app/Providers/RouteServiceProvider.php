@@ -66,10 +66,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+        $files = Finder::create()
+            ->in(app_path('Http/Controllers'))
+            ->name('routes.php');
+
+        foreach($files as $file) {
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group($file->getRealPath());
+        }
     }
 
     /**

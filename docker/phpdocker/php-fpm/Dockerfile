@@ -5,6 +5,7 @@ WORKDIR "/application"
 # Install git
 RUN apt-get update \
     && apt-get -y install git \
+    && apt-get -y install zip unzip \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # pcntl
