@@ -29,7 +29,7 @@ class ListaProductos extends Controller
         if(count($producto)) {
 
             foreach ($producto as $query) {
-                $results[] = ['id' => $query->id, 'value' => $query->nombre, 'precio' => $query->precio_venta];
+                $results[] = ['id' => $query->id, 'value' => $query->nombre, 'precio' => $query->precio_venta,'barcode' => $query->barcode];
             }
         }
 

@@ -2,7 +2,7 @@
 @section('sidebar','sidebar-mini sidebar-collapse')
 
 @section('contenido')
-    <div ng-controller="Terminal" ng-init="init({{ $venta->id }})" ng-cloak>
+    <div ng-controller="Terminal" ng-init="init({{ $venta->id }},'{{ env('IP_ACCESSO_REMOTO') }}:8080')" ng-cloak>
 
         <div class="row">
             <div class="col-xs-8">

@@ -268,7 +268,7 @@
 <!-- Select2 -->
 <script src="{{ asset('adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
 <!-- Socket.io-->
-<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="http://{{ env('IP_ACCESSO_REMOTO') }}:8080/socket.io/socket.io.js"></script>
 <!-- Terminal -->
 <script src="{{ asset('js/terminal.js') }}"></script>
 

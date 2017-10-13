@@ -5,13 +5,14 @@ var redisub;
 
 var rp = require('request-promise');
 
-var app,socket;
+var app,io,socket;
 
 
-function init(_app,_socket)
+function init(_app,_io,_socket)
 {
   socket = _socket;
   app = _app;
+  io = _io;
 
   client = redis.createClient(6379,"redis");
   redisub = redis.createClient(6379,"redis");
@@ -53,7 +54,6 @@ function getRedisResume(venta_id)
     if (error) throw error;
     socket.emit('redisMessageChannel', JSON.parse(data));
   });
-
 }
 
 function socketActions()
@@ -85,8 +85,9 @@ function socketActions()
         console.log("addByCodigoResponse",result);
 
         // Puedo emitir una respuesta de node, para que el front haga otra cosa
-        socket.emit('updateFacturacion', result);
-      })
+        //socket.emit('updateFacturacion', result);
+        io.emit('updateFacturacion', result);
+    })
       .catch(function (err) {
         console.log("No se pudo acceder al API v3",err );
       });
@@ -99,7 +100,8 @@ function socketActions()
         console.log("removeDetalleIdResponse",result);
 
         // Puedo emitir una respuesta de node, para que el front haga otra cosa
-        socket.emit('updateFacturacion', result);
+        io.emit('updateFacturacion', result);
+        //socket.emit('updateFacturacion', result);
       })
       .catch(function (err) {
         console.log("No se pudo acceder al API");

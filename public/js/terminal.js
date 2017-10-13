@@ -16,42 +16,45 @@ app.controller('Terminal', function($scope)
 
     $scope.facturacion = {};
     $scope.cambioCalculado = 0;
-
-    console.log('Terminal con Socket.io');
-
-    var socket = io.connect('http://'+$scope.nodeHost, { 'forceNew': true });
-
-    socket.on('nodeserver', function(data) {
-        console.log("Client on nodeserver",data);
-    });
+    var socket;
 
     // Inicializo la terminal con la ID de venta
-    $scope.init = function(venta_id)
+    $scope.init = function(venta_id,host)
     {
         $scope.venta_id = venta_id;
+        if(host!=undefined)
+        {
+            $scope.nodeHost = host;
+        }
+
+        console.log('Terminal con Socket.io');
+        socket = io.connect('http://'+$scope.nodeHost, { 'forceNew': true });
+
+        socket.on('nodeserver', function(data) {
+            console.log("Client on nodeserver",data);
+        });
+        socket.on('redisMessageChannel', function(data) {
+            console.log("Client on redisMessageChannel",data);
+            $scope.facturacion = data;
+            $scope.$digest();
+        });
+
+        socket.on('updateFacturacion', function(data) {
+            console.log("Client on updateFacturacion",data);
+
+            if(data.error!=undefined)
+            {
+                console.log("Client on updateFacturacion error",data);
+                swal(data.error, "", "error");
+            } else
+            {
+                $scope.facturacion = data.resumen;
+                $scope.$digest();
+            }
+        });
 
         socket.emit('setVentaId', $scope.venta_id);
     };
-
-    socket.on('redisMessageChannel', function(data) {
-        console.log("Client on redisMessageChannel",data);
-        $scope.facturacion = data;
-        $scope.$digest();
-    });
-
-    socket.on('updateFacturacion', function(data) {
-        console.log("Client on updateFacturacion",data);
-
-        if(data.error!=undefined)
-        {
-            console.log("Client on updateFacturacion error",data);
-            swal(data.error, "", "error");
-        } else
-        {
-            $scope.facturacion = data.resumen;
-            $scope.$digest();
-        }
-    });
 
     // Agrega productos a la venta_id segun el barcode solicitado
     $scope.addProducto= function()

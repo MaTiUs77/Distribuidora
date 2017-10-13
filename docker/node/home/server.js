@@ -12,7 +12,7 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-  terminal.init(app,socket);
+  terminal.init(app,io,socket);
   
   /*
   socket.on('testAutocomplete', function(termino) {
