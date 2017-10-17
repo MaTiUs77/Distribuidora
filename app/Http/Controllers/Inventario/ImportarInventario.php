@@ -12,11 +12,6 @@ use PDF;
 
 class ImportarInventario extends Controller
 {
-    public function index()
-    {
-        return view('inventario.index');
-    }
-
     public function download($type)
     {
         $data = ProductosModel::get()->toArray();

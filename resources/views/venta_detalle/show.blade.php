@@ -255,6 +255,10 @@
 @endsection
 
 @section('footer')
+    <!-- Socket.io-->
+    <script src="http://{{ env('IP_ACCESSO_REMOTO') }}:8080/socket.io/socket.io.js"></script>
+    <!-- Terminal -->
+    <script src="{{ asset('js/terminal.js') }}"></script>
 
     <script >
 
