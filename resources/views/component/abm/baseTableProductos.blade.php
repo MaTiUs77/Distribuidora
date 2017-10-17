@@ -22,7 +22,9 @@
         <th style="width: 180px">Acciones</th>
         @endhasanyrole
         <th style="width: 10px">Id</th>
+{{--
         <th>Imagen</th>
+--}}
         <th>Nombre</th>
         <th>Barcode</th>
         <th>Precio Proveedor</th>
@@ -47,9 +49,11 @@
           </td>
           @endhasanyrole
           <td>{{ $item->id }}</td>
+{{--
           <td>
             <img src="{{ asset("upload/".$item->imagen) }}" width="100" style="display: block;">
           </td>
+--}}
           <td>{{ $item->nombre }}</td>
           <td>{{ $item->barcode }}</td>
           <td>{{ $item->precio_proveedor }}</td>
@@ -58,7 +62,7 @@
           <td>{{ $item->estado }}</td>
           <td>{{ $item->stock }}</td>
           <td>{{ $item->almacen->nombre }}</td>
-          <td>{{ $item->proveedor->nombre }}</td>
+          <td>{{ $item->proveedor->name }}</td>
           <td>{{ $item->marca->nombre }}</td>
           <td>{{ $item->categoria->nombre }}</td>
 

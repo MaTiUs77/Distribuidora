@@ -14,6 +14,7 @@ class UsersSeeder extends Seeder
       // create roles and assign existing permissions
       $role = Role::create(['name' => 'vendedor']);
       $role = Role::create(['name' => 'cliente']);
+      $role = Role::create(['name' => 'proveedor']);
       $role = Role::create(['name' => 'admin']);
 
       // Alta de usuario admin

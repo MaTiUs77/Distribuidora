@@ -11,6 +11,7 @@ class ProductosModel extends Model
 
     public $fillable = [
         'nombre',
+        'codigo_interno',
         'barcode',
         'descripcion',
         'precio_proveedor',
@@ -32,7 +33,7 @@ class ProductosModel extends Model
 
     public function proveedor()
     {
-        return $this->hasOne('App\Http\Controllers\Proveedores\Model\ProveedoresModel','id','id_proveedor');
+        return $this->hasOne('App\User','id', 'id_proveedor');
     }
 
     public function marca()

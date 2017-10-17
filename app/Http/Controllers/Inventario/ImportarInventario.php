@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\Inventario;
 
+use App\Http\Controllers\Almacenes\Model\AlmacenesModel;
+use App\Http\Controllers\Categorias\Model\CategoriasModel;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Marcas\Model\MarcasModel;
+use App\Http\Controllers\Perfil\Model\PerfilModel;
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+
+use Spatie\Permission\Models\Role;
+use App\User;
+
 
 
 class ImportarInventario extends Controller
@@ -58,6 +66,32 @@ class ImportarInventario extends Controller
 
         $data->each(function($fila){
             $fila['precio_venta'] = $this->calcularPorcentaje($fila->precio_proveedor,$fila->aplicar_porcentaje);
+
+            $almacen = AlmacenesModel::firstOrCreate(['nombre' => $fila->id_almacen]);
+            $marca = MarcasModel::firstOrCreate(['nombre' => $fila->id_marca]);
+            $categoria = CategoriasModel::firstOrCreate(['nombre' => $fila->id_categoria]);
+
+            $fila['id_almacen'] = $almacen->id;
+            $fila['id_marca'] = $marca->id;
+            $fila['id_categoria'] = $categoria->id;
+
+            // Existe proveedor?
+            $proveedor = User::where('email',$fila->id_proveedor.'@default')->first();
+
+            if($proveedor==null)
+            {
+                // Alta de proveedor
+                $proveedor = User::create([
+                    'name' => $fila->id_proveedor,
+                    'email' => $fila->id_proveedor.'@default',
+                    'password' => bcrypt('interna'),
+                ]);
+            }
+
+//            $proveedor->assignRole('proveedor');
+
+            $fila['id_proveedor'] = $proveedor->id;
+
         });
 
         // Existen filas?

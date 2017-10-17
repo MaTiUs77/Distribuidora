@@ -9,18 +9,10 @@ class DatabaseSeeder extends Seeder
 {
   public function run()
   {
-    AlmacenesModel::create([
-      'nombre' => 'Default'
-    ]);
-
-    MarcasModel::create([
-        'nombre' => 'Default'
-    ]);
-
     $this->call(CategoriasSeeder::class);
     $this->call(ProveedoresSeeder::class);
-    $this->call(ProductosSeeder::class);
     $this->call(UsersSeeder::class);
 
+    $this->call(ProductosSeeder::class);
   }
 }
