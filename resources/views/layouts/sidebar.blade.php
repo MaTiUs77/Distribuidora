@@ -48,15 +48,8 @@
             @endhasanyrole
 
             <li>
-              <a href="{{route('pendientes.index')}}"><i class="fa fa-cart-arrow-down"></i> Ver pendientes
-
-                <span class="label label-primary pull-right">
-                {{  \App\Http\Controllers\Ventas\Model\VentasModel::where('estado','PENDIENTE')->count() }}
-                </span>
-
-              </a>
+              <a href="{{route('pendientes.index')}}"><i class="fa fa-cart-arrow-down"></i> Ver registros</a>
             </li>
-            <li><a href="{{ route('historial.index') }}"><i class="fa fa-history"></i> Ver historial</a></li>
           </ul>
         </li>
 

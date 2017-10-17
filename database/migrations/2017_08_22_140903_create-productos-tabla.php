@@ -18,6 +18,7 @@ class CreateProductosTabla extends Migration
 
             $table->increments('id');
             $table->string('nombre')->index();
+            $table->string('codigo_interno')->nullable();
             $table->string('barcode')->unique();
             $table->text('descripcion')->nullable();
             $table->integer('precio_proveedor')->unsigned();

@@ -17,7 +17,7 @@ class CreateVentasTabla extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            
+
             $table->enum('estado', ['COBRADO', 'A COBRAR','VENCIDO']);
             $table->integer('user_id')->unsigned();
             $table->integer('cliente_id')->unsigned();
@@ -28,11 +28,11 @@ class CreateVentasTabla extends Migration
             $table->dateTime('fecha_emision');
             $table->dateTime('fecha_vencimiento');
 
-            $table->double('total_venta',10,2);
-            $table->double('subtotal_sin_descuento',10,2);
-            $table->double('subtotal_con_descuento',10,2);
-            $table->double('a_cobrar',10,2);
-            $table->double('cobrado',10,2);
+            $table->double('total_venta',10,2)->nullable();
+            $table->double('subtotal_sin_descuento',10,2)->nullable();
+            $table->double('subtotal_con_descuento',10,2)->nullable();
+            $table->double('a_cobrar',10,2)->nullable();
+            $table->double('cobrado',10,2)->nullable();
 
             $table->timestamps();
 

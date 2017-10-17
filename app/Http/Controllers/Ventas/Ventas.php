@@ -56,6 +56,9 @@ class Ventas extends Controller
                 $nuevaVenta->origen = 'FACTURACION';
                 $nuevaVenta->estado = 'A COBRAR';
 
+                $nuevaVenta->fecha_emision = Carbon::now();
+                $nuevaVenta->fecha_vencimiento = Carbon::now();
+
                 $nuevaVenta->save();
 
                 return redirect(route('venta_detalle.show',$nuevaVenta->id));

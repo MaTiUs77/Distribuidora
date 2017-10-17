@@ -37,12 +37,12 @@ class ResumenDetalle extends Controller
         }
 
         if(
-            $this->venta->total != $this->costoTotal &&
+            $this->venta->total_venta != $this->costoTotal &&
             $this->venta->cantidad != $this->cantidadProductos
         )
         {
             $this->venta->cantidad = $this->cantidadProductos;
-            $this->venta->total = $this->costoTotal;
+            $this->venta->total_venta = $this->costoTotal;
             $this->venta->save();
         }
     }
