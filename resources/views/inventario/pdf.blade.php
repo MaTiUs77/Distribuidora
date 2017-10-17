@@ -1,0 +1,3 @@
+Inventario
+
+{{ dump($data) }}

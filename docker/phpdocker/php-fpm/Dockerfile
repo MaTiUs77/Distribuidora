@@ -4,9 +4,18 @@ WORKDIR "/application"
 
 # Install git
 RUN apt-get update \ 
-    && apt-get -y install zlib1g-dev \
-    && apt-get -y install git \
-    && apt-get -y install zip unzip \
+    && apt-get install -y \
+        zlib1g-dev \
+        git \
+        zip \
+        unzip \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng12-dev \
+    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # pcntl

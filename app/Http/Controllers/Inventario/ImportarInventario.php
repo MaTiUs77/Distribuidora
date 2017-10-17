@@ -7,6 +7,7 @@ use App\Http\Controllers\Productos\Model\ProductosModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 
 class ImportarInventario extends Controller
@@ -19,12 +20,28 @@ class ImportarInventario extends Controller
     public function download($type)
     {
         $data = ProductosModel::get()->toArray();
-        return Excel::create('inventario', function($excel) use ($data) {
-            $excel->sheet('Hoja', function($sheet) use ($data)
-            {
-                $sheet->fromArray($data);
-            });
-        })->download($type);
+
+        switch ($type)
+        {
+            case 'pdf':
+                return $this->downloadPdf($data);
+            break;
+            default:
+
+                return Excel::create('inventario', function ($excel) use ($data) {
+                    $excel->sheet('Hoja', function ($sheet) use ($data) {
+                        $sheet->fromArray($data);
+                    });
+                })->download($type);
+            break;
+        }
+    }
+
+    public function downloadPdf($data)
+    {
+        $output = compact('data');
+        $pdf = PDF::loadView('inventario.pdf', $output);
+        return $pdf->download('inventario.pdf');
     }
 
     public function import()
