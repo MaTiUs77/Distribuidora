@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCuentasTabla extends Migration
+class CreateEtiquetasTabla extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCuentasTabla extends Migration
      */
     public function up()
     {
-        Schema::create('cuentas', function (Blueprint $table) {
+        Schema::create('etiquetas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->enum('tipo',['EFECTIVO', 'BANCO','A COBRAR', 'A PAGAR']);
             $table->string('nombre');
         });
     }
@@ -29,6 +28,6 @@ class CreateCuentasTabla extends Migration
      */
     public function down()
     {
-        Schema::drop('cuentas');
+        Schema::drop('etiquetas');
     }
 }

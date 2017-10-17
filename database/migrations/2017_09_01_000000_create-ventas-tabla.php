@@ -17,6 +17,7 @@ class CreateVentasTabla extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
+            
             $table->enum('estado', ['COBRADO', 'A COBRAR','VENCIDO']);
             $table->integer('user_id')->unsigned();
             $table->integer('cliente_id')->unsigned();

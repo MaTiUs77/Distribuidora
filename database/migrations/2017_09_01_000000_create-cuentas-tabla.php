@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVentasEtiquetasTabla extends Migration
+class CreateCuentasTabla extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateVentasEtiquetasTabla extends Migration
      */
     public function up()
     {
-        Schema::create('ventas_etiquetas', function (Blueprint $table) {
+        Schema::create('cuentas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
-            $table->integer('ventas_id');
-            $table->integer('etiquetas_id');
-
-            $table->foreign('ventas_id')->references('id')->on('ventas');
-            $table->foreign('etiquetas_id')->references('id')->on('etiquetas');
-
+            $table->increments('id');
+            
+            $table->enum('tipo',['EFECTIVO', 'BANCO','A COBRAR', 'A PAGAR']);
+            $table->string('nombre');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateVentasEtiquetasTabla extends Migration
      */
     public function down()
     {
-        Schema::drop('ventas_etiquetas');
+        Schema::drop('cuentas');
     }
 }
