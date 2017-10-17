@@ -7,7 +7,7 @@ class ProductosSeeder extends Seeder
 {
     public function run()
     {
-        ProductosModel::create([
+/*        ProductosModel::create([
             'nombre' => 'Leche',
             'barcode' => '0001',
             'precio_proveedor' => '100',
@@ -33,6 +33,11 @@ class ProductosSeeder extends Seeder
             'id_proveedor' => 1,
             'id_marca' => 1,
             'id_categoria' => 1,
-          ]);
+          ]);*/
+
+        $file = \Illuminate\Support\Facades\Storage::disk('local')->path('inventario.xls');
+
+        $import = new \App\Http\Controllers\Inventario\ImportarInventario();
+        $import->importExcel($file);
     }
 }

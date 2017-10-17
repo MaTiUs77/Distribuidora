@@ -9,6 +9,22 @@ class ProductosModel extends Model
 {
     protected $table = 'productos';
 
+    public $fillable = [
+        'nombre',
+        'barcode',
+        'descripcion',
+        'precio_proveedor',
+        'precio_venta',
+        'aplicar_porcentaje',
+        'estado',
+        'stock',
+        'stock_minimo',
+        'id_almacen',
+        'id_proveedor',
+        'id_marca',
+        'id_categoria',
+    ];
+
     public function almacen()
     {
         return $this->hasOne('App\Http\Controllers\Almacenes\Model\AlmacenesModel','id','id_almacen');

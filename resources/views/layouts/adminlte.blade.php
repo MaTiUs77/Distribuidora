@@ -30,6 +30,11 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <style>
+    .ui-autocomplete {
+      z-index:900 !important;
+    }
+  </style>
   @yield('head')
 
 </head>
@@ -272,8 +277,22 @@
 <!-- Terminal -->
 <script src="{{ asset('js/terminal.js') }}"></script>
 
+<script >
+  $(function() {
+    $("#sidebarBuscarProducto").autocomplete({
+      source: "{{ url('api/autocomplete/productos') }}",
+      minLength: 2,
+      select: function (event, ui) {
+        console.log(ui);
+        $('#sidebarBuscarProducto').val(ui.item.value);
+      }
+    });
+  });
+</script>
+
 
 @yield('footer')
+
 
 </body>
 </html>

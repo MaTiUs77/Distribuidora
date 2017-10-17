@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Perfil\Model\PerfilModel;
-use App\Http\Controllers\Productos\Inventario;
-use App\Http\Controllers\Usuarios\Usuarios;
+use App\Http\Controllers\Inventario\Inventario;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
-use App\Http\Controllers\Venta_Detalle\Venta_Detalle;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 use App\User;
 use Carbon\Carbon;

@@ -97,7 +97,28 @@ app.controller('Terminal', function($scope)
         }
     };
 
+    $scope.functionKey = function($event){
+        var key = $event.keyCode;
 
+        switch(key)
+        {
+            case 113: // F2
+                console.log("Finalizar venta");
+                return false;
+                break;
+            case 114: // F3
+                console.log(key);
+                return false;
+                break;
+            case 115: // F4
+                console.log(key);
+                return false;
+                break;
+            default:
+                console.log(key)
+                break;
+        }
+    }
 });
 
 app.directive('myEnter', function () {

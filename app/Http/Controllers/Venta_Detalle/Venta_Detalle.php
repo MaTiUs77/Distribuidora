@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Venta_Detalle;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Productos\Inventario;
+use App\Http\Controllers\Inventario\Inventario;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
-use App\Http\Controllers\Ventas\ResumenDeVenta;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\In;
 
 class Venta_Detalle extends Controller
 {
@@ -67,12 +64,12 @@ class Venta_Detalle extends Controller
         }
 
         // Generar nuevos datos de la factuacion
-        $api  = new ApiVentaDetalle();
-        $response = $api->resumen($newventa->venta_id);
+//        $api  = new ApiVentaDetalle();
+//        $response = $api->resumen($newventa->venta_id);
 
         // Publica en el canal de venta redis
-        Redis::set('venta', json_encode($response));
-        Redis::publish('venta', json_encode($response));
+//        Redis::set('venta', json_encode($response));
+//        Redis::publish('venta', json_encode($response));
 
         return "OK";
 

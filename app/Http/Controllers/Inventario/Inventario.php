@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Productos;
+namespace App\Http\Controllers\Inventario;
 
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 
 
 class Inventario extends Controller

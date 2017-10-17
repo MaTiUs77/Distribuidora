@@ -3,16 +3,20 @@ FROM php:7-fpm
 WORKDIR "/application"
 
 # Install git
-RUN apt-get update \
+RUN apt-get update \ 
+    && apt-get -y install zlib1g-dev \
     && apt-get -y install git \
     && apt-get -y install zip unzip \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # pcntl
-RUN docker-php-ext-install pcntl 
+RUN docker-php-ext-install pcntl
 
 # Instalar extencion mysql
 RUN docker-php-ext-install pdo pdo_mysql
+
+# Instalar zip
+RUN docker-php-ext-install zip
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- \

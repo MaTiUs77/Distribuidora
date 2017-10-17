@@ -2,7 +2,7 @@
 @section('sidebar','sidebar-mini sidebar-collapse')
 
 @section('contenido')
-    <div ng-controller="Terminal" ng-init="init({{ $venta->id }},'{{ env('IP_ACCESSO_REMOTO') }}:8080')" ng-cloak>
+    <div ng-controller="Terminal" ng-init="init({{ $venta->id }},'{{ env('IP_ACCESSO_REMOTO') }}:8080')" ng-cloak ng-keydown='functionKey($event)'>
 
         <div class="row">
             <div class="col-xs-8">
@@ -197,9 +197,9 @@
                         <br>
 
                         @if($venta->origen =='TERMINAL')
-                            <a href="{{ route('pendientes.finish',[$venta->id,'TERMINAL']) }}" class="btn btn-success btn-block">F6 - Finalizar Venta</a>
+                            <a href="{{ route('pendientes.finish',[$venta->id,'TERMINAL']) }}" class="btn btn-success btn-block">F2 - Finalizar Venta</a>
                         @else
-                            <a href="{{ route('pendientes.finish',$venta->id) }}" class="btn btn-success btn-block">F6 - Finalizar Venta</a>
+                            <a href="{{ route('pendientes.finish',$venta->id) }}" class="btn btn-success btn-block">F2 - Finalizar Venta</a>
                         @endif
                     </div>
                     <!-- /.box-body -->

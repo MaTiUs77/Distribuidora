@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Productos\Inventario;
+use App\Http\Controllers\Inventario\Inventario;
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Venta_Detalle\Model\Ventas_DetallesModel;
-use App\Http\Controllers\Venta_Detalle\ResumenDetalle;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 
 class ApiTerminal extends Api

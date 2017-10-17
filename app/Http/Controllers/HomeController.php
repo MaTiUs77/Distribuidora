@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Productos\Inventario;
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Ventas\Model\VentasModel;
 use App\Http\Controllers\Ventas\ResumenDeVenta;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
 {
