@@ -17,14 +17,21 @@ class CreateVentasTabla extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('fecha_entrega');
-            $table->string('estado');
+            $table->enum('estado', ['COBRADO', 'A COBRAR','VENCIDO']);
             $table->integer('user_id')->unsigned();
             $table->integer('cliente_id')->unsigned();
 
             $table->integer('cantidad')->nullable();
-            $table->integer('total')->nullable();
             $table->string('origen');
+
+            $table->dateTime('fecha_emision');
+            $table->dateTime('fecha_vencimiento');
+
+            $table->double('total_venta',10,2);
+            $table->double('subtotal_sin_descuento',10,2);
+            $table->double('subtotal_con_descuento',10,2);
+            $table->double('a_cobrar',10,2);
+            $table->double('cobrado',10,2);
 
             $table->timestamps();
 
