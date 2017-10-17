@@ -100,8 +100,13 @@ app.controller('Terminal', function($scope)
 
         switch(key)
         {
+            case 27: // ESC
+                $('#codigoProducto').focus();
+
+                return false;
+                break;
             case 113: // F2
-                console.log("Finalizar venta");
+                $('#modalCobro').modal('show');
                 return false;
                 break;
             case 114: // F3

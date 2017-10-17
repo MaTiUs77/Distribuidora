@@ -54,7 +54,7 @@
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini')" ng-cloak>
+<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini') ng-cloak" @stack('ng-body')>
 <div class="wrapper">
 
   <!-- Main Header -->

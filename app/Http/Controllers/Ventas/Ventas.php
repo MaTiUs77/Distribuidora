@@ -50,11 +50,12 @@ class Ventas extends Controller
         else
             {
                 $nuevaVenta = new VentasModel();
-                $nuevaVenta->origen = 'FACTURACION';
-                $nuevaVenta->fecha_entrega = Carbon::now();
-                $nuevaVenta->estado = 'PENDIENTE';
                 $nuevaVenta->user_id = Auth::id();
                 $nuevaVenta->cliente_id = $request->get('cliente_id');
+
+                $nuevaVenta->origen = 'FACTURACION';
+                $nuevaVenta->estado = 'A COBRAR';
+
                 $nuevaVenta->save();
 
                 return redirect(route('venta_detalle.show',$nuevaVenta->id));

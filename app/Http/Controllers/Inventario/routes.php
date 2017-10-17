@@ -6,7 +6,3 @@ Route::prefix('inventario')->group(function () {
     Route::post('import', 'Inventario\ImportarInventario@import')
         ->name('inventario.import');
 });
-
-
-
-
