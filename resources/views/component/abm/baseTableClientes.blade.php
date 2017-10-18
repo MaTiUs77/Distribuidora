@@ -16,29 +16,25 @@
     <table class="table table-striped">
       <tbody>
       <tr>
+        @hasanyrole('admin')
         <th style="width: 180px">Acciones</th>
-        <th style="width: 10px">Id</th>
+        @endhasanyrole
         <th>Nombre</th>
         <th>Email</th>
-        <th>Rol</th>
       </tr>
 
       @foreach($items as $item)
         <tr>
+          @hasanyrole('admin')
           <td>
             @include('component.abm.btn',[
                 'resource' => $resource,
                 'item' => $item,
             ])
           </td>
-          <td>{{ $item->id }}</td>
+          @endhasanyrole
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
-          <td>
-            @foreach ($item->roles as $rol)
-              <span class="label label-primary">{{ $rol->name }}</span>
-            @endforeach
-          </td>
         </tr>
       @endforeach
 
@@ -58,12 +54,10 @@
 
 @if(session()->has('message'))
   <script>
-
     document.onreadystatechange = () => {
       if (document.readyState === 'complete') {
         swal("{{ session('message') }}", "", "success")
       }
     }
-
   </script>
 @endif
