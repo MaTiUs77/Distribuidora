@@ -53,14 +53,47 @@
           </ul>
         </li>
 
-        @hasanyrole('vendedor|admin')
-          <li class="header">ADMINISTRACION</li>
-          <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
-          <li><a href="{{ route('clientes.index') }}"><i class="fa fa-user"></i> <span>Clientes</span></a></li>
-          <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-address-book"></i> <span>Proveedores</span></a></li>
-          <li><a href="{{ route('marcas.index') }}"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>
-          <li><a href="{{ route('categorias.index') }}"><i class="fa fa-book"></i> <span>Categorias</span></a></li>
-          <li><a href="{{ route('almacenes.index') }}"><i class="fa fa-cubes"></i> <span>Almacenes</span></a></li>
+        @hasanyrole('admin')
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-address-book"></i>
+            <span>Agenda</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            @hasanyrole('admin')
+            <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+            @endhasanyrole
+            <li><a href="{{ route('clientes.index') }}"><i class="fa fa-address-card"></i> <span>Clientes</span></a></li>
+            <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-truck"></i> <span>Proveedores</span></a></li>
+          </ul>
+        </li>
+
+        @endhasanyrole
+
+
+        @hasanyrole('admin')
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-database"></i>
+            <span>Bade de datos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li><a href="{{ route('marcas.index') }}"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>
+            <li><a href="{{ route('categorias.index') }}"><i class="fa fa-book"></i> <span>Categorias</span></a></li>
+            <li><a href="{{ route('almacenes.index') }}"><i class="fa fa-cubes"></i> <span>Almacenes</span></a></li>
+          </ul>
+        </li>
+
         @endhasanyrole
 
         @stack('sidebar_menu')
