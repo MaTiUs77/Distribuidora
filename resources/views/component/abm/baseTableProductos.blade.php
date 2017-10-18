@@ -15,13 +15,13 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body no-padding">
-    <table class="table table-striped">
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped">
       <tbody>
       <tr>
         @hasanyrole('vendedor|admin')
-        <th style="width: 180px">Acciones</th>
+        <th style="width: 100px">Acciones</th>
         @endhasanyrole
-        <th style="width: 10px">Id</th>
 {{--
         <th>Imagen</th>
 --}}
@@ -42,13 +42,23 @@
         <tr>
           @hasanyrole('vendedor|admin')
           <td>
+
+              <!-- Agrega botones adicionales al componente btn.abm -->
+              @section('component.abm.btn.option')
+              <li>
+                <a href="">
+                  <i class="fa fa-cube"></i>
+                  Ajustar stock
+                </a>
+              </li>
+              @endsection
+
               @include('component.abm.btn',[
                   'resource' => $resource,
                   'item' => $item,
               ])
           </td>
           @endhasanyrole
-          <td>{{ $item->id }}</td>
 {{--
           <td>
             <img src="{{ asset("upload/".$item->imagen) }}" width="100" style="display: block;">
@@ -81,6 +91,7 @@
 
       </tbody>
     </table>
+    </div>
   </div>
   <!-- /.box-body -->
 </div>

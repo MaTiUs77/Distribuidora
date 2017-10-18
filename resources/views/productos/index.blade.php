@@ -1,10 +1,11 @@
 @extends('layouts.adminlte')
 
+@section('sidebar','sidebar-mini sidebar-collapse')
+
 @section('contenido')
 
     <div class="box box-primary">
         <div class="box-header">
-
             <form action="{{ route('inventario.import') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
@@ -12,7 +13,6 @@
                     Seleccionar archivo Excel <input type='file'name="import_file"/>
                 </span>
                 <input type="submit" class="btn btn-success" value="Importar">
-
 
                 <div class="dropdown pull-right">
                     <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Exportar inventario
@@ -27,7 +27,6 @@
                 </div>
 
             </form>
-
         </div>
     </div>
 

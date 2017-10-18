@@ -22,7 +22,12 @@ class ImportarInventario extends Controller
 {
     public function download($type)
     {
-        $data = ProductosModel::get()->toArray();
+        $data = ProductosModel::with([
+            'Almacen',
+            'Marca',
+            'Categoria',
+            'Proveedor',
+        ])->get()->toArray();
 
         switch ($type)
         {
@@ -40,11 +45,19 @@ class ImportarInventario extends Controller
         }
     }
 
-    public function downloadPdf($data)
+    public function downloadPdf($data,$forceDownload=false)
     {
         $output = compact('data');
-        $pdf = PDF::loadView('inventario.pdf', $output);
-        return $pdf->download('inventario.pdf');
+        $pdf = PDF::loadView('inventario.pdf', $output)
+            ->setPaper('A4', 'landscape');
+
+        if($forceDownload)
+        {
+            return $pdf->download('inventario.pdf');
+        } else
+        {
+            return $pdf->stream('inventario.pdf');
+        }
     }
 
     public function import()
@@ -62,7 +75,6 @@ class ImportarInventario extends Controller
     public function importExcel($filePath)
     {
         $data = Excel::load($filePath)->get();
-
 
         $data->each(function($fila){
             $fila['precio_venta'] = $this->calcularPorcentaje($fila->precio_proveedor,$fila->aplicar_porcentaje);

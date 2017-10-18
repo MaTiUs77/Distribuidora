@@ -1,7 +1,30 @@
-<table class="table table-striped">
-    <tbody>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style>
+    html {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    table thead tr {
+        background-color: #0a0a0a;
+        color: #ffffff;
+    }
+
+    tbody td{
+        padding: 2px;
+    }
+
+    tbody tr:nth-child(odd){
+        background-color: #F4F4F4;
+        color: #000000;
+    }
+
+</style>
+<table cellpadding="0" cellspacing="0">
+    <thead>
     <tr>
-        <th>Nombre</th>
+        <th>Producto</th>
+        <th>Codigo</th>
         <th>Barcode</th>
         <th>Precio Proveedor</th>
         <th>Precio Venta</th>
@@ -13,7 +36,8 @@
         <th>Marca</th>
         <th>Categoria</th>
     </tr>
-
+    </thead>
+    <tbody>
     @foreach($data as $item)
 
         <?php
@@ -21,16 +45,17 @@
         ?>
         <tr>
             <td>{{ $item->nombre }}</td>
+            <td>{{ $item->codigo_interno }}</td>
             <td>{{ $item->barcode }}</td>
             <td>{{ $item->precio_proveedor }}</td>
             <td>{{ $item->precio_venta }}</td>
             <td>{{ $item->aplicar_porcentaje }}</td>
             <td>{{ $item->estado }}</td>
             <td>{{ $item->stock }}</td>
-            <td>{{ $item->id_almacen }}</td>
-            <td>{{ $item->id_proveedor }}</td>
-            <td>{{ $item->id_marca }}</td>
-            <td>{{ $item->id_categoria }}</td>
+            <td>{{ $item->almacen['nombre'] }}</td>
+            <td>{{ $item->proveedor['name'] }}</td>
+            <td>{{ $item->marca['nombre'] }}</td>
+            <td>{{ $item->categoria['nombre'] }}</td>
         </tr>
     @endforeach
 

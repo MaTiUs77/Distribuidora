@@ -1,16 +1,25 @@
-<a href="{{ route($resource.'.edit',$item->id) }}" class="btn btn-warning btn-sm" >
-    <i class="fa fa-edit"></i>
-    <span class="hidden-xs">
-        Editar
-    </span>
-</a>
+<div class="dropdown">
+    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Acciones
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{{ route($resource.'.edit',$item->id) }}">
+                <i class="fa fa-edit"></i>
+                Editar
+            </a>
+        </li>
 
-<a href="javascript:{{ $resource.$item->id }}_delete({{$item->id}});" class="btn btn-danger btn-sm">
-    <i class="fa fa-trash"></i>
-    <span class="hidden-xs">
-        Eliminar
-    </span>
-</a>
+        @yield('component.abm.btn.option')
+
+        <li class="divider"></li>
+        <li>
+            <a href="javascript:{{ $resource.$item->id }}_delete({{$item->id}});">
+                <i class="fa fa-trash"></i>
+                Eliminar
+            </a>
+        </li>
+    </ul>
+</div>
 
 <form id="form_{{ $resource.$item->id }}" method="POST" action="{{ route($resource.'.destroy',$item->id) }}">
   {{ csrf_field() }}
@@ -20,17 +29,17 @@
 <script>
   function {{ $resource.$item->id }}_delete(id) {
     swal({
-              title: "Confirma eliminar?",
-              text: "No podra recuperar esta informacion!",
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#DD6B55",
-              confirmButtonText: "Si, eliminar!",
-              cancelButtonText: "Cancelar",
-              closeOnConfirm: false
-            },
-            function(){
-              $('#form_{{ $resource.$item->id }}').submit();
-            });
+      title: "Confirma eliminar?",
+      text: "No podra recuperar esta informacion!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Si, eliminar!",
+      cancelButtonText: "Cancelar",
+      closeOnConfirm: false
+    },
+    function(){
+      $('#form_{{ $resource.$item->id }}').submit();
+    });
   }
 </script>
