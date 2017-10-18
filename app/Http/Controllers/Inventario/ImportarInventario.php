@@ -88,7 +88,7 @@ class ImportarInventario extends Controller
                 ]);
             }
 
-//            $proveedor->assignRole('proveedor');
+            // $proveedor->syncRole('proveedor');
 
             $fila['id_proveedor'] = $proveedor->id;
 
