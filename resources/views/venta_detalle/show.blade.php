@@ -8,22 +8,11 @@
 @section('contenido')
     <div class="row">
         <!-- Detalle de venta -->
-        <div class="col-xs-8">
-            <section class="invoice">
-                <!-- title row -->
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h2 class="page-header">
-                            <i class="fa fa-globe"></i> Distribuidora
-                            <small class="pull-right">Date: 2/10/2014</small>
-                        </h2>
-                    </div>
-                    <!-- /.col -->
-                </div>
-
+        <div class="col-xs-12 col-sm-8">
+            <section class="invoice" style="margin: 0;">
                 <!-- info row -->
                 <div class="row invoice-info">
-                    <div class="col-sm-4 invoice-col">
+                    <div class="col-md-4 invoice-col">
                         Vendedor
                         @if(isset($venta->vendedor->perfil))
                             <address>
@@ -33,7 +22,6 @@
                                 Email: {{$venta->vendedor->perfil->email}}
                             </address>
                         @else
-                            <label class="label label-danger">sin perfil</label>
                             <address>
                                 <strong>{{$venta->vendedor->name}}</strong><br>
                                 Email: {{$venta->vendedor->email}}
@@ -41,7 +29,7 @@
                         @endif
                     </div>
                     <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
+                    <div class="col-md-4 invoice-col">
                         Cliente
 
                         @if(isset($venta->cliente->perfil))
@@ -52,7 +40,6 @@
                                 Email: {{$venta->cliente->perfil->email}}
                             </address>
                         @else
-                            <label class="label label-danger">sin perfil</label>
                             <address>
                                 <strong>{{$venta->cliente->name}}</strong><br>
                                 Email: {{$venta->cliente->email}}
@@ -63,8 +50,8 @@
                     <div class="col-sm-4 invoice-col">
                         <b>Venta N° {{$venta->id}}</b><br>
                         <br>
-                        <b>Creada:</b> {{$venta->created_at}} <br>
-                        <b>Entrega:</b> {{$venta->fecha_entrega}} <br>
+                        <b>Fecha emision:</b> {{$venta->fecha_emision}} <br>
+                        <b>Fecha vencimiento:</b> {{$venta->fecha_vencimiento}} <br>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -105,38 +92,40 @@
         </div>
 
         <!-- Panel de operacion -->
-        <div class="col-sm-4">
+        <div class="col-xs-12 col-sm-4">
             <div class="box box-solid">
                 <div class="box-body">
-                    <div class="callout callout-info">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>
-                                    Total
-                                </p>
-                                <h2 style="padding:0px;margin:0px;">
-                                    $ @{{ facturacion.costoTotal }}
-                                </h2>
-
-                            </div>
-                            <div class="col-sm-6">
-                                <p>
-                                    Productos
-                                </p>
-                                <h2 style="padding:0px;margin:0px;">
-                                    @{{ facturacion.cantidadProductos }}
-                                </h2>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="row">
+                        <div class="col-xs-12">
+                            <div class="callout callout-info">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p>
+                                            Total
+                                        </p>
+                                        <h2 style="padding:0px;margin:0px;">
+                                            $ @{{ facturacion.costoTotal }}
+                                        </h2>
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>
+                                            Productos
+                                        </p>
+                                        <h2 style="padding:0px;margin:0px;">
+                                            @{{ facturacion.cantidadProductos }}
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-9">
                             <label for="codigoProducto">Producto:</label>
                             <input class="form-control input-lg" type="text" placeholder="Nombre o Codigo del Producto" id="codigoProducto" ng-model="codigoProducto" my-enter="addProducto()" >
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-xs-12 col-sm-3">
                             <label for="cantidadProducto">Cantidad:</label>
                             <input class="form-control input-lg" type="text" placeholder="Cantidad" ng-model="cantidadProducto" ng-init="cantidadProducto = 1" my-enter="addProducto()" >
                         </div>
@@ -160,9 +149,34 @@
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title">Cobro</h5>
+                    <h5 class="modal-title">Realizar cobro</h5>
                 </div>
                 <div class="modal-body">
+
+                    <!-- Resumen de facturacion -->
+                    <div class="callout callout-info">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    Total
+                                </p>
+                                <h2 style="padding:0px;margin:0px;">
+                                    $ @{{ facturacion.costoTotal }}
+                                </h2>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    Productos
+                                </p>
+                                <h2 style="padding:0px;margin:0px;">
+                                    @{{ facturacion.cantidadProductos }}
+                                </h2>
+
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Calculo de cambio -->
                     <div class="callout" ng-class="{ 'callout-info': (cambioCalculado == 0) , 'callout-success': (cambioCalculado > 0) , 'callout-danger': (cambioCalculado < 0)}">
                         <div class="row">
@@ -184,9 +198,20 @@
                                 <h2 style="padding:0px;margin:0px;">
                                     $ @{{ cambioCalculado  }}
                                 </h2>
-
                             </div>
                         </div>
+                    </div>
+
+                    <select class="form-control input-lg">
+                        <option>- Metodo de pago -</option>
+                        @foreach($cuentas as $cuenta)
+                            <option value="{{ $cuenta->id }}">{{ $cuenta->nombre }}</option>
+                        @endforeach
+                    </select>
+
+                    <hr>
+                    <div class="text-right">
+                        <a href="javascript:;"  data-toggle="modal" data-target="#modalCobro" class="btn btn-success">Guardar operacion</a>
                     </div>
                 </div>
             </div>
