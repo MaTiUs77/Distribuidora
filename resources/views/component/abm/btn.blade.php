@@ -3,19 +3,21 @@
         <span class="caret"></span></button>
     <ul class="dropdown-menu">
 
+        @if(isset($modalEdit))
         <li>
             <a href="javascript:;" class="abmEdit" data-toggle="modal" data-target="#modalEdit" data-id="{{ $item->id }}" data-nombre="{{ $item->nombre }}">
-                <i class="fa fa-edit"></i>
-                Editar con modal
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ route($resource.'.edit',$item->id) }}">
                 <i class="fa fa-edit"></i>
                 Editar
             </a>
         </li>
+        @else
+            <li>
+                <a href="{{ route($resource.'.edit',$item->id) }}">
+                    <i class="fa fa-edit"></i>
+                    Editar
+                </a>
+            </li>
+        @endif
 
         @yield('component.abm.btn.option')
 

@@ -26,6 +26,7 @@
             @include('component.abm.btn',[
                 'resource' => $resource,
                 'item' => $item,
+                'modalEdit' => true
             ])
           </td>
           <td>{{ $item->nombre }}</td>
