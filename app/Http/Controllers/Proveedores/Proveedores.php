@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Proveedores;
 
-use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
+use App\Http\Controllers\Perfil\Model\PerfilModel;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 
 class Proveedores extends Controller
 {
@@ -15,7 +17,7 @@ class Proveedores extends Controller
      */
     public function index()
     {
-        $proveedores = ProveedoresModel::paginate(10);
+        $proveedores = User::role('proveedor')->paginate(10);
         $datos = compact('proveedores');
         return view('proveedores.index',$datos);
     }
@@ -38,13 +40,31 @@ class Proveedores extends Controller
      */
     public function store(Request $request)
     {
-        $newItem = new ProveedoresModel();
-        $newItem->nombre = $request->get('name');
-        $newItem->telefono = $request->get('telefono');
-        $newItem->direccion = $request->get('direccion');
-        $newItem->email = $request->get('email');
-        $newItem->save();
-        return redirect()->route('proveedores.index');
+        $roles = Role::where('name','proveedor')->first();
+        $user = new User();
+        $user->name = $request->get('nombre');
+        $user->email = $request->get('email');
+        $user->password = bcrypt('123');
+
+        $user->save();
+
+        $user->assignRole($roles);
+
+        $nuevoPerfil = new PerfilModel();
+        $nuevoPerfil->nombre = $request->get('nombre');
+        $nuevoPerfil->codigo = $request->get('codigo');
+        $nuevoPerfil->telefono = $request->get('telefono');
+        $nuevoPerfil->direccion = $request->get('direccion');
+        $nuevoPerfil->tipo_identificacion = $request->get('tipo_identificacion');
+        $nuevoPerfil->numero_identificacion = $request->get('numero_identificacion');
+        $nuevoPerfil->email = $request->get('email');
+        $nuevoPerfil->pais = $request->get('pais');
+        $nuevoPerfil->provincia = $request->get('provincia');
+        $nuevoPerfil->localidad = $request->get('localidad');
+        $nuevoPerfil->user_id= $user->id;
+        $nuevoPerfil->save();
+
+        return redirect()->route('proveedores.index')->with('message', 'Proveedor agregado con exito!');
     }
 
     /**
@@ -66,8 +86,9 @@ class Proveedores extends Controller
      */
     public function edit($id)
     {
-        $proveedor = ProveedoresModel::findOrFail($id);
-        $dato =  compact('proveedor');
+        $user = User::findOrFail($id);
+        $perfil = PerfilModel::where('user_id',$user->id)->first();
+        $dato = compact('user', 'roles','perfil');
         return view('proveedores.edit', $dato);
     }
 
@@ -80,13 +101,26 @@ class Proveedores extends Controller
      */
     public function update(Request $request, $id)
     {
-        $proveedores = ProveedoresModel::findOrFail($id);
-        $proveedores->nombre = $request->get('name');
-        $proveedores->telefono = $request->get('telefono');
-        $proveedores->direccion = $request->get('direccion');
-        $proveedores->email = $request->get('email');
-        $proveedores->save();
-        return redirect()->route('proveedores.index');
+
+        //SE MODIFICA EL EMAIL EN LAS DOS TABLAS. NORMALIZAR ESTAS TABLAS PARA NO REPETIR EL EMAIL.
+        $proveedorUser = User::findOrFail($request->get('user_id'));
+        $proveedorUser->email = $request->get('email');
+        $proveedorUser->save();
+
+        $proveedor = PerfilModel::find($id);
+        $proveedor->nombre = $request->get('nombre');
+        $proveedor->codigo = $request->get('codigo');
+        $proveedor->telefono = $request->get('telefono');
+        $proveedor->direccion = $request->get('direccion');
+        $proveedor->tipo_identificacion = $request->get('tipo_identificacion');
+        $proveedor->numero_identificacion = $request->get('numero_identificacion');
+        $proveedor->email = $request->get('email');
+        $proveedor->pais = $request->get('pais');
+        $proveedor->provincia = $request->get('provincia');
+        $proveedor->localidad = $request->get('localidad');
+        $proveedor->save();
+
+        return redirect()->route('proveedores.index')->with('message', 'Proveedor actualizado con exito!');
     }
 
     /**
@@ -97,8 +131,13 @@ class Proveedores extends Controller
      */
     public function destroy($id)
     {
-        $proveedores = ProveedoresModel::findOrFail($id);
-        $proveedores->delete();
+        $user = User::findOrFail($id);
+        $perfil = PerfilModel::where('user_id',$user->id)->first();
+        if(isset($perfil))
+        {
+            $perfil->delete();
+        }
+        $user->delete();
         return redirect()->route('proveedores.index')->with('message', 'Proveedor eliminado con exito!');
     }
 }
