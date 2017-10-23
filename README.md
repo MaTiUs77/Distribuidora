@@ -1,8 +1,10 @@
+(Es neceario realizar una instalacion desde cero para validar los pasos de instalacion)
+
 ## Requisitos
 
 * docker & docker-compose
 
-###Limpiar todos los contenedores de docker
+### Limpiar todos los contenedores de docker
 ```
 docker rm $(docker ps -a -q)
 ```
@@ -17,5 +19,10 @@ docker rmi -f $(docker images -a -q)
 cd docker/
 docker-compose up -d --build
 docker exec -it dev-php-fpm bash
-php artisan migrate --seed
+```
+
+### Dentro del contenedor PHP-FPM, ejecutar: 
+```
+compose install
+php artisan migrate:fresh --seed
 ```
