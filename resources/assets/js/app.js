@@ -1,22 +1,31 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
-
 window.Vue = require('vue');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import Vue from 'vue'
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import VueHotkey from 'v-hotkey'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify);
+Vue.use(VueHotkey);
+
+//Vue.component('terminal', require('./components/TerminalComponent.vue'));
+
+Vue.component('autocomplete_personas', require('./components/autocompletePersonas.vue'));
+Vue.component('inscripcion_alumno', require('./components/inscripcionAlumno.vue'));
+
+Vue.component('inscripcion_stepper', require('./components/inscripcionStepper.vue'));
+
+Vue.component('datepicker', require('./components/ejemplo/pickers/date-internationalization.vue'));
+Vue.component('form_basic', require('./components/ejemplo/forms/basic-validation.vue'));
+Vue.component('form_validation_with_submit', require('./components/ejemplo/forms/validation-with-submit-and-clear.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        title: "Montoto"
+    },
+    created() {
+        console.log('App created');
+    }
 });
