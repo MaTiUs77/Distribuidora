@@ -23,6 +23,12 @@
   <!-- JqueryUI-->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
 
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/select2-bootstrap-theme/dist/select2-bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css') }}">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -257,7 +263,6 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 3 -->
 <script src="{{ asset('adminlte/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- jQuery UI -->
@@ -274,6 +279,7 @@
 <script src="{{ asset('adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
 <!-- System App -->
 <script src="{{ asset('js/system.js') }}"></script>
+
 
 <script >
   $(function() {
