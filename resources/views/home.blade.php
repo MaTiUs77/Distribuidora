@@ -1,7 +1,6 @@
 @extends('layouts.adminlte')
 
 @section('contenido')
-
   <div class="col-md-4">
     <div class="info-box">
       <span class="info-box-icon bg-yellow"><i class="fa fa-bell-o"></i></span>
@@ -67,7 +66,5 @@
     <!-- /.box-footer -->
   </div>
   </div>
-
-
 
 @endsection

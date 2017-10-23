@@ -51,12 +51,12 @@ services:
     node:
       container_name: dev-node
       build:
-        context: "./node"
-        dockerfile: "Dockerfile"
+        context: "../"
+        dockerfile: "docker/node/Dockerfile"
       ports:
          - "8080:8080"
       volumes:
-         - "./node/home:/home"
+         - "../:/home"
 
     redis:
       image: redis:alpine

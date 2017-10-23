@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html ng-app="SytemApp">
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | Starter</title>
@@ -296,7 +297,6 @@
 
 
 @yield('footer')
-
 
 </body>
 </html>

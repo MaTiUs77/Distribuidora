@@ -11,5 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/terminal.js', 'public/js');
-//   .sass('resources/assets/sass/app.scss', 'public/css');
+
+mix.js('resources/assets/js/app.js', 'public/js')
+ .js('resources/assets/js/baseTable.js', 'public/js')
+.copy('node_modules/vuetify/dist/vuetify.min.css', 'public/css');

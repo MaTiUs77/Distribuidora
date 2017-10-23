@@ -4,31 +4,92 @@
 
 @section('contenido')
 
-    <div class="box box-primary">
-        <div class="box-header">
-            <form action="{{ route('inventario.import') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
+    <!-- START CUSTOM TABS -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Filtros</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">Importar</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">Exportar</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label for="inputId">ID</label>
+                                    <input id="inputId" type="text" class="form-control" placeholder="Buscar por ID">
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label for="inputProveedor">Proveedor</label>
+                                    <input id="inputProveedor" type="text" class="form-control" placeholder="Buscar por Proveedor">
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label for="inputMarca">Marca</label>
+                                    <input id="inputMarca" type="text" class="form-control" placeholder="Buscar por Marca">
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label for="inputCategoria">Categoria</label>
+                                    <input id="inputCategoria" type="text" class="form-control" placeholder="Buscar por Categoria">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label>Nombre</label>
+                                <input type="text" placeholder="Buscar por nombre">
+                            </div>
+                            <div class="col-xs-3">
+                                <label>Barcode</label>
+                                <input type="text" placeholder="Buscar por barcode">
+                            </div>
+                            <div class="col-xs-3">
+                                <label>Codigo</label>
+                                <input type="text" placeholder="Buscar por codigo">
+                            </div>
+                            <div class="col-xs-3">
+                                <label>Estado</label>
+                                <input type="text" placeholder="Buscar por estado">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_2">
+                        <form action="{{ route('inventario.import') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
 
-                <span class="btn btn-default btn-file">
-                    Seleccionar archivo Excel <input type='file'name="import_file"/>
-                </span>
-                <input type="submit" class="btn btn-success" value="Importar">
+                            <span class="btn btn-default btn-file">
+                                Seleccionar archivo Excel <input type='file'name="import_file"/>
+                            </span>
+                            <input type="submit" class="btn btn-success" value="Iniciar importacion">
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_3">
 
-                <div class="dropdown pull-right">
-                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Exportar inventario
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('inventario.download','pdf') }}">PDF</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{ route('inventario.download','xls') }}">XLS</a></li>
-                        <li><a href="{{ route('inventario.download','xlsx') }}">XLSX</a></li>
-                        <li><a href="{{ route('inventario.download','csv') }}">CSV</a></li>
-                    </ul>
+                        <a href="{{ route('inventario.download','pdf') }}" class="btn btn-default">Exportar PDF</a>
+                        <a href="{{ route('inventario.download','xls') }}" class="btn btn-default">Exportar XLS</a>
+                        <a href="{{ route('inventario.download','xlsx') }}" class="btn btn-default">Exportar XLSX</a>
+                        <a href="{{ route('inventario.download','csv') }}" class="btn btn-default">Exportar CSV</a>
+                    </div>
+                    <!-- /.tab-pane -->
                 </div>
-
-            </form>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
         </div>
+        <!-- /.col -->
     </div>
+    <!-- /.row -->
+    <!-- END CUSTOM TABS -->
 
     @include('component.abm.baseTableProductos',[
         'resource' => 'productos',
