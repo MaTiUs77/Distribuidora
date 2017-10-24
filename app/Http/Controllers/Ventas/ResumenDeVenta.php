@@ -29,7 +29,7 @@ class ResumenDeVenta extends Controller
     {
         foreach ($this->ventas as $venta)
         {
-            $this->costoTotal += $venta->total;
+            $this->costoTotal += $venta->total_venta;
         }
     }
 }

@@ -39,6 +39,7 @@
       </tr>
 
       @foreach($items as $item)
+
         <tr>
           @hasanyrole('vendedor|admin')
           <td>
@@ -66,11 +67,15 @@
 --}}
           <td>{{ $item->nombre }}</td>
           <td>{{ $item->barcode }}</td>
-          <td>{{ $item->precio_proveedor }}</td>
-          <td>{{ $item->precio_venta }}</td>
-          <td>{{ $item->aplicar_porcentaje }}</td>
+          <td> $ {{ $item->precio_proveedor }}</td>
+          <td> $ {{ $item->precio_venta }}</td>
+          <td> % {{ $item->aplicar_porcentaje }}</td>
           <td>{{ $item->estado }}</td>
-          <td>{{ $item->stock }}</td>
+          @if($item->stock < $item->stock_minimo)
+            <td class="warning">{{ $item->stock }} de {{$item->stock_minimo}}</td>
+          @else
+            <td>{{ $item->stock }}</td>
+          @endif
           <td>{{ $item->almacen->nombre }}</td>
           <td>{{ $item->proveedor->name }}</td>
           <td>{{ $item->marca->nombre }}</td>
