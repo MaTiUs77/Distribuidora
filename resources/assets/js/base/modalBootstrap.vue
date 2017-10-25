@@ -52,14 +52,22 @@
       },
       // Enviar formulario
       submitForm(e) {
+
         axios.post(this.action,this.form).then(response => {
           $("#myModal").modal('hide');
-
           this.notificar();
         })
         .catch(e => {
-          this.errors.push(e)
-        });
+//          this.errors.push(e);
+
+          let bodyMessage = e.response.data.message;
+
+          this.$notify({
+            message: bodyMessage,
+            type: 'error'
+          });
+
+      });
       },
       // Notifica que la operacion se realizo con exito
       notificar() {
@@ -69,7 +77,6 @@
         });
 
         // Limpia formulario y actualiza la tabla del $parent
-        this.form.nombre = '';
         this.$parent.loadTable();
       }
     }

@@ -7,7 +7,6 @@ use App\Http\Controllers\Categorias\Model\CategoriasModel;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Marcas\Model\MarcasModel;
 use App\User;
-use Illuminate\Support\Facades\Input;
 
 class Datatable extends Controller
 {
@@ -24,5 +23,10 @@ class Datatable extends Controller
     public function almacenes()
     {
         return AlmacenesModel::all();
+    }
+
+    public function proveedores()
+    {
+        return  User::role('proveedor')->get();
     }
 }

@@ -15240,6 +15240,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('baseTable', __webpack_req
 
 var root = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#root',
+  data: {
+    form: {}
+  },
   created: function created() {
     console.log('Root vue created');
   }
@@ -83903,23 +83906,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _method: 'DELETE'
       }).then(function (response) {
         _this.isDeleting = false;
-
-        _this.$message({
-          message: 'Eliminado con exito.',
-          type: 'success'
-        });
-
+        // Carga tabla $parent
         _this.$parent.loadTable();
       }).catch(function (e) {
         _this.isDeleting = false;
 
-        _this.$notify({
-          title: 'Error',
-          message: e.message,
-          type: 'danger'
-        });
+        var bodyMessage = e.response.data.message;
 
-        _this.errors.push(e);
+        _this.$notify({
+          message: bodyMessage,
+          type: 'error'
+        });
       });
     }
   }
@@ -84110,13 +84107,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['titulo', 'action', 'load', 'columnas'],
+  props: ['titulo', 'action', 'load', 'columnas', 'form'],
   data: function data() {
     return {
-      form: {},
-
       isDeleting: true,
       tableLoading: true,
       promptbtn: '',
@@ -84189,29 +84187,8 @@ var render = function() {
                   form: _vm.form
                 }
               },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.nombre,
-                      expression: "form.nombre"
-                    }
-                  ],
-                  staticClass: "form-control input-lg autofocus",
-                  attrs: { type: "text", required: "" },
-                  domProps: { value: _vm.form.nombre },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "nombre", $event.target.value)
-                    }
-                  }
-                })
-              ]
+              [_vm._t("default")],
+              2
             )
           ],
           1
@@ -84425,10 +84402,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       axios.post(this.action, this.form).then(function (response) {
         $("#myModal").modal('hide');
-
         _this.notificar();
       }).catch(function (e) {
-        _this.errors.push(e);
+        //          this.errors.push(e);
+
+        var bodyMessage = e.response.data.message;
+
+        _this.$notify({
+          message: bodyMessage,
+          type: 'error'
+        });
       });
     },
 
@@ -84440,7 +84423,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
 
       // Limpia formulario y actualiza la tabla del $parent
-      this.form.nombre = '';
       this.$parent.loadTable();
     }
   }

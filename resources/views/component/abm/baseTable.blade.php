@@ -1,27 +1,10 @@
 <base-table
-        :columnas="['nombre']"
         titulo="{{ ucfirst($resource) }}"
         load="{{ url('api/datatable/'.$resource) }}"
-        action="{{ route($resource.'.index') }}">
+        action="{{ route($resource.'.index') }}"
+        :columnas="['nombre']"
+        :form="form">
+
+        <input v-model="form.nombre" class="form-control input-lg autofocus" type="text" placeholder="Ingresar nombre" required>
+
 </base-table>
-
-{{--
-@if($items instanceof  \Illuminate\Pagination\LengthAwarePaginator)
-  <div class="text-center">
-    {{ $items->links() }}
-  </div>
-@endif
---}}
-
-{{--
-@section('footer')
-  <script>
-    $(function(){
-      $('.onmodal').on('shown.bs.modal', function (e) {
-        var el = $('.autofocus');
-        el.focus();
-        console.log(el);
-      });
-    });
-  </script>
-@endsection--}}

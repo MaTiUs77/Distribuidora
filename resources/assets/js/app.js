@@ -24,6 +24,9 @@ Vue.component('baseTable', require('./base/baseTable.vue'));
 
 const root = new Vue({
   el: '#root',
+  data: {
+    form: {}
+  },
   created() {
     console.log('Root vue created');
   }

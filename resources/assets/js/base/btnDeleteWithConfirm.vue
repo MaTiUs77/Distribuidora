@@ -36,24 +36,18 @@
           })
            .then(response => {
             this.isDeleting = false;
-
-            this.$message({
-              message: 'Eliminado con exito.',
-              type: 'success'
-            });
-
+            // Carga tabla $parent
             this.$parent.loadTable();
         })
         .catch(e => {
             this.isDeleting = false;
 
-            this.$notify({
-              title: 'Error',
-              message: e.message,
-              type: 'danger'
-            });
+            let bodyMessage = e.response.data.message;
 
-          this.errors.push(e)
+            this.$notify({
+              message: bodyMessage,
+              type: 'error'
+            });
         });
 
       }

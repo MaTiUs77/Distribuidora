@@ -17,7 +17,7 @@ class Proveedores extends Controller
      */
     public function index()
     {
-        $proveedores = User::role('proveedor')->paginate(10);
+//        $proveedores = User::role('proveedor')->paginate(10);
         $datos = compact('proveedores');
         return view('proveedores.index',$datos);
     }
@@ -64,7 +64,9 @@ class Proveedores extends Controller
         $nuevoPerfil->user_id= $user->id;
         $nuevoPerfil->save();
 
-        return redirect()->route('proveedores.index')->with('message', 'Proveedor agregado con exito!');
+        return compact('roles','user','nuevoPerfil');
+
+//        return redirect()->route('proveedores.index')->with('message', 'Proveedor agregado con exito!');
     }
 
     /**
@@ -138,6 +140,8 @@ class Proveedores extends Controller
             $perfil->delete();
         }
         $user->delete();
-        return redirect()->route('proveedores.index')->with('message', 'Proveedor eliminado con exito!');
+
+        return $user;
+//        return redirect()->route('proveedores.index')->with('message', 'Proveedor eliminado con exito!');
     }
 }

@@ -1,5 +1,8 @@
 <template>
   <div>
+
+
+
     <div class="box">
       <div class="box-header">
         <h3 class="box-title">Lista de {{ titulo }}</h3>
@@ -7,7 +10,7 @@
         <div class="pull-right">
 
           <modal-bootstrap :titulo="promptbtn" :action="action" :form="form">
-            <input v-model="form.nombre" class="form-control input-lg autofocus" type="text" required>
+            <slot></slot>
           </modal-bootstrap>
 
         </div>
@@ -41,11 +44,9 @@
 
 <script>
   export default {
-    props: ['titulo','action','load','columnas'],
+    props: ['titulo','action','load','columnas','form'],
     data () {
       return {
-        form: {},
-
         isDeleting: true,
         tableLoading: true,
         promptbtn: '',
@@ -70,8 +71,7 @@
         .then(response => {
           this.tableData = response.data;
           this.tableLoading = false;
-        })
-        .catch(e => {
+        }).catch(e => {
           this.errors.push(e);
           this.tableLoading = false;
         });
@@ -82,9 +82,9 @@
     },
     filters: {
       capitalize: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        return value.charAt(0).toUpperCase() + value.slice(1)
+        if (!value) return '';
+        value = value.toString();
+        return value.charAt(0).toUpperCase() + value.slice(1);
       }
     }
   }
