@@ -29,4 +29,14 @@ class Datatable extends Controller
     {
         return  User::role('proveedor')->get();
     }
+
+    public function clientes()
+    {
+        return  User::role('cliente')->get();
+    }
+
+    public function usuarios()
+    {
+        return  User::with('roles')->get();
+    }
 }

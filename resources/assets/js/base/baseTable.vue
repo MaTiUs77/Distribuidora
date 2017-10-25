@@ -1,8 +1,6 @@
 <template>
   <div>
 
-
-
     <div class="box">
       <div class="box-header">
         <h3 class="box-title">Lista de {{ titulo }}</h3>
@@ -17,7 +15,8 @@
 
       </div>
       <div class="box-body no-padding" v-loading.body="tableLoading" element-loading-text="Cargando...">
-        <table class="table table-striped">
+        <div class="table-responsive">
+          <table class="table table-striped">
           <thead>
           <tr>
             <th style="width: 10px"></th>
@@ -33,10 +32,14 @@
             <td>
               <btn-delete-confirm :elemento="item" :action="action"></btn-delete-confirm>
             </td>
-            <td v-for="columna in columnas" v-text="item[columna]"></td>
+            <td v-for="columna in columnas">{{ item[columna] }}</td>
+            <td v-if="item.roles && item.roles.length>0">
+              <el-tag v-for="tag in item.roles">{{ tag.name }}</el-tag>
+            </td>
           </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   </div>

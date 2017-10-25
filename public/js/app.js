@@ -84110,6 +84110,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['titulo', 'action', 'load', 'columnas', 'form'],
@@ -84211,55 +84214,64 @@ var render = function() {
           attrs: { "element-loading-text": "Cargando..." }
         },
         [
-          _c("table", { staticClass: "table table-striped" }, [
-            _c("thead", [
-              _c(
-                "tr",
-                [
-                  _c("th", { staticStyle: { width: "10px" } }),
-                  _vm._v(" "),
-                  _c("th", { staticStyle: { width: "120px" } }, [
-                    _vm._v("Acciones")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.columnas, function(columna) {
-                    return _c("th", [
-                      _vm._v(_vm._s(_vm._f("capitalize")(columna)))
-                    ])
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.tableData, function(item) {
-                return _c(
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-striped" }, [
+              _c("thead", [
+                _c(
                   "tr",
                   [
-                    _c("td", [_c("el-checkbox")], 1),
+                    _c("th", { staticStyle: { width: "10px" } }),
                     _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c("btn-delete-confirm", {
-                          attrs: { elemento: item, action: _vm.action }
-                        })
-                      ],
-                      1
-                    ),
+                    _c("th", { staticStyle: { width: "120px" } }, [
+                      _vm._v("Acciones")
+                    ]),
                     _vm._v(" "),
                     _vm._l(_vm.columnas, function(columna) {
-                      return _c("td", {
-                        domProps: { textContent: _vm._s(item[columna]) }
-                      })
+                      return _c("th", [
+                        _vm._v(_vm._s(_vm._f("capitalize")(columna)))
+                      ])
                     })
                   ],
                   2
                 )
-              })
-            )
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.tableData, function(item) {
+                  return _c(
+                    "tr",
+                    [
+                      _c("td", [_c("el-checkbox")], 1),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c("btn-delete-confirm", {
+                            attrs: { elemento: item, action: _vm.action }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.columnas, function(columna) {
+                        return _c("td", [_vm._v(_vm._s(item[columna]))])
+                      }),
+                      _vm._v(" "),
+                      item.roles && item.roles.length > 0
+                        ? _c(
+                            "td",
+                            _vm._l(item.roles, function(tag) {
+                              return _c("el-tag", [_vm._v(_vm._s(tag.name))])
+                            })
+                          )
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                })
+              )
+            ])
           ])
         ]
       )

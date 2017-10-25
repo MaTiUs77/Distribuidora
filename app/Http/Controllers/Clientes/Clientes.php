@@ -13,7 +13,7 @@ class Clientes extends Controller
 
     public function index()
     {
-        $clientes = User::role('cliente')->paginate(10);
+      //  $clientes = User::role('cliente')->paginate(10);
 
         $datos = compact('clientes');
         return view('clientes.index', $datos);
@@ -50,7 +50,9 @@ class Clientes extends Controller
         $nuevoPerfil->user_id= $user->id;
         $nuevoPerfil->save();
 
-        return redirect()->route('clientes.index')->with('message', 'Cliente agregado con exito!');
+        return compact('roles','user','nuevoPerfil');
+
+        //return redirect()->route('clientes.index')->with('message', 'Cliente agregado con exito!');
     }
 
     public function show($id)
@@ -94,6 +96,9 @@ class Clientes extends Controller
         $perfil->delete();
         }
         $user->delete();
-        return redirect()->route('clientes.index')->with('message', 'Cliente eliminado con exito!');
+
+        return $user;
+
+//        return redirect()->route('clientes.index')->with('message', 'Cliente eliminado con exito!');
     }
 }

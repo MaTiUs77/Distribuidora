@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Usuarios;
 
 use App\Http\Controllers\Almacenes\Model\AlmacenesModel;
+use App\Http\Controllers\Perfil\Model\PerfilModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -17,9 +18,10 @@ class Usuarios extends Controller
 
     public function index()
     {
-        $users = User::paginate(10);
+//        $users = User::paginate(10);
+        $roles = Role::all();
 
-        $datos = compact('users');
+        $datos = compact('users','roles');
         return view('usuarios.index', $datos);
     }
 
@@ -102,7 +104,14 @@ class Usuarios extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        $perfil = PerfilModel::where('user_id',$user->id)->first();
+        if(isset($perfil))
+        {
+            $perfil->delete();
+        }
         $user->delete();
-        return redirect()->route('usuarios.index')->with('message', 'Usuario eliminado con exito!');
+
+        return $user;
+        //return redirect()->route('usuarios.index')->with('message', 'Usuario eliminado con exito!');
     }
 }
