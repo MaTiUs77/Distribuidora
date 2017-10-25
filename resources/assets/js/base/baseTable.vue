@@ -19,7 +19,7 @@
           <tr>
             <th style="width: 10px"></th>
             <th style="width: 120px">Acciones</th>
-            <th v-for="columna in columnas" v-text="columna"></th>
+            <th v-for="columna in columnas">{{ columna | capitalize }}</th>
           </tr>
           </thead>
           <tbody>
@@ -30,7 +30,7 @@
             <td>
               <btn-delete-confirm :elemento="item" :action="action"></btn-delete-confirm>
             </td>
-            <td>{{ item.nombre }}</td>
+            <td v-for="columna in columnas" v-text="item[columna]"></td>
           </tr>
           </tbody>
         </table>
@@ -78,6 +78,13 @@
       },
       btnDelete() {
         this.isDeleting = true;
+      }
+    },
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
       }
     }
   }

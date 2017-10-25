@@ -20,7 +20,6 @@ Vue.directive('focus', {
 Vue.component('uploadImage', require('./base/uploadImage.vue'));
 Vue.component('btnDeleteConfirm', require('./base/btnDeleteWithConfirm.vue'));
 Vue.component('modalBootstrap', require('./base/modalBootstrap.vue'));
-//Vue.component('promptAdd', require('./base/promptAdd.vue'));
 Vue.component('baseTable', require('./base/baseTable.vue'));
 
 const root = new Vue({

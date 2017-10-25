@@ -1,4 +1,9 @@
-<base-table :columnas="['Nombre']" titulo="{{ ucfirst($resource) }}" load="{{ url('api/datatable/'.$resource) }}" action="{{ route($resource.'.index') }}"></base-table>
+<base-table
+        :columnas="['nombre']"
+        titulo="{{ ucfirst($resource) }}"
+        load="{{ url('api/datatable/'.$resource) }}"
+        action="{{ route($resource.'.index') }}">
+</base-table>
 
 {{--
 @if($items instanceof  \Illuminate\Pagination\LengthAwarePaginator)

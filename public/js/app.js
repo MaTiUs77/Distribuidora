@@ -15236,7 +15236,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.directive('focus', {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('uploadImage', __webpack_require__(181));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('btnDeleteConfirm', __webpack_require__(184));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('modalBootstrap', __webpack_require__(200));
-//Vue.component('promptAdd', require('./base/promptAdd.vue'));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('baseTable', __webpack_require__(190));
 
 var root = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
@@ -84152,6 +84151,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     btnDelete: function btnDelete() {
       this.isDeleting = true;
     }
+  },
+  filters: {
+    capitalize: function capitalize(value) {
+      if (!value) return '';
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
   }
 });
 
@@ -84240,9 +84246,9 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.columnas, function(columna) {
-                    return _c("th", {
-                      domProps: { textContent: _vm._s(columna) }
-                    })
+                    return _c("th", [
+                      _vm._v(_vm._s(_vm._f("capitalize")(columna)))
+                    ])
                   })
                 ],
                 2
@@ -84252,21 +84258,29 @@ var render = function() {
             _c(
               "tbody",
               _vm._l(_vm.tableData, function(item) {
-                return _c("tr", [
-                  _c("td", [_c("el-checkbox")], 1),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c("btn-delete-confirm", {
-                        attrs: { elemento: item, action: _vm.action }
+                return _c(
+                  "tr",
+                  [
+                    _c("td", [_c("el-checkbox")], 1),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c("btn-delete-confirm", {
+                          attrs: { elemento: item, action: _vm.action }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.columnas, function(columna) {
+                      return _c("td", {
+                        domProps: { textContent: _vm._s(item[columna]) }
                       })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.nombre))])
-                ])
+                    })
+                  ],
+                  2
+                )
               })
             )
           ])
