@@ -20,44 +20,52 @@
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label for="inputId">ID</label>
-                                    <input id="inputId" type="text" class="form-control" placeholder="Buscar por ID">
+                                    <input id="inputId" type="text" class="form-control input-sm" placeholder="Buscar por ID">
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label for="inputProveedor">Proveedor</label>
-                                    <input id="inputProveedor" type="text" class="form-control" placeholder="Buscar por Proveedor">
+                                    <input id="inputProveedor" type="text" class="form-control input-sm" placeholder="Buscar por Proveedor">
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label for="inputMarca">Marca</label>
-                                    <input id="inputMarca" type="text" class="form-control" placeholder="Buscar por Marca">
+                                    <input id="inputMarca" type="text" class="form-control input-sm" placeholder="Buscar por Marca">
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label for="inputCategoria">Categoria</label>
-                                    <input id="inputCategoria" type="text" class="form-control" placeholder="Buscar por Categoria">
+                                    <input id="inputCategoria" type="text" class="form-control input-sm" placeholder="Buscar por Categoria">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
+                                <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" placeholder="Buscar por nombre">
+                                <input type="text" placeholder="Buscar por nombre" class="form-control input-sm">
+                                </div>
                             </div>
                             <div class="col-xs-3">
+                                <div class="form-group">
                                 <label>Barcode</label>
-                                <input type="text" placeholder="Buscar por barcode">
+                                <input type="text" placeholder="Buscar por barcode" class="form-control input-sm">
+                                </div>
                             </div>
                             <div class="col-xs-3">
+                                <div class="form-group">
                                 <label>Codigo</label>
-                                <input type="text" placeholder="Buscar por codigo">
+                                <input type="text" placeholder="Buscar por codigo" class="form-control input-sm">
+                                </div>
                             </div>
                             <div class="col-xs-3">
+                                <div class="form-group">
                                 <label>Estado</label>
-                                <input type="text" placeholder="Buscar por estado">
+                                <input type="text" placeholder="Buscar por estado" class="form-control input-sm">
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Categorias\Model\CategoriasModel;
 use App\Http\Controllers\Marcas\Model\MarcasModel;
 use App\Http\Controllers\Productos\Model\ProductosModel;
 use App\Http\Controllers\Proveedores\Model\ProveedoresModel;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -45,7 +46,7 @@ class Productos extends Controller
     public function create()
     {
         $almacenes = AlmacenesModel::all();
-        $proveedores = ProveedoresModel::all();
+        $proveedores = User::role('proveedor')->get();
         $marcas = MarcasModel::all();
         $categorias = CategoriasModel::all();
 
@@ -61,9 +62,12 @@ class Productos extends Controller
      */
     public function store(Request $request)
     {
+
+
         $newItem = new ProductosModel();
-        $newItem->nombre = $request->get('producto');
-        $newItem->barcode = $request->get('barcode');
+        $newItem->nombre = $request->get('nombre');
+        $newItem->barcode = $request->get('codigo_de_barras');
+        $newItem->codigo_interno = $request->get('codigo_interno');
         $newItem->descripcion = $request->get('descripcion');
         $newItem->precio_proveedor = $request->get('precio_proveedor');
         $newItem->precio_venta = $request->get('precio_venta');
@@ -74,7 +78,21 @@ class Productos extends Controller
         $newItem->id_proveedor = $request->get('proveedor');
         $newItem->id_marca = $request->get('marca');
         $newItem->id_categoria = $request->get('categoria');
+
+        if($request->hasFile('imagen'))
+        {
+            $file = $request->file('imagen');
+
+            $path = public_path().'/upload';
+            $fileName = uniqid() . $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            $newItem->imagen = $fileName;
+
+        }
+
         $newItem->save();
+        
         return redirect()->route('productos.index');
     }
 
@@ -98,9 +116,9 @@ class Productos extends Controller
     public function edit($id)
     {
         $producto = ProductosModel::findOrFail($id);
+        $proveedores = User::role('proveedor')->get();
 
         $almacenes = AlmacenesModel::all();
-        $proveedores = ProveedoresModel::all();
         $marcas = MarcasModel::all();
         $categorias = CategoriasModel::all();
 
@@ -118,14 +136,16 @@ class Productos extends Controller
     public function update(Request $request, $id)
     {
          $producto = ProductosModel::findOrFail($id);
-         $producto ->nombre = $request->get('producto');
-         $producto ->barcode = $request->get('barcode');
+         $producto ->nombre = $request->get('nombre');
+         $producto ->barcode = $request->get('codigo_de_barras');
+         $producto ->codigo_interno = $request->get('codigo_interno');
          $producto ->descripcion = $request->get('descripcion');
          $producto ->precio_proveedor = $request->get('precio_proveedor');
          $producto ->precio_venta = $request->get('precio_venta');
          $producto ->aplicar_porcentaje = $request->get('aplicar_porcentaje');
          $producto ->estado = $request->get('estado');
          $producto ->stock= $request->get('stock');
+         $producto ->stock_minimo= $request->get('stock_minimo');
          $producto ->id_almacen = $request->get('almacen');
          $producto ->id_proveedor = $request->get('proveedor');
          $producto ->id_marca = $request->get('marca');
