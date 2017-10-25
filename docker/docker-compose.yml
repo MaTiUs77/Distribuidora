@@ -5,6 +5,7 @@ version: "3.1"
 services:
 
     myadmin:
+      restart: always
       image: phpmyadmin/phpmyadmin
       container_name: phpmyadmin
       ports:
@@ -12,12 +13,11 @@ services:
       environment:
           - PMA_ARBITRARY=1
           - PMA_HOST=mysql
-      restart: always
 
     mysql:
+      restart: always
       image: mysql
       container_name: dev-mysql
-      restart: always
       environment:
           - MYSQL_DATABASE=distribuidora
           - MYSQL_ROOT_PASSWORD=root
@@ -25,8 +25,11 @@ services:
           - MYSQL_PASSWORD=dev
       ports:
           - "3306:3306"
+      volumes:
+          - ./mysqldata:/home
 
     web:
+      restart: always
       image: nginx:alpine
       container_name: dev-web
       working_dir: /application
@@ -39,6 +42,7 @@ services:
           - php-fpm
 
     php-fpm:
+      restart: always
       build: phpdocker/php-fpm
       container_name: dev-php-fpm
       working_dir: /application
@@ -49,6 +53,7 @@ services:
           - mysql
 
     node:
+      restart: always
       container_name: dev-node
       build:
         context: "../"
@@ -59,10 +64,12 @@ services:
          - "../:/home"
 
     redis:
+      restart: always
       image: redis:alpine
       container_name: dev-redis
 
     memcached:
+      restart: always
       image: memcached:alpine
       container_name: dev-memcached
 

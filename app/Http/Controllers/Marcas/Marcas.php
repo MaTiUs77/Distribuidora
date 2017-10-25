@@ -15,8 +15,8 @@ class Marcas extends Controller
      */
     public function index()
     {
-        $marcas = MarcasModel::paginate(10);
-
+//        $marcas = MarcasModel::paginate(10);
+        
         $datos = compact('marcas');
         return view('marcas.index',$datos);
     }
@@ -40,9 +40,11 @@ class Marcas extends Controller
     public function store(Request $request)
     {
         $newItem = new MarcasModel();
-        $newItem->nombre = $request->get('name');
+        $newItem->nombre = $request->get('nombre');
         $newItem->save();
-        return redirect()->route('marcas.index');
+
+        return $newItem;
+//        return redirect()->route('marcas.index');
     }
 
     /**
@@ -94,6 +96,8 @@ class Marcas extends Controller
     {
         $marcas = MarcasModel::findOrFail($id);
         $marcas->delete();
-        return redirect()->route('marcas.index')->with('message', 'Marca eliminada con exito!');
+
+        return $marcas;
+  //      return redirect()->route('marcas.index')->with('message', 'Marca eliminada con exito!');
     }
 }

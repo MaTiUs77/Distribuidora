@@ -2,9 +2,8 @@
 
 @section('contenido')
 
-        @include('component.abm.baseTable',[
-                'resource' => 'almacenes',
-                'items' => $almacenes,
-        ])
+ @include('component.abm.baseTable',[
+  'resource' => 'almacenes'
+ ])
 
 @endsection

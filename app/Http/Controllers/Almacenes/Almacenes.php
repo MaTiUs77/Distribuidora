@@ -15,7 +15,7 @@ class Almacenes extends Controller
      */
     public function index()
     {
-        $almacenes = AlmacenesModel::paginate(10);
+      //  $almacenes = AlmacenesModel::paginate(10);
 
         $datos = compact('almacenes');
         return view('almacenes.index',$datos);
@@ -40,9 +40,11 @@ class Almacenes extends Controller
     public function store(Request $request)
     {
         $newItem = new AlmacenesModel();
-        $newItem->nombre = $request->get('name');
+        $newItem->nombre = $request->get('nombre');
         $newItem->save();
-        return redirect()->route('almacenes.index');
+
+        return $newItem;
+//        return redirect()->route('almacenes.index');
     }
 
     /**
@@ -95,6 +97,8 @@ class Almacenes extends Controller
     {
         $almacen = AlmacenesModel::findOrFail($id);
         $almacen->delete();
-        return redirect()->route('almacenes.index')->with('message', 'Almacen eliminado con exito!');
+
+        return $almacen;
+  //      return redirect()->route('almacenes.index')->with('message', 'Almacen eliminado con exito!');
     }
 }

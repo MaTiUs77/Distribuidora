@@ -16,7 +16,7 @@ class Categorias extends Controller
      */
     public function index()
     {
-        $categorias = CategoriasModel::paginate(10);
+//        $categorias = CategoriasModel::paginate(10);
 
         $datos = compact('categorias');
         return view('categorias.index',$datos);
@@ -41,9 +41,12 @@ class Categorias extends Controller
     public function store(Request $request)
     {
         $newItem = new CategoriasModel();
-        $newItem->nombre = $request->get('name');
+        $newItem->nombre = $request->get('nombre');
         $newItem->save();
-        return redirect()->route('categorias.index');
+
+        return $newItem;
+
+//        return redirect()->route('categorias.index');
     }
 
     /**
@@ -96,6 +99,9 @@ class Categorias extends Controller
     {
         $categoria = CategoriasModel::findOrFail($id);
         $categoria->delete();
-        return redirect()->route('categorias.index')->with('message', 'Categoria eliminada con exito!');
+
+        return $categoria;
+
+//        return redirect()->route('categorias.index')->with('message', 'Categoria eliminada con exito!');
     }
 }

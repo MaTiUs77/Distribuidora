@@ -5,7 +5,7 @@
 
         @if(isset($modalEdit))
         <li>
-            <a href="javascript:;" class="abmEdit" data-toggle="modal" data-target="#modalEdit" data-id="{{ $item->id }}" data-nombre="{{ $item->nombre }}">
+            <a href="#" class="abmEdit" data-toggle="modal" data-target="#modalEdit" data-id="{{ $item->id }}" data-nombre="{{ $item->nombre }}">
                 <i class="fa fa-edit"></i>
                 Editar
             </a>

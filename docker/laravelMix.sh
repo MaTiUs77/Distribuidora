@@ -1,2 +1,2 @@
 #!/bin/bash
-docker exec -it dev-node npm run watch
+docker exec -it dev-node bash -c "cd /home && npm run watch"

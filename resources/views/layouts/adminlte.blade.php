@@ -1,14 +1,19 @@
 @inject('ventasModel', '\App\Http\Controllers\Ventas\Model\VentasModel')
 
 <!DOCTYPE html>
-<html ng-app="SytemApp">
+<html>
 <head>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | Starter</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+
+  <!-- Bootstrap 3.3.7 con SASS -->
+  <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+  <!-- SweetAlert -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
@@ -17,12 +22,9 @@
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/AdminLTE.min.css') }}">
   <!-- AdminLTE Skins-->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}">
-  <!-- SweetAlert -->
-  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/select2/dist/css/select2.min.css') }}">
   <!-- JqueryUI-->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,7 +57,7 @@
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini') ng-cloak" @stack('ng-body')>
+<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini')" @stack('ng-body')>
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -171,7 +173,7 @@
   <div class="content-wrapper">
 
     <!-- Main content -->
-    <section class="content container-fluid">
+    <section class="content container-fluid" id="root">
 	  @yield('contenido')
     </section>
     <!-- /.content -->
@@ -259,24 +261,18 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 3 -->
-<script src="{{ asset('adminlte/bower_components/jquery/dist/jquery.min.js') }}"></script>
-<!-- jQuery UI -->
-<script src="{{ asset('adminlte/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<!-- Asset Js-->
+<script src="{{ mix('js/app.js') }}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- SweetAlert -->
 <script src="{{ asset('adminlte/plugins/sweetalert/sweetalert.min.js') }}"></script>
-<!-- AngularJS -->
-<script src="{{ asset('adminlte/bower_components/angular/angular.min.js') }}"></script>
-<!-- Select2 -->
-<script src="{{ asset('adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
-<!-- System App -->
-<script src="{{ asset('js/system.js') }}"></script>
 
+
+<!-- FOOTER -->
 @yield('footer')
+<!-- END FOOTER -->
 
 </body>
 </html>

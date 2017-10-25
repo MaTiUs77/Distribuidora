@@ -3,29 +3,27 @@ window.Vue = require('vue');
 
 import Vue from 'vue'
 
-import VueHotkey from 'v-hotkey'
-import Vuetify from 'vuetify'
+import 'element-ui/lib/theme-default/index.css'
+import ElementUI from 'element-ui'
+Vue.use(ElementUI);
 
-Vue.use(Vuetify);
-Vue.use(VueHotkey);
+//import VueHotkey from 'v-hotkey'
 
-//Vue.component('terminal', require('./components/TerminalComponent.vue'));
+//Vue.use(VueHotkey);
 
-Vue.component('autocomplete_personas', require('./components/autocompletePersonas.vue'));
-Vue.component('inscripcion_alumno', require('./components/inscripcionAlumno.vue'));
+Vue.directive('focus', {
+  inserted: function (el) {
+    el.focus();
+  }
+});
 
-Vue.component('inscripcion_stepper', require('./components/inscripcionStepper.vue'));
+Vue.component('btnDeleteConfirm', require('./base/btnDeleteWithConfirm.vue'));
+Vue.component('promptAdd', require('./base/promptAdd.vue'));
+Vue.component('baseTable', require('./base/baseTable.vue'));
 
-Vue.component('datepicker', require('./components/ejemplo/pickers/date-internationalization.vue'));
-Vue.component('form_basic', require('./components/ejemplo/forms/basic-validation.vue'));
-Vue.component('form_validation_with_submit', require('./components/ejemplo/forms/validation-with-submit-and-clear.vue'));
-
-const app = new Vue({
-    el: '#app',
-    data: {
-        title: "Montoto"
-    },
-    created() {
-        console.log('App created');
-    }
+const root = new Vue({
+  el: '#root',
+  created() {
+    console.log('Root vue created');
+  }
 });
