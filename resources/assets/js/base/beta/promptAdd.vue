@@ -7,41 +7,10 @@
     </el-button>
 
     <el-dialog v-bind:title="titulo" :visible.sync="visible" @open="onDialogOpen">
-
       <form role="form" method="post" @action="action" @submit.prevent="submitForm">
         <slot></slot>
       </form>
     </el-dialog>
-<!--
-    &lt;!&ndash; Modal &ndash;&gt;
-    <div id="vueModalCreate" class="modal fade onmodal" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{{ titulo }}</h4>
-          </div>
-          <div class="modal-body">
-            &lt;!&ndash; Modal Body&ndash;&gt;
-
-            <form role="form" method="post" @action="action" @submit.prevent="submitForm">
-              <slot></slot>
-
-              <input v-model="form.nombre" class="form-control input-lg autofocus" type="text" required placeholder="Ingresar nombre de">
-
-            </form>
-
-            &lt;!&ndash; Modal Body&ndash;&gt;
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" @click="submitForm" data-dismiss="modal"><i class="fa fa-plus"></i>  Crear</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
--->
-    <!-- END Modal -->
 
   </div>
 </template>
