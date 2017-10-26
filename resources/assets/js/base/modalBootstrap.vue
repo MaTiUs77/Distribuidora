@@ -66,8 +66,7 @@
             message: bodyMessage,
             type: 'error'
           });
-
-      });
+       });
       },
       // Notifica que la operacion se realizo con exito
       notificar() {

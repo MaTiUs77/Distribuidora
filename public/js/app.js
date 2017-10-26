@@ -15214,6 +15214,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_element_ui_lib_theme_default_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_element_ui_lib_theme_default_index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_element_ui__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_v_hotkey__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_v_hotkey___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_v_hotkey__);
 __webpack_require__(74);
 window.Vue = __webpack_require__(3);
 
@@ -15223,9 +15225,8 @@ window.Vue = __webpack_require__(3);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_element_ui___default.a);
 
-//import VueHotkey from 'v-hotkey'
 
-//Vue.use(VueHotkey);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_v_hotkey___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.directive('focus', {
   inserted: function inserted(el) {
@@ -15237,6 +15238,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('uploadImage', __webpack_r
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('btnDeleteConfirm', __webpack_require__(184));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('modalBootstrap', __webpack_require__(200));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('baseTable', __webpack_require__(190));
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('terminal', __webpack_require__(203));
 
 var root = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#root',
@@ -83884,12 +83887,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['action', 'elemento'],
   data: function data() {
     return {
-      popVisible: false,
+      popDeleteVisible: false,
+      popEditVisible: false,
       isDeleting: false
     };
   },
@@ -83899,7 +83922,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       var deleteRoute = this.action + '/' + this.elemento.id;
-      this.popVisible = false;
+      this.popDeleteVisible = false;
       this.isDeleting = true;
 
       axios.post(deleteRoute, {
@@ -83936,14 +83959,14 @@ var render = function() {
       _c(
         "el-popover",
         {
-          ref: "popover",
+          ref: "popDelete",
           attrs: { placement: "right", width: "160" },
           model: {
-            value: _vm.popVisible,
+            value: _vm.popDeleteVisible,
             callback: function($$v) {
-              _vm.popVisible = $$v
+              _vm.popDeleteVisible = $$v
             },
-            expression: "popVisible"
+            expression: "popDeleteVisible"
           }
         },
         [
@@ -83959,7 +83982,7 @@ var render = function() {
                   attrs: { size: "mini", type: "text" },
                   on: {
                     click: function($event) {
-                      _vm.popVisible = false
+                      _vm.popDeleteVisible = false
                     }
                   }
                 },
@@ -83981,19 +84004,70 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "el-button",
+        "el-popover",
         {
-          directives: [
-            { name: "popover", rawName: "v-popover:popover", arg: "popover" }
-          ],
-          attrs: {
-            type: "danger",
-            icon: "delete",
-            size: "small",
-            loading: _vm.isDeleting
+          ref: "popEdit",
+          attrs: { placement: "right", width: "160" },
+          model: {
+            value: _vm.popEditVisible,
+            callback: function($$v) {
+              _vm.popEditVisible = $$v
+            },
+            expression: "popEditVisible"
           }
         },
-        [_vm._v("Borrar")]
+        [
+          _c("p", [_vm._v("Esta opcion no esta disponible")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticStyle: { "text-align": "right", margin: "0" } },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini", type: "text" },
+                  on: {
+                    click: function($event) {
+                      _vm.popEditVisible = false
+                    }
+                  }
+                },
+                [_vm._v("aceptar")]
+              )
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-button-group",
+        [
+          _c("el-button", {
+            directives: [
+              { name: "popover", rawName: "v-popover:popEdit", arg: "popEdit" }
+            ],
+            attrs: { type: "info", icon: "edit", size: "small" }
+          }),
+          _vm._v(" "),
+          _c("el-button", {
+            directives: [
+              {
+                name: "popover",
+                rawName: "v-popover:popDelete",
+                arg: "popDelete"
+              }
+            ],
+            attrs: {
+              type: "danger",
+              icon: "delete",
+              size: "small",
+              loading: _vm.isDeleting
+            }
+          })
+        ],
+        1
       )
     ],
     1
@@ -84534,6 +84608,577 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-91c1060e", module.exports)
   }
 }
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(24)
+/* script */
+var __vue_script__ = __webpack_require__(204)
+/* template */
+var __vue_template__ = __webpack_require__(205)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/base/terminal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-56c7cbb4", Component.options)
+  } else {
+    hotAPI.reload("data-v-56c7cbb4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 204 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['venta_id', 'api'],
+  data: function data() {
+    return {
+      codigoProducto: '',
+      cantidadProducto: 1,
+      terminalLoading: true,
+      resumen: {
+        detalles: []
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.terminalFocus();
+    this.loadVenta();
+  },
+
+  methods: {
+    removerUltimoProducto: function removerUltimoProducto() {
+      var lastId = this.resumen.detalles[this.resumen.detalles.length - 1].id;
+      this.removerProducto(lastId);
+    },
+    iniciarCobranza: function iniciarCobranza() {
+      this.$notify({
+        message: "Opcion aun no disponible",
+        type: 'error'
+      });
+    },
+    removerProducto: function removerProducto(id) {
+      var _this = this;
+
+      var uri = this.api + '/remove/' + id;
+      axios.get(uri).then(function (response) {
+
+        if (response.data.error) {
+          _this.$notify({
+            message: response.data.error,
+            type: 'error'
+          });
+        } else {
+          _this.resumen = response.data.resumen;
+        }
+      }).catch(function (e) {
+        var bodyMessage = e.response.data.message;
+
+        _this.$notify({
+          message: bodyMessage,
+          type: 'error'
+        });
+      });
+    },
+    agregarProducto: function agregarProducto() {
+      var _this2 = this;
+
+      if (this.codigoProducto != '') {
+        var uri = this.api + '/add/' + this.venta_id + '/' + this.cantidadProducto + '/' + this.codigoProducto;
+        axios.get(uri).then(function (response) {
+
+          if (response.data.error) {
+            _this2.$notify({
+              message: response.data.error,
+              type: 'error'
+            });
+          } else {
+            _this2.resumen = response.data.resumen;
+          }
+
+          _this2.codigoProducto = '';
+          _this2.cantidadProducto = 1;
+
+          _this2.terminalFocus();
+        }).catch(function (e) {
+          var bodyMessage = e.response.data.message;
+
+          _this2.$notify({
+            message: bodyMessage,
+            type: 'error'
+          });
+        });
+      }
+    },
+    loadVenta: function loadVenta() {
+      var _this3 = this;
+
+      var uri = this.api + '/resumen/' + this.venta_id;
+      axios.get(uri).then(function (response) {
+        _this3.resumen = response.data.resumen;
+
+        _this3.terminalLoading = false;
+      }).catch(function (e) {
+        var bodyMessage = e.response.data.message;
+
+        _this3.$notify({
+          message: bodyMessage,
+          type: 'error'
+        });
+
+        _this3.terminalLoading = false;
+      });
+    },
+    terminalFocus: function terminalFocus() {
+      this.codigoProducto = '';
+      this.cantidadProducto = 1;
+
+      $("#codigoProducto").focus();
+    }
+  },
+  computed: {
+    keymap: function keymap() {
+      return {
+        'esc': {
+          keydown: this.terminalFocus
+        },
+        'ctrl+backspace': {
+          keydown: this.removerUltimoProducto
+        },
+        'enter': {
+          keydown: this.agregarProducto
+        },
+        'F2': {
+          keydown: this.iniciarCobranza
+        }
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "hotkey",
+          rawName: "v-hotkey",
+          value: _vm.keymap,
+          expression: "keymap"
+        }
+      ]
+    },
+    [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading.body",
+              value: _vm.terminalLoading,
+              expression: "terminalLoading",
+              modifiers: { body: true }
+            }
+          ],
+          staticClass: "row",
+          attrs: { "element-loading-text": "Espere..." }
+        },
+        [
+          _c("div", { staticClass: "col-xs-12 col-sm-8" }, [
+            _c(
+              "section",
+              { staticClass: "invoice", staticStyle: { margin: "0" } },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-xs-12 table-responsive" }, [
+                    _c("table", { staticClass: "table table-striped" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.resumen.detalles, function(detalle) {
+                          return _vm.resumen.detalles.length > 0
+                            ? _c("tr", [
+                                _c("td", [
+                                  _vm._v(_vm._s(detalle.producto.nombre))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(detalle.producto.barcode))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(detalle.producto.precio_venta))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(detalle.cantidad))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    "$ " +
+                                      _vm._s(
+                                        detalle.producto.precio_venta *
+                                          detalle.cantidad
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  [
+                                    _c("el-button", {
+                                      attrs: {
+                                        type: "danger",
+                                        icon: "delete",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.removerProducto(detalle.id)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            : _vm._e()
+                        })
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-xs-12 col-sm-4" }, [
+            _c("div", { staticClass: "box box-solid" }, [
+              _c("div", { staticClass: "box-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-xs-12" }, [
+                    _c("div", { staticClass: "callout callout-info" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-sm-6" }, [
+                          _c("p", [
+                            _vm._v(
+                              "\n                    Total\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            { staticStyle: { padding: "0px", margin: "0px" } },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.resumen.costoTotal) +
+                                  "\n                  "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-6" }, [
+                          _c("p", [
+                            _vm._v(
+                              "\n                    Productos\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "h2",
+                            { staticStyle: { padding: "0px", margin: "0px" } },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.resumen.cantidadProductos) +
+                                  "\n                  "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("label", { attrs: { for: "codigoProducto" } }, [
+                      _vm._v("Producto:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.codigoProducto,
+                          expression: "codigoProducto"
+                        }
+                      ],
+                      staticClass: "form-control input-lg",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Nombre o Codigo del Producto",
+                        id: "codigoProducto"
+                      },
+                      domProps: { value: _vm.codigoProducto },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.codigoProducto = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
+                    _c("label", { attrs: { for: "cantidadProducto" } }, [
+                      _vm._v("Cantidad:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.cantidadProducto,
+                          expression: "cantidadProducto"
+                        }
+                      ],
+                      staticClass: "form-control input-lg",
+                      attrs: {
+                        id: "cantidadProducto",
+                        type: "text",
+                        placeholder: "Cantidad"
+                      },
+                      domProps: { value: _vm.cantidadProducto },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.cantidadProducto = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("code", [_vm._v("CTRL+BACKSPACE")]),
+      _vm._v(" Remueve de la venta al ultimo producto agregado\n  "),
+      _c("br"),
+      _vm._v(" "),
+      _c("code", [_vm._v("ENTER")]),
+      _vm._v(" o "),
+      _c("code", [_vm._v("ESC")]),
+      _vm._v(" Llevar el puntero hacia ingresar producto\n  "),
+      _c("br"),
+      _vm._v(" "),
+      _c("code", [_vm._v("F2")]),
+      _vm._v(" Iniciar cobranza\n")
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Codigo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Acciones")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-right" }, [
+      _c("a", { staticClass: "btn btn-success", attrs: { href: "#" } }, [
+        _vm._v("F2 - Cobrar")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-56c7cbb4", module.exports)
+  }
+}
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.VueHotkey=t():e.VueHotkey=t()}(this,function(){return function(e){function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=1)}([function(e,t,n){var o,r,a;!function(n,u){r=[t],o=u,void 0!==(a="function"==typeof o?o.apply(t,r):o)&&(e.exports=a)}(0,function(e){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};e.default=function(e){if(e&&"object"===(void 0===e?"undefined":t(e))){var r=e.which||e.keyCode||e.charCode;r&&(e=r)}if("number"==typeof e)return names[e];var a=String(e),u=n[a.toLowerCase()];if(u)return u;var u=o[a.toLowerCase()];return u||(1===a.length?a.charCodeAt(0):void 0)};var n=e.codes={backspace:8,tab:9,enter:13,shift:16,ctrl:17,alt:18,"pause/break":19,"caps lock":20,esc:27,space:32,"page up":33,"page down":34,end:35,home:36,left:37,up:38,right:39,down:40,insert:45,delete:46,command:91,"left command":91,"right command":93,"numpad *":106,"numpad +":107,"numpad -":109,"numpad .":110,"numpad /":111,"num lock":144,"scroll lock":145,"my computer":182,"my calculator":183,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222},o=e.aliases={windows:91,"⇧":16,"⌥":18,"⌃":17,"⌘":91,ctl:17,control:17,option:18,pause:19,break:19,caps:20,return:13,escape:27,spc:32,pgup:33,pgdn:34,ins:45,del:46,cmd:91};for(r=97;r<123;r++)n[String.fromCharCode(r)]=r-32;for(var r=48;r<58;r++)n[r-48]=r;for(r=1;r<13;r++)n["f"+r]=r+111;for(r=0;r<10;r++)n["numpad "+r]=r+96})},function(e,t,n){var o,r,a;!function(u,c){r=[e,t,n(0)],o=c,void 0!==(a="function"==typeof o?o.apply(t,r):o)&&(e.exports=a)}(0,function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=function(e){return e&&e.__esModule?e:{default:e}}(n),r=function(e){return Object.keys(e).map(function(t){var n={};return t.split("+").forEach(function(e){switch(e.toLowerCase()){case"ctrl":case"alt":case"shift":case"meta":n[e]=!0;break;default:n.keyCode=(0,o.default)(e)}}),n.callback=e[t],n})};t.default={install:function(e){e.directive("hotkey",{bind:function(e,t,n,o){e._keymap=r(t.value),e._keymapHasKeyUp=e._keymap.some(function(e){return e.callback.keyup}),e._keyHandler=function(t){var n=!0,o=!1,r=void 0;try{for(var a,u=e._keymap[Symbol.iterator]();!(n=(a=u.next()).done);n=!0){var c=a.value,i=c.keyCode===t.keyCode&&!!c.ctrl===t.ctrlKey&&!!c.alt===t.altKey&&!!c.shift===t.shiftKey&&!!c.meta===t.metaKey&&("keydown"===t.type?c.callback.keydown||c.callback:c.callback.keyup);i&&i(t)}}catch(e){o=!0,r=e}finally{try{!n&&u.return&&u.return()}finally{if(o)throw r}}},document.addEventListener("keydown",e._keyHandler),e._keymapHasKeyUp&&document.addEventListener("keyup",e._keyHandler)},unbind:function(e,t,n,o){document.removeEventListener("keydown",e._keyHandler),e._keymapHasKeyUp&&document.removeEventListener("keyup",e._keyHandler)}})}},e.exports=t.default})}])});
 
 /***/ })
 /******/ ]);

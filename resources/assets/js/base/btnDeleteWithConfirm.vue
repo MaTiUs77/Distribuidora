@@ -1,18 +1,37 @@
 <template>
   <div>
+
+    <!-- CONFIRM DELETE -->
     <el-popover
-            ref="popover"
+            ref="popDelete"
             placement="right"
             width="160"
-            v-model="popVisible">
+            v-model="popDeleteVisible">
       <p>Confirma la eliminacion?</p>
       <div style="text-align: right; margin: 0">
-        <el-button size="mini" type="text" @click="popVisible = false">cancelar</el-button>
+        <el-button size="mini" type="text" @click="popDeleteVisible = false">cancelar</el-button>
         <el-button type="primary" size="mini" @click="confirmDelete">confirmar</el-button>
       </div>
     </el-popover>
 
-    <el-button type="danger" icon="delete" size="small" v-popover:popover :loading="isDeleting">Borrar</el-button>
+    <!-- EDITAR -->
+    <el-popover
+            ref="popEdit"
+            placement="right"
+            width="160"
+            v-model="popEditVisible">
+      <p>Esta opcion no esta disponible</p>
+      <div style="text-align: right; margin: 0">
+        <el-button size="mini" type="text" @click="popEditVisible = false">aceptar</el-button>
+      </div>
+    </el-popover>
+
+    <!-- BTN CRUD -->
+    <el-button-group>
+      <el-button type="info" icon="edit" size="small" v-popover:popEdit ></el-button>
+      <el-button type="danger" icon="delete" size="small" v-popover:popDelete :loading="isDeleting"></el-button>
+    </el-button-group>
+
   </div>
 </template>
 
@@ -21,14 +40,15 @@
     props: ['action','elemento'],
     data() {
       return {
-        popVisible: false,
+        popDeleteVisible: false,
+        popEditVisible: false,
         isDeleting: false
       };
     },
     methods: {
       confirmDelete(e) {
         let deleteRoute =  this.action+'/'+this.elemento.id;
-        this.popVisible = false;
+        this.popDeleteVisible = false;
         this.isDeleting = true;
 
         axios.post(deleteRoute,{

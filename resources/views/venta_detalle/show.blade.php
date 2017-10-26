@@ -1,9 +1,10 @@
 @extends('layouts.adminlte')
 @section('sidebar','sidebar-mini sidebar-collapse')
 
-@push('ng-body')
-    ng-controller="Terminal" ng-init="init({{ $venta->id }},'{{ env('IP_ACCESSO_REMOTO') }}:8080')" ng-keydown='functionKey($event)'
-@endpush
+@section('contenido')
+    <terminal venta_id="{{ $venta->id }}" api="{{ url('api/terminal') }}"></terminal>
+@endsection
+{{--
 
 @section('contenido')
     <div class="row">
@@ -242,3 +243,4 @@
         });
     </script>
 @endsection
+--}}

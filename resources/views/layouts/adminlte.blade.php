@@ -22,8 +22,10 @@
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/AdminLTE.min.css') }}">
   <!-- AdminLTE Skins-->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}">
+{{--
   <!-- JqueryUI-->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
+--}}
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -57,7 +59,7 @@
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini')" @stack('ng-body')>
+<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini')">
 <div class="wrapper">
 
   <!-- Main Header -->
