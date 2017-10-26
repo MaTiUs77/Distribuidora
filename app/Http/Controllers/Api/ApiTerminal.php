@@ -14,6 +14,7 @@ class ApiTerminal extends Api
      *
      * @param $codigo
      */
+
     public function addCodigo($venta_id,$cantidad,$codigo)
     {
         $venta = VentasModel::find($venta_id);

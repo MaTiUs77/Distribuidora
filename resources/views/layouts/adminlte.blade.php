@@ -12,8 +12,6 @@
   <!-- Bootstrap 3.3.7 con SASS -->
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-  <!-- SweetAlert -->
-  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert/sweetalert.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
@@ -22,11 +20,8 @@
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/AdminLTE.min.css') }}">
   <!-- AdminLTE Skins-->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}">
-{{--
-  <!-- JqueryUI-->
-  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
---}}
-
+  <!-- Select2-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -273,11 +268,12 @@
 
 <!-- Asset Js-->
 <script src="{{ mix('js/app.js') }}"></script>
-
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- SweetAlert -->
 <script src="{{ asset('adminlte/plugins/sweetalert/sweetalert.min.js') }}"></script>
+<!-- Select2 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 
 
 <!-- FOOTER -->

@@ -20,11 +20,13 @@
                   </thead>
                   <tbody>
                   <tr v-if="resumen.detalles.length > 0" v-for="detalle in resumen.detalles">
-                    <td>{{ detalle.producto.nombre }}</td>
+                    <td>
+                      <small>( {{ detalle.producto.codigo_interno }} )</small> {{ detalle.producto.nombre }}
+                    </td>
                     <td>{{ detalle.producto.barcode }}</td>
                     <td>{{ detalle.producto.precio_venta }}</td>
                     <td>{{ detalle.cantidad }}</td>
-                    <td>$ {{ detalle.producto.precio_venta * detalle.cantidad }}</td>
+                    <td>$ {{ detalle.producto.costoTotal }}</td>
                     <td>
                       <el-button type="danger" icon="delete" size="small" @click="removerProducto(detalle.id)"></el-button>
                     </td>
@@ -42,7 +44,7 @@
             <div class="box-body">
 
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-sm-12">
                   <div class="callout callout-info">
                     <div class="row">
                       <div class="col-sm-6">
@@ -66,13 +68,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-9">
-                  <label for="codigoProducto">Producto:</label>
-                  <input class="form-control input-lg" type="text" placeholder="Nombre o Codigo del Producto" id="codigoProducto" v-model="codigoProducto">
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <label for="cantidadProducto">Cantidad:</label>
-                  <input id="cantidadProducto" class="form-control input-lg" type="text" placeholder="Cantidad" v-model="cantidadProducto" >
+
+                <div class="col-sm-12">
+                  <div class="col-xs-12">
+                    <label for="codigoProducto">Producto:</label>
+                    <input class="form-control input-lg" type="text" placeholder="Nombre o Codigo del Producto" id="codigoProducto" v-model="codigoProducto">
+                  </div>
+
+                  <div class="col-sm-12">
+                    <label for="cantidadProducto">Cantidad:</label>
+                    <input id="cantidadProducto" class="form-control input-lg" type="text" placeholder="Cantidad" v-model="cantidadProducto" >
+                  </div>
                 </div>
               </div>
 
