@@ -4,6 +4,7 @@
 @section('contenido')
     <terminal venta_id="{{ $venta->id }}" api="{{ url('api/terminal') }}"></terminal>
 @endsection
+
 {{--
 
 @section('contenido')

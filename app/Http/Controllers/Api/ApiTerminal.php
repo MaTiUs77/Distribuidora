@@ -77,4 +77,22 @@ class ApiTerminal extends Api
             return compact('error');
         }
     }
+
+    public function resetVenta($venta_id)
+    {
+        $venta = VentasModel::find($venta_id);
+
+        if(isset($venta))
+        {
+            $inv = new Inventario();
+            // Devuelve y elimina el producto de la venta
+            $inv->devolverProductosMultiples($venta->detalles,true);
+
+            $response = $this->venta($venta->id);
+            return $response;
+        } else  {
+            $error = 'La venta no existe';
+            return compact('error');
+        }
+    }
 }

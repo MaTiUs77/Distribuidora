@@ -258,8 +258,16 @@
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 1.0
+    </div>
+    <strong>Copyright &copy; 2017-2018 <a href="">DevAlliance</a>.</strong> Todos los derechos reservados.
+  </footer>
 </div>
 <!-- ./wrapper -->
+
 
 <!-- REQUIRED JS SCRIPTS -->
 

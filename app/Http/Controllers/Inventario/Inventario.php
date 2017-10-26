@@ -46,11 +46,15 @@ class Inventario extends Controller
         return $producto;
     }
 
-    public function devolverProductosMultiples(Collection $detalleCollection)
+    public function devolverProductosMultiples(Collection $detalleCollection, $delete=false)
     {
         foreach ($detalleCollection as $detalle)
         {
             $this->devolverProducto($detalle);
+            if($delete)
+            {
+                $detalle->delete();
+            }
         }
 
         return true;

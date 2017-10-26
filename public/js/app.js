@@ -15216,6 +15216,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_element_ui__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_v_hotkey__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_v_hotkey___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_v_hotkey__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_fullscreen__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_fullscreen___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_fullscreen__);
 __webpack_require__(74);
 window.Vue = __webpack_require__(3);
 
@@ -15227,6 +15229,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_elem
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_v_hotkey___default.a);
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_fullscreen___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.directive('focus', {
   inserted: function inserted(el) {
@@ -84614,6 +84619,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(208)
+}
 var normalizeComponent = __webpack_require__(24)
 /* script */
 var __vue_script__ = __webpack_require__(204)
@@ -84622,7 +84631,7 @@ var __vue_template__ = __webpack_require__(205)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -84761,14 +84770,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['venta_id', 'api'],
   data: function data() {
     return {
+      fullscreen: false,
+      terminalLoading: true,
+
       codigoProducto: '',
       cantidadProducto: 1,
-      terminalLoading: true,
+
       resumen: {
         detalles: []
       }
@@ -84780,6 +84797,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    // Metodo para fullscreen
+    toggle: function toggle() {
+      this.$fullscreen.enter(this.$el.querySelector('.fullapp'), {
+        wrap: true,
+        background: '#ECF0F5',
+        callback: this.fullscreenChange
+      });
+    },
+    fullscreenChange: function fullscreenChange(fullscreen) {
+      this.fullscreen = fullscreen;
+      this.$el.querySelector('.fullapp');
+
+      this.terminalFocus();
+    },
     removerUltimoProducto: function removerUltimoProducto() {
       var lastId = this.resumen.detalles[this.resumen.detalles.length - 1].id;
       this.removerProducto(lastId);
@@ -84862,6 +84893,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this3.terminalLoading = false;
       });
     },
+    resetVenta: function resetVenta() {
+      var _this4 = this;
+
+      this.terminalLoading = true;
+
+      var uri = this.api + '/reset/' + this.venta_id;
+      axios.get(uri).then(function (response) {
+        _this4.resumen = response.data.resumen;
+        _this4.terminalLoading = false;
+      }).catch(function (e) {
+        var bodyMessage = e.response.data.message;
+
+        _this4.$notify({
+          message: bodyMessage,
+          type: 'error'
+        });
+
+        _this4.terminalLoading = false;
+      });
+    },
     terminalFocus: function terminalFocus() {
       this.codigoProducto = '';
       this.cantidadProducto = 1;
@@ -84880,6 +84931,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         'enter': {
           keydown: this.agregarProducto
+        },
+        'F9': {
+          keydown: this.resetVenta
         },
         'F2': {
           keydown: this.iniciarCobranza
@@ -84910,226 +84964,232 @@ var render = function() {
       ]
     },
     [
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading.body",
-              value: _vm.terminalLoading,
-              expression: "terminalLoading",
-              modifiers: { body: true }
-            }
-          ],
-          staticClass: "row",
-          attrs: { "element-loading-text": "Espere..." }
-        },
-        [
-          _c("div", { staticClass: "col-xs-12 col-sm-8" }, [
-            _c(
-              "section",
-              { staticClass: "invoice", staticStyle: { margin: "0" } },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-xs-12 table-responsive" }, [
-                    _c("table", { staticClass: "table table-striped" }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.resumen.detalles, function(detalle) {
-                          return _vm.resumen.detalles.length > 0
-                            ? _c("tr", [
-                                _c("td", [
-                                  _vm._v(_vm._s(detalle.producto.nombre))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(detalle.producto.barcode))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(detalle.producto.precio_venta))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(detalle.cantidad))]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    "$ " +
-                                      _vm._s(
-                                        detalle.producto.precio_venta *
-                                          detalle.cantidad
-                                      )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  [
-                                    _c("el-button", {
-                                      attrs: {
-                                        type: "danger",
-                                        icon: "delete",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.removerProducto(detalle.id)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ])
-                            : _vm._e()
-                        })
-                      )
-                    ])
-                  ])
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-xs-12 col-sm-4" }, [
-            _c("div", { staticClass: "box box-solid" }, [
-              _c("div", { staticClass: "box-body" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-xs-12" }, [
-                    _c("div", { staticClass: "callout callout-info" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-sm-6" }, [
-                          _c("p", [
-                            _vm._v(
-                              "\n                    Total\n                  "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "h2",
-                            { staticStyle: { padding: "0px", margin: "0px" } },
-                            [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(_vm.resumen.costoTotal) +
-                                  "\n                  "
-                              )
-                            ]
-                          )
-                        ]),
+      _c("div", { staticClass: "fullapp" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "loading",
+                rawName: "v-loading.body",
+                value: _vm.terminalLoading,
+                expression: "terminalLoading",
+                modifiers: { body: true }
+              }
+            ],
+            staticClass: "row",
+            attrs: { "element-loading-text": "Espere..." }
+          },
+          [
+            _c("div", { staticClass: "col-xs-12 col-sm-8" }, [
+              _c(
+                "section",
+                { staticClass: "invoice", staticStyle: { margin: "0" } },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-xs-12 table-responsive" }, [
+                      _c("table", { staticClass: "table table-striped" }, [
+                        _vm._m(0),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-6" }, [
-                          _c("p", [
-                            _vm._v(
-                              "\n                    Productos\n                  "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "h2",
-                            { staticStyle: { padding: "0px", margin: "0px" } },
-                            [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(_vm.resumen.cantidadProductos) +
-                                  "\n                  "
-                              )
-                            ]
-                          )
-                        ])
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.resumen.detalles, function(detalle) {
+                            return _vm.resumen.detalles.length > 0
+                              ? _c("tr", [
+                                  _c("td", [
+                                    _vm._v(_vm._s(detalle.producto.nombre))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(_vm._s(detalle.producto.barcode))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(detalle.producto.precio_venta)
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(detalle.cantidad))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      "$ " +
+                                        _vm._s(
+                                          detalle.producto.precio_venta *
+                                            detalle.cantidad
+                                        )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    [
+                                      _c("el-button", {
+                                        attrs: {
+                                          type: "danger",
+                                          icon: "delete",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.removerProducto(detalle.id)
+                                          }
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ])
+                              : _vm._e()
+                          })
+                        )
                       ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-9" }, [
-                    _c("label", { attrs: { for: "codigoProducto" } }, [
-                      _vm._v("Producto:")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.codigoProducto,
-                          expression: "codigoProducto"
-                        }
-                      ],
-                      staticClass: "form-control input-lg",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Nombre o Codigo del Producto",
-                        id: "codigoProducto"
-                      },
-                      domProps: { value: _vm.codigoProducto },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.codigoProducto = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
-                    _c("label", { attrs: { for: "cantidadProducto" } }, [
-                      _vm._v("Cantidad:")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.cantidadProducto,
-                          expression: "cantidadProducto"
-                        }
-                      ],
-                      staticClass: "form-control input-lg",
-                      attrs: {
-                        id: "cantidadProducto",
-                        type: "text",
-                        placeholder: "Cantidad"
-                      },
-                      domProps: { value: _vm.cantidadProducto },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.cantidadProducto = $event.target.value
-                        }
-                      }
-                    })
                   ])
-                ]),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _vm._m(1)
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-xs-12 col-sm-4" }, [
+              _c("div", { staticClass: "box box-solid" }, [
+                _c("div", { staticClass: "box-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-xs-12" }, [
+                      _c("div", { staticClass: "callout callout-info" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-sm-6" }, [
+                            _c("p", [
+                              _vm._v(
+                                "\n                          Total\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "h2",
+                              {
+                                staticStyle: { padding: "0px", margin: "0px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                          " +
+                                    _vm._s(_vm.resumen.costoTotal) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-6" }, [
+                            _c("p", [
+                              _vm._v(
+                                "\n                          Productos\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "h2",
+                              {
+                                staticStyle: { padding: "0px", margin: "0px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                          " +
+                                    _vm._s(_vm.resumen.cantidadProductos) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("label", { attrs: { for: "codigoProducto" } }, [
+                        _vm._v("Producto:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.codigoProducto,
+                            expression: "codigoProducto"
+                          }
+                        ],
+                        staticClass: "form-control input-lg",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Nombre o Codigo del Producto",
+                          id: "codigoProducto"
+                        },
+                        domProps: { value: _vm.codigoProducto },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.codigoProducto = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
+                      _c("label", { attrs: { for: "cantidadProducto" } }, [
+                        _vm._v("Cantidad:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.cantidadProducto,
+                            expression: "cantidadProducto"
+                          }
+                        ],
+                        staticClass: "form-control input-lg",
+                        attrs: {
+                          id: "cantidadProducto",
+                          type: "text",
+                          placeholder: "Cantidad"
+                        },
+                        domProps: { value: _vm.cantidadProducto },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.cantidadProducto = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ])
               ])
             ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("code", [_vm._v("CTRL+BACKSPACE")]),
-      _vm._v(" Remueve de la venta al ultimo producto agregado\n  "),
-      _c("br"),
-      _vm._v(" "),
-      _c("code", [_vm._v("ENTER")]),
-      _vm._v(" o "),
-      _c("code", [_vm._v("ESC")]),
-      _vm._v(" Llevar el puntero hacia ingresar producto\n  "),
-      _c("br"),
-      _vm._v(" "),
-      _c("code", [_vm._v("F2")]),
-      _vm._v(" Iniciar cobranza\n")
+          ]
+        ),
+        _vm._v(" "),
+        _c("code", [_vm._v("CTRL+RETROCESO")]),
+        _vm._v(" Remueve de la venta al ultimo producto agregado\n      "),
+        _c("br"),
+        _vm._v(" "),
+        _c("code", [_vm._v("F9")]),
+        _vm._v(" Remueve todos los productos de la venta\n      "),
+        _c("br"),
+        _vm._v(" "),
+        _c("code", [_vm._v("F2")]),
+        _vm._v(" Iniciar cobranza\n    ")
+      ])
     ]
   )
 }
@@ -85179,6 +85239,791 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.VueHotkey=t():e.VueHotkey=t()}(this,function(){return function(e){function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=1)}([function(e,t,n){var o,r,a;!function(n,u){r=[t],o=u,void 0!==(a="function"==typeof o?o.apply(t,r):o)&&(e.exports=a)}(0,function(e){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};e.default=function(e){if(e&&"object"===(void 0===e?"undefined":t(e))){var r=e.which||e.keyCode||e.charCode;r&&(e=r)}if("number"==typeof e)return names[e];var a=String(e),u=n[a.toLowerCase()];if(u)return u;var u=o[a.toLowerCase()];return u||(1===a.length?a.charCodeAt(0):void 0)};var n=e.codes={backspace:8,tab:9,enter:13,shift:16,ctrl:17,alt:18,"pause/break":19,"caps lock":20,esc:27,space:32,"page up":33,"page down":34,end:35,home:36,left:37,up:38,right:39,down:40,insert:45,delete:46,command:91,"left command":91,"right command":93,"numpad *":106,"numpad +":107,"numpad -":109,"numpad .":110,"numpad /":111,"num lock":144,"scroll lock":145,"my computer":182,"my calculator":183,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222},o=e.aliases={windows:91,"⇧":16,"⌥":18,"⌃":17,"⌘":91,ctl:17,control:17,option:18,pause:19,break:19,caps:20,return:13,escape:27,spc:32,pgup:33,pgdn:34,ins:45,del:46,cmd:91};for(r=97;r<123;r++)n[String.fromCharCode(r)]=r-32;for(var r=48;r<58;r++)n[r-48]=r;for(r=1;r<13;r++)n["f"+r]=r+111;for(r=0;r<10;r++)n["numpad "+r]=r+96})},function(e,t,n){var o,r,a;!function(u,c){r=[e,t,n(0)],o=c,void 0!==(a="function"==typeof o?o.apply(t,r):o)&&(e.exports=a)}(0,function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=function(e){return e&&e.__esModule?e:{default:e}}(n),r=function(e){return Object.keys(e).map(function(t){var n={};return t.split("+").forEach(function(e){switch(e.toLowerCase()){case"ctrl":case"alt":case"shift":case"meta":n[e]=!0;break;default:n.keyCode=(0,o.default)(e)}}),n.callback=e[t],n})};t.default={install:function(e){e.directive("hotkey",{bind:function(e,t,n,o){e._keymap=r(t.value),e._keymapHasKeyUp=e._keymap.some(function(e){return e.callback.keyup}),e._keyHandler=function(t){var n=!0,o=!1,r=void 0;try{for(var a,u=e._keymap[Symbol.iterator]();!(n=(a=u.next()).done);n=!0){var c=a.value,i=c.keyCode===t.keyCode&&!!c.ctrl===t.ctrlKey&&!!c.alt===t.altKey&&!!c.shift===t.shiftKey&&!!c.meta===t.metaKey&&("keydown"===t.type?c.callback.keydown||c.callback:c.callback.keyup);i&&i(t)}}catch(e){o=!0,r=e}finally{try{!n&&u.return&&u.return()}finally{if(o)throw r}}},document.addEventListener("keydown",e._keyHandler),e._keymapHasKeyUp&&document.addEventListener("keyup",e._keyHandler)},unbind:function(e,t,n,o){document.removeEventListener("keydown",e._keyHandler),e._keymapHasKeyUp&&document.removeEventListener("keyup",e._keyHandler)}})}},e.exports=t.default})}])});
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["VueFullscreen"] = factory();
+	else
+		root["VueFullscreen"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = supportFullScreen;
+/* harmony export (immutable) */ __webpack_exports__["b"] = fullScreenStatus;
+/* harmony export (immutable) */ __webpack_exports__["f"] = requestFullscreen;
+/* harmony export (immutable) */ __webpack_exports__["c"] = exitFullscreen;
+/* harmony export (immutable) */ __webpack_exports__["e"] = onFullScreenEvent;
+/* harmony export (immutable) */ __webpack_exports__["d"] = offFullScreenEvent;
+function supportFullScreen() {
+  var doc = document.documentElement;
+
+  return 'requestFullscreen' in doc || 'mozRequestFullScreen' in doc && document.mozFullScreenEnabled || 'msRequestFullscreen' in doc && document.msFullscreenEnabled || 'webkitRequestFullScreen' in doc;
+}
+
+function fullScreenStatus() {
+  if (document.fullscreen || document.mozFullScreen || document.fullscreenElement || document.msFullscreenElement || document.webkitIsFullScreen) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function requestFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else {
+    console.log('Fullscreen API is not supported.');
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else {
+    console.log('Fullscreen API is not supported.');
+  }
+}
+
+function onFullScreenEvent(callback) {
+  document.addEventListener('fullscreenchange', callback);
+  document.addEventListener('mozfullscreenchange', callback);
+  document.addEventListener('MSFullscreenChange', callback);
+  document.addEventListener('webkitfullscreenchange', callback);
+}
+
+function offFullScreenEvent(callback) {
+  document.removeEventListener('fullscreenchange', callback);
+  document.removeEventListener('mozfullscreenchange', callback);
+  document.removeEventListener('MSFullscreenChange', callback);
+  document.removeEventListener('webkitfullscreenchange', callback);
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(0);
+
+
+var defaults = {
+  wrap: true,
+  background: '#333',
+  callback: function callback() {},
+  fullscreenClass: 'fullscreen'
+};
+
+var support = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* supportFullScreen */])();
+
+function getState() {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* fullScreenStatus */])();
+}
+
+function toggle(target, options, force) {
+  if (!support) {
+    return;
+  }
+  if (force === undefined) {
+    !getState() ? enter(target, options) : exit();
+  } else {
+    force ? enter(target, options) : exit();
+  }
+}
+
+function enter() {
+  var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.body;
+  var options = arguments[1];
+
+  if (!support) {
+    return;
+  }
+  if (getState()) {
+    return;
+  }
+  options = Object.assign({}, defaults, options);
+
+  var el = target;
+  var wrapper = void 0;
+  if (options.wrap) {
+    wrapper = document.createElement('div');
+    wrapper.style['overflow-y'] = 'auto';
+    wrapper.style['background'] = options.background;
+    wrapper.style['width'] = '100%';
+    wrapper.style['height'] = '100%';
+
+    el.parentNode.insertBefore(wrapper, el);
+    wrapper.appendChild(el);
+    wrapper.addEventListener('click', function (event) {
+      if (event.target === this) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* exitFullscreen */])();
+      }
+    });
+  }
+
+  el.classList.add(options.fullscreenClass);
+
+  function fullScreenCallback() {
+    var isFullscreen = getState();
+    if (!isFullscreen) {
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* offFullScreenEvent */])(fullScreenCallback);
+
+      el.classList.remove(options.fullscreenClass);
+
+      if (options.wrap) {
+        wrapper.parentNode.insertBefore(el, wrapper);
+        wrapper.parentNode.removeChild(wrapper);
+      }
+    }
+
+    if (options.callback) {
+      options.callback(isFullscreen);
+    }
+  }
+
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* onFullScreenEvent */])(fullScreenCallback);
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* requestFullscreen */])(options.wrap ? wrapper : el);
+}
+
+function exit() {
+  if (!support) {
+    return;
+  }
+  if (!getState()) {
+    return;
+  }
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* exitFullscreen */])();
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  getState: getState,
+  toggle: toggle,
+  enter: enter,
+  exit: exit
+});
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(5)(
+  /* script */
+  __webpack_require__(4),
+  /* template */
+  __webpack_require__(6),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "D:\\Workspaces\\Web\\Git\\vue-fullscreen\\src\\component.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] component.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2c545db3", Component.options)
+  } else {
+    hotAPI.reload("data-v-2c545db3", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__component_vue__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__component_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__component_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service__ = __webpack_require__(1);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  install: function install(Vue) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var name = opts.name || 'fullscreen';
+    Vue.component(name, Object.assign(__WEBPACK_IMPORTED_MODULE_0__component_vue___default.a, { name: name }));
+    Vue.prototype['$' + name] = __WEBPACK_IMPORTED_MODULE_1__service__["a" /* default */];
+  }
+});
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(0);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    background: {
+      type: String,
+      default: '#333'
+    },
+    fullscreenClass: {
+      type: String,
+      default: 'fullscreen'
+    },
+    fullscreen: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data: function data() {
+    return {
+      supportFullScreen: false,
+      isFullscreen: false
+    };
+  },
+
+
+  computed: {
+    wrapperStyle: function wrapperStyle() {
+      return {
+        'background': this.background,
+        'overflow-y': 'auto',
+        'width': '100%',
+        'height': '100%'
+      };
+    }
+  },
+
+  methods: {
+    toggle: function toggle(value) {
+      if (value === undefined) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* fullScreenStatus */])()) {
+          this.exit();
+        } else {
+          this.enter();
+        }
+      } else {
+        value ? this.enter() : this.exit();
+      }
+    },
+    enter: function enter() {
+      if (!this.supportFullScreen) {
+        return;
+      }
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* onFullScreenEvent */])(this.fullScreenCallback);
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* requestFullscreen */])(this.$el);
+    },
+    exit: function exit() {
+      if (!this.supportFullScreen) {
+        return;
+      }
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* exitFullscreen */])();
+    },
+    shadeClick: function shadeClick(e) {
+      if (e.target === this.$el) {
+        this.exit();
+      }
+    },
+    fullScreenCallback: function fullScreenCallback() {
+      this.isFullscreen = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* fullScreenStatus */])();
+      if (!this.isFullscreen) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* offFullScreenEvent */])(this.fullScreenCallback);
+      }
+      this.$emit('change', this.isFullscreen);
+      this.$emit('update:fullscreen', this.isFullscreen);
+    }
+  },
+
+  watch: {
+    fullscreen: function fullscreen(value) {
+      if (value !== __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* fullScreenStatus */])()) {
+        value ? this.enter() : this.exit();
+      }
+    }
+  },
+
+  created: function created() {
+    this.supportFullScreen = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* supportFullScreen */])();
+  }
+});
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = Object.create(options.computed || null)
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+    options.computed = computed
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    class: _vm.isFullscreen ? [_vm.fullscreenClass] : [],
+    style: (_vm.isFullscreen ? [_vm.wrapperStyle] : []),
+    on: {
+      "click": function($event) {
+        _vm.shadeClick($event)
+      }
+    }
+  }, [_vm._t("default")], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2c545db3", module.exports)
+  }
+}
+
+/***/ })
+/******/ ]);
+});
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(209);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(210)("4ea724a6", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56c7cbb4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./terminal.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56c7cbb4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./terminal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(102)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fullscreen {\n  height:98%;\n  width:98%;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(211)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
 
 /***/ })
 /******/ ]);

@@ -10,6 +10,9 @@ Vue.use(ElementUI);
 import VueHotkey from 'v-hotkey'
 Vue.use(VueHotkey);
 
+import fullscreen from 'vue-fullscreen'
+Vue.use(fullscreen);
+
 Vue.directive('focus', {
   inserted: function (el) {
     el.focus();
