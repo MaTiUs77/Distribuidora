@@ -13,19 +13,11 @@ RUN apt-get update \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng12-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+        libxml2-dev \
+    && docker-php-ext-install -j$(nproc) pcntl pdo pdo_mysql zip iconv mcrypt soap \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
-
-# pcntl
-RUN docker-php-ext-install pcntl
-
-# Instalar extencion mysql
-RUN docker-php-ext-install pdo pdo_mysql
-
-# Instalar zip
-RUN docker-php-ext-install zip
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- \

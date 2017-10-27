@@ -4,6 +4,16 @@
 version: "3.1"
 services:
 
+    myadmin:
+      restart: always
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      ports:
+          - "81:80"
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOST=mysql
+
     mysql:
       restart: always
       image: mysql
@@ -41,6 +51,22 @@ services:
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
       depends_on:
           - mysql
+
+    node:
+      restart: always
+      container_name: dev-node
+      build:
+        context: "../"
+        dockerfile: "docker/node/Dockerfile"
+      ports:
+         - "8080:8080"
+      volumes:
+         - "../:/home"
+
+    redis:
+      restart: always
+      image: redis:alpine
+      container_name: dev-redis
 
     memcached:
       restart: always
