@@ -2,21 +2,7 @@
 @section('sidebar','sidebar-mini sidebar-collapse')
 
 @section('contenido')
-
-    <select class="form-control js-example-basic-single" style="width:200px" name="state">
-        <option value="AL">Cliente final</option>
-        <option value="WY">Diarco</option>
-    </select>
-
     <terminal venta_id="{{ $venta->id }}" api="{{ url('api/terminal') }}"></terminal>
-@endsection
-
-@section('footer')
-    <script>
-        $(function(){
-            $('.js-example-basic-single').select2();
-/**/        });
-    </script>
 @endsection
 {{--
 

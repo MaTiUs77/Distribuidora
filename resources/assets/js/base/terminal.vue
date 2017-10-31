@@ -2,9 +2,29 @@
   <div v-hotkey="keymap">
     <div class="fullapp">
       <div class="row"  v-loading.body="terminalLoading" element-loading-text="Espere...">
+
         <!-- Detalle de venta -->
         <div class="col-xs-12 col-sm-8">
+
+          <div class="box box-solid">
+            <div class="box-body">
+
+              <div class="col-sm-10">
+                <label for="codigoProducto">Codigo del producto:</label>
+                <input class="form-control input-lg" type="text" placeholder="Codigo del Producto" id="codigoProducto" v-model="codigoProducto">
+              </div>
+
+              <div class="col-sm-2">
+                <label for="cantidadProducto">Cantidad:</label>
+                <input id="cantidadProducto" class="form-control input-lg" type="text" placeholder="Cantidad" v-model="cantidadProducto" >
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+
           <section class="invoice" style="margin: 0;">
+            <!-- Lista de articulos -->
             <div class="row">
               <div class="col-xs-12 table-responsive">
                 <table class="table table-striped">
@@ -66,18 +86,6 @@
 
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="col-sm-12">
-                  <div class="col-xs-12">
-                    <label for="codigoProducto">Producto:</label>
-                    <input class="form-control input-lg" type="text" placeholder="Nombre o Codigo del Producto" id="codigoProducto" v-model="codigoProducto">
-                  </div>
-
-                  <div class="col-sm-12">
-                    <label for="cantidadProducto">Cantidad:</label>
-                    <input id="cantidadProducto" class="form-control input-lg" type="text" placeholder="Cantidad" v-model="cantidadProducto" >
                   </div>
                 </div>
               </div>
@@ -154,8 +162,7 @@
           type: 'error'
         });
       },
-      removerProducto(id)
-      {
+      removerProducto(id) {
         let uri = this.api+'/remove/'+id;
         axios.get(uri).then(response => {
 
@@ -176,8 +183,7 @@
           });
         });
       },
-      agregarProducto()
-      {
+      agregarProducto() {
         if(this.codigoProducto!='')
         {
           let uri = this.api+'/add/'+this.venta_id+'/'+this.cantidadProducto+'/'+this.codigoProducto;
@@ -207,8 +213,7 @@
           });
         }
       },
-      loadVenta()
-      {
+      loadVenta() {
         let uri = this.api+'/resumen/'+this.venta_id;
         axios.get(uri).then(response => {
           this.resumen = response.data.resumen;
@@ -227,8 +232,7 @@
 
         });
       },
-      resetVenta()
-      {
+      resetVenta() {
         this.terminalLoading = true;
 
         let uri = this.api+'/reset/'+this.venta_id;

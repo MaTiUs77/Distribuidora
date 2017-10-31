@@ -263,10 +263,9 @@
 </div>
 <!-- ./wrapper -->
 
-
-<!-- REQUIRED JS SCRIPTS -->
-
-<!-- Asset Js-->
+<!-- Bootstrap Js-->
+<script src="{{ mix('js/bootstrap.js') }}"></script>
+<!-- App Js-->
 <script src="{{ mix('js/app.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
@@ -274,7 +273,6 @@
 <script src="{{ asset('adminlte/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-
 
 <!-- FOOTER -->
 @yield('footer')
