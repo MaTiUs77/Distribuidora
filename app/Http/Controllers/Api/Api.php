@@ -22,10 +22,10 @@ class Api extends Controller
             $resumen = new ResumenDetalle($venta, $detalles);
 
             // Cada vez que se usa este metodo del api, se va a realzar un espejo en REDIS
-            $channel = 'venta_'.$venta_id;
+/*            $channel = 'venta_'.$venta_id;
 
             Redis::set($channel, json_encode($resumen));
-            Redis::publish($channel, json_encode($resumen));
+            Redis::publish($channel, json_encode($resumen));*/
 
             return compact('resumen');
         } else {
