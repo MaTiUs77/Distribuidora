@@ -274,6 +274,10 @@
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 
+<script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+
 <!-- FOOTER -->
 @yield('footer')
 <!-- END FOOTER -->
