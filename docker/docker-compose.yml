@@ -47,3 +47,23 @@ services:
       image: memcached:alpine
       container_name: dev-memcached
 
+    myadmin:
+      restart: always
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      ports:
+          - "81:80"
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOST=mysql
+
+    node:
+      restart: always
+      container_name: dev-node
+      build:
+        context: "../"
+        dockerfile: "docker/node/Dockerfile"
+      ports:
+         - "8080:8080"
+      volumes:
+         - "../:/home"

@@ -85,7 +85,7 @@ class AfipApi extends Controller
 
         $response = null;
         try {
-            $response = $afip->CreateNextVoucher($data);
+            $response = $this->afip->CreateNextVoucher($data);
         } catch (\Exception $ex)
         {
             $response['error'] = $ex->getMessage();
@@ -97,12 +97,12 @@ class AfipApi extends Controller
         $voucher_types = $this->afip->GetVoucherTypes();
         $concept_types = $this->afip->GetConceptTypes();
         $document_types = $this->afip->GetDocumentTypes();
-        $aloquot_types = $this->afip->GetAliquotTypes();
+        $aliquot_types = $this->afip->GetAliquotTypes();
         $currencies_types = $this->afip->GetCurrenciesTypes();
         $option_types = $this->afip->GetOptionsTypes();
         $tax_types = $this->afip->GetTaxTypes();
 
-        return compact('voucher_types','concept_types','document_types','aloquot_types','currencies_types','option_types','tax_types');
+        return compact('voucher_types','concept_types','document_types','aliquot_types','currencies_types','option_types','tax_types');
     }
 
     public function custom()
