@@ -18,10 +18,10 @@
   <link rel="stylesheet" href="{{ asset('adminlte/bower_components/Ionicons/css/ionicons.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/AdminLTE.min.css') }}">
-  <!-- AdminLTE Skins-->
+  <!-- AdminLTE Skins -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/skins/_all-skins.min.css') }}">
-  <!-- Select2-->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('adminlte/bower_components/select2/dist/css/select2.min.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -263,20 +263,18 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- Bootstrap Js-->
+<!-- Bootstrap y Jquery -->
 <script src="{{ mix('js/bootstrap.js') }}"></script>
-<!-- App Js-->
+<!-- Aplicacion en Vuejs2-->
 <script src="{{ mix('js/app.js') }}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- SweetAlert -->
 <script src="{{ asset('adminlte/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <!-- Select2 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-
-<script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
-<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
-<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script src="{{ asset('adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('adminlte/bower_components/select2/dist/js/i18n/es.js') }}"></script>
 
 <!-- FOOTER -->
 @yield('footer')
