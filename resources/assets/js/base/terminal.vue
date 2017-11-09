@@ -44,9 +44,9 @@
                       <small>( {{ detalle.producto.codigo_interno }} )</small> {{ detalle.producto.nombre }}
                     </td>
                     <td>{{ detalle.producto.barcode }}</td>
-                    <td>{{ detalle.producto.precio_venta }}</td>
+                    <td>$ {{ detalle.producto.precio_venta }}</td>
                     <td>{{ detalle.cantidad }}</td>
-                    <td>$ {{ detalle.producto.costoTotal }}</td>
+                    <td>$ {{ detalle.costoTotal }}</td>
                     <td>
                       <el-button type="danger" icon="delete" size="small" @click="removerProducto(detalle.id)"></el-button>
                     </td>
@@ -72,7 +72,7 @@
                           Total
                         </p>
                         <h2 style="padding:0px;margin:0px;">
-                          {{ resumen.costoTotal }}
+                          $ {{ resumen.costoTotal }}
                         </h2>
 
                       </div>

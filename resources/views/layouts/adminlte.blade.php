@@ -54,7 +54,7 @@
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini')">
+<body class="hold-transition skin-blue @yield('sidebar','sidebar-mini sidebar-collapse')">
 <div class="wrapper">
 
   <!-- Main Header -->

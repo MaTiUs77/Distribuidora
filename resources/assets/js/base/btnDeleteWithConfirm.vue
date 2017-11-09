@@ -29,9 +29,8 @@
     <!-- BTN CRUD -->
     <el-button-group>
       <el-button type="info" icon="edit" size="small" v-popover:popEdit ></el-button>
-      <el-button type="danger" icon="delete" size="small" v-popover:popDelete :loading="isDeleting"></el-button>
+      <el-button type="danger" icon="delete" size="small" @click="confirmDelete" :loading="isDeleting"></el-button>
     </el-button-group>
-
   </div>
 </template>
 
@@ -47,6 +46,15 @@
     },
     methods: {
       confirmDelete(e) {
+        this.$confirm('Se eliminara permanentemente. Desea continuar?', 'Atencion', {
+            confirmButtonText: 'Si',
+            cancelButtonText: 'Cancelar',
+            type: 'warning'
+          }).then(() => {
+            this.startDelete(e);
+          });
+      },
+      startDelete(e) {
         let deleteRoute =  this.action+'/'+this.elemento.id;
         this.popDeleteVisible = false;
         this.isDeleting = true;

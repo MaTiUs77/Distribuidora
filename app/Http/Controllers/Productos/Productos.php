@@ -62,7 +62,7 @@ class Productos extends Controller
      */
     public function store(Request $request)
     {
-
+        // Falta realizar todas las validaciones previo a guardar los datos
 
         $newItem = new ProductosModel();
         $newItem->nombre = $request->get('nombre');
@@ -74,11 +74,40 @@ class Productos extends Controller
         $newItem->aplicar_porcentaje = $request->get('aplicar_porcentaje');
         $newItem->estado = $request->get('estado');
         $newItem->stock= $request->get('stock');
-        $newItem->id_almacen = $request->get('almacen');
-        $newItem->id_proveedor = $request->get('proveedor');
-        $newItem->id_marca = $request->get('marca');
-        $newItem->id_categoria = $request->get('categoria');
 
+        $id_marca = $request->get('marca');
+        $id_almacen = $request->get('almacen');
+        $id_categoria = $request->get('categoria');
+
+        // Proveedores necesita de mas datos para un alta dinamica
+        $id_proveedor = $request->get('proveedor');
+
+        // Si la marca no es numerica, crea una nueva
+        if(!is_numeric($id_marca)) {
+            $newMarca = MarcasModel::firstOrCreate(['nombre' => $id_marca]);
+            $id_marca = $newMarca->id;
+        }
+
+        // Si la almacen no es numerica, crea una nueva
+        if(!is_numeric($id_almacen)) {
+            $newAlmacen = AlmacenesModel::firstOrCreate(['nombre' => $id_almacen]);
+            $id_almacen = $newAlmacen->id;
+        }
+
+        // Si la categoria no es numerica, crea una nueva
+        if(!is_numeric($id_categoria)) {
+            $newCategoria = CategoriasModel::firstOrCreate(['nombre' => $id_categoria]);
+            $id_categoria = $newCategoria->id;
+        }
+
+        $newItem->id_marca = $id_marca;
+        $newItem->id_almacen = $id_almacen;
+        $newItem->id_categoria = $id_categoria;
+
+        // El proveedor seleccionado
+        $newItem->id_proveedor = $id_proveedor;
+
+        // Gestiona el upload de la imagen
         if($request->hasFile('imagen'))
         {
             $file = $request->file('imagen');
@@ -90,9 +119,7 @@ class Productos extends Controller
             $newItem->imagen = $fileName;
 
         }
-
         $newItem->save();
-        
         return redirect()->route('productos.index');
     }
 

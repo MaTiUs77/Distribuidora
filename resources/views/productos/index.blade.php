@@ -1,7 +1,5 @@
 @extends('layouts.adminlte')
 
-@section('sidebar','sidebar-mini sidebar-collapse')
-
 @section('contenido')
 
     <!-- START CUSTOM TABS -->
