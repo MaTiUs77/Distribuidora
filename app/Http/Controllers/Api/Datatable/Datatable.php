@@ -32,11 +32,11 @@ class Datatable extends Controller
 
     public function clientes()
     {
-        return  User::role('cliente')->get();
+        return  User::role('cliente')->where('name','!=','Cliente Final')->get();
     }
 
     public function usuarios()
     {
-        return  User::with('roles')->get();
+        return  User::with('roles')->where('name','!=','Cliente Final')->get();
     }
 }
