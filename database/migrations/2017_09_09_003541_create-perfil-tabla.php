@@ -18,7 +18,7 @@ class CreatePerfilTabla extends Migration
 
             $table->increments('id');
             $table->string('nombre');
-            $table->string('codigo');
+            $table->string('codigo_postal');
             $table->string('telefono');
             $table->string('direccion');
             $table->string('tipo_identificacion');

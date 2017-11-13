@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div>
 
     <el-button type="primary" v-bind:title="titulo" data-toggle="modal" data-target="#myModal">
@@ -55,7 +55,16 @@
 
         axios.post(this.action,this.form).then(response => {
           $("#myModal").modal('hide');
-          this.notificar();
+            this.form.tipo_identificacion = '',
+            this.form.numero_identificacion = '',
+            this.form.nombre = '',
+            this.form.codigo_postal = '',
+            this.form.provincia = '',
+            this.form.telefono = '',
+            this.form.direccion = '',
+            this.form.localidad = '',
+            this.form.email = '',
+            this.notificar();
         })
         .catch(e => {
 //          this.errors.push(e);

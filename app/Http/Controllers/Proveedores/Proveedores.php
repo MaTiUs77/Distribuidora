@@ -52,7 +52,7 @@ class Proveedores extends Controller
 
         $nuevoPerfil = new PerfilModel();
         $nuevoPerfil->nombre = $request->get('nombre');
-        $nuevoPerfil->codigo = $request->get('codigo');
+        $nuevoPerfil->codigo_postal = $request->get('codigo_postal');
         $nuevoPerfil->telefono = $request->get('telefono');
         $nuevoPerfil->direccion = $request->get('direccion');
         $nuevoPerfil->tipo_identificacion = $request->get('tipo_identificacion');

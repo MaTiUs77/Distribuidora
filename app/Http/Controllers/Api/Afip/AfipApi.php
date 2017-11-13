@@ -35,6 +35,10 @@ class AfipApi extends Controller
         return $this->client->get("parametros/v1/categoriasMonotributo");
     }
 
+    public function provincias(){
+       return $this->client->get('parametros/v1/provincias');
+    }
+
     /*
      * FACTUACION ELECTRONICA
      */

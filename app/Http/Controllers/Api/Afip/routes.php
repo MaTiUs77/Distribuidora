@@ -6,3 +6,5 @@ Route::get('afip/custom', 'Api\Afip\AfipApi@custom');
 
 
 Route::get('afip/persona/{cuil}', 'Api\Afip\AfipApi@persona');
+
+Route::get('afip/provincias', 'Api\Afip\AfipApi@provincias');
